@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://355eg4wuaduq"]
+
+[ext_resource type="Script" path="res://Scripts/Player/soulsCam.gd" id="1_kymmq"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_qeif0"]
+
+[node name="CameraPivot" type="Node3D"]
+script = ExtResource("1_kymmq")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+transform = Transform3D(0.944049, 0, 0.329806, 0, 1, 0, -0.329806, 0, 0.944049, 0.669386, 0.913384, 0)
+spring_length = 3.0
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+transform = Transform3D(1, 9.31323e-10, 0, 0, 1, -1.49012e-08, 0, 7.45058e-09, 1, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.105)
+visible = false
+mesh = SubResource("CapsuleMesh_qeif0")

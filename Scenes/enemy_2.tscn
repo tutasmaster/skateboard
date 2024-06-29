@@ -1,0 +1,224 @@
+[gd_scene load_steps=31 format=3 uid="uid://crrc5llutirmu"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy/Snek.gd" id="1_1o8ma"]
+[ext_resource type="PackedScene" uid="uid://bclewyge2s8u8" path="res://Assets/snek.blend" id="2_q0ntk"]
+[ext_resource type="Texture2D" uid="uid://i6f14fk1hg7s" path="res://Assets/Textures/snek_colored.png" id="3_tuwbb"]
+[ext_resource type="Script" path="res://Scripts/Enemy/Hitbox.gd" id="4_03h3x"]
+[ext_resource type="Material" uid="uid://daexjmi27j5g5" path="res://Assets/Materials/Debug/hitbox.tres" id="5_ybyig"]
+[ext_resource type="AudioStream" uid="uid://dprmget8dvn6j" path="res://bone-crack-121580.mp3" id="6_xlerl"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6mp8x"]
+animation = &"SnekAttack"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_t0fet"]
+animation = &"SnekIdle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4hxiw"]
+animation = &"SnekWiggle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_voxdt"]
+animation = &"SnekWiggle"
+play_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_x4kmu"]
+animation = &"SnekWiggle"
+play_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_duxbi"]
+animation = &"SnekWiggle"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_cotgd"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_t0fet")
+blend_point_0/pos = Vector2(0, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_4hxiw")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_voxdt")
+blend_point_2/pos = Vector2(-1, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_x4kmu")
+blend_point_3/pos = Vector2(0, -1)
+blend_point_4/node = SubResource("AnimationNodeAnimation_duxbi")
+blend_point_4/pos = Vector2(0, 1)
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4bunu"]
+animation = &"SnekDeath"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_x0wdj"]
+animation = &"SnekKnockback"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u2h4u"]
+animation = &"SnekGetUp"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_djvv6"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ic53k"]
+xfade_time = 0.2
+advance_mode = 2
+advance_condition = &"attack"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_i7nhc"]
+xfade_time = 0.3
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_penef"]
+xfade_time = 0.05
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0rnwk"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_856hm"]
+xfade_time = 0.25
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xpm05"]
+xfade_time = 0.25
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lvny7"]
+switch_mode = 2
+advance_mode = 2
+advance_condition = &"death"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_m8gtk"]
+states/Attack/node = SubResource("AnimationNodeAnimation_6mp8x")
+states/Attack/position = Vector2(594, 284)
+states/BlendSpace2D/node = SubResource("AnimationNodeBlendSpace2D_cotgd")
+states/BlendSpace2D/position = Vector2(583, 130)
+states/Death/node = SubResource("AnimationNodeAnimation_4bunu")
+states/Death/position = Vector2(1104, 184)
+states/End/position = Vector2(1323, 100)
+states/Knockback/node = SubResource("AnimationNodeAnimation_x0wdj")
+states/Knockback/position = Vector2(872, 253)
+"states/get up/node" = SubResource("AnimationNodeAnimation_u2h4u")
+"states/get up/position" = Vector2(805, 112)
+transitions = ["Start", "BlendSpace2D", SubResource("AnimationNodeStateMachineTransition_djvv6"), "BlendSpace2D", "Attack", SubResource("AnimationNodeStateMachineTransition_ic53k"), "Attack", "BlendSpace2D", SubResource("AnimationNodeStateMachineTransition_i7nhc"), "Attack", "Knockback", SubResource("AnimationNodeStateMachineTransition_penef"), "BlendSpace2D", "Knockback", SubResource("AnimationNodeStateMachineTransition_0rnwk"), "Knockback", "get up", SubResource("AnimationNodeStateMachineTransition_856hm"), "get up", "BlendSpace2D", SubResource("AnimationNodeStateMachineTransition_xpm05"), "Knockback", "Death", SubResource("AnimationNodeStateMachineTransition_lvny7")]
+graph_offset = Vector2(240, -38)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mnt01"]
+shading_mode = 0
+diffuse_mode = 1
+albedo_texture = ExtResource("3_tuwbb")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a86r3"]
+radius = 1.5509
+height = 3.18422
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_uxdeu"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_csoio"]
+radius = 4.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_bp3ct"]
+material = ExtResource("5_ybyig")
+radius = 4.0
+height = 8.0
+
+[node name="Enemy2" type="Node3D" node_paths=PackedStringArray("_hitbox_list")]
+script = ExtResource("1_1o8ma")
+_hitbox_list = [NodePath("Hitbox")]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 349.0
+offset_bottom = 46.0
+
+[node name="ProgressBar" type="ProgressBar" parent="Control"]
+layout_mode = 0
+offset_right = 281.0
+offset_bottom = 27.0
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+root_node = NodePath("../Body/snek")
+root_motion_track = NodePath("Armature/Skeleton3D:Bone.013")
+tree_root = SubResource("AnimationNodeStateMachine_m8gtk")
+anim_player = NodePath("../Body/snek/AnimationPlayer")
+parameters/conditions/attack = true
+parameters/conditions/death = false
+parameters/BlendSpace2D/blend_position = Vector2(-0.00263852, 0.0108932)
+
+[node name="Body" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.64742, 0)
+
+[node name="snek" parent="Body" instance=ExtResource("2_q0ntk")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -1.53005, 0)
+
+[node name="Skeleton3D" parent="Body/snek/Armature" index="0"]
+bones/0/rotation = Quaternion(0, 0.707107, 0.707107, 0)
+bones/1/position = Vector3(0, 0.555508, 0)
+bones/1/rotation = Quaternion(0.793106, 0.607904, 0.00314974, -0.0377491)
+bones/2/rotation = Quaternion(-0.0178995, -0.00938347, -0.471296, 0.881744)
+bones/3/rotation = Quaternion(-0.0293559, 0.0406913, -0.493521, 0.868285)
+bones/4/rotation = Quaternion(0.084529, 0.102352, -0.402108, 0.905918)
+bones/5/rotation = Quaternion(-0.116808, -0.0176248, -0.460364, 0.879835)
+bones/6/rotation = Quaternion(-0.102326, -0.0364111, -0.407038, 0.906931)
+bones/7/rotation = Quaternion(0.190081, 0.633011, -0.341142, 0.668422)
+bones/8/rotation = Quaternion(0.0645453, 0.198002, -0.188996, 0.959641)
+bones/9/rotation = Quaternion(0.0834965, -0.12499, -0.329092, 0.932258)
+bones/10/rotation = Quaternion(0.125175, -0.0244377, -0.174346, 0.97639)
+bones/11/rotation = Quaternion(0.00275022, 0.0883744, -0.318352, 0.94384)
+bones/12/rotation = Quaternion(-0.0551098, -0.056262, 0.23602, 0.968552)
+bones/13/rotation = Quaternion(0.65239, -0.268394, -0.337762, 0.623112)
+
+[node name="Circle" parent="Body/snek/Armature/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_mnt01")
+
+[node name="Empty" parent="Body/snek" index="1"]
+visible = false
+
+[node name="Sun" parent="Body/snek" index="2"]
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1.44243, 0, 0, 0, 1.44243, 0, 0, 0, 1.44243, 0, 1.17411, -0.243031)
+shape = SubResource("CapsuleShape3D_a86r3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Body/CollisionShape3D"]
+visible = false
+mesh = SubResource("CapsuleMesh_uxdeu")
+skeleton = NodePath("../../../..")
+
+[node name="RootMotionView" type="RootMotionView" parent="Body"]
+visible = false
+animation_path = NodePath("../../AnimationTree")
+
+[node name="Hitbox" type="BoneAttachment3D" parent="."]
+transform = Transform3D(0.914958, -0.35335, -0.194925, -0.401168, -0.74402, -0.534321, 0.0437742, 0.567079, -0.8225, -4.91151, 9.80343, -1.40165)
+rotation_edit_mode = 1
+bone_name = "Bone.012"
+bone_idx = 13
+use_external_skeleton = true
+external_skeleton = NodePath("../Body/snek/Armature/Skeleton3D")
+script = ExtResource("4_03h3x")
+
+[node name="Area3D" type="Area3D" parent="Hitbox"]
+transform = Transform3D(1, -5.96046e-08, -5.96046e-08, 5.96046e-08, 1, 0, 1.49012e-08, -2.98023e-08, 1, 0, 3.24133, -0.829179)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox/Area3D"]
+transform = Transform3D(1, 1.19209e-07, 4.47035e-08, -2.98023e-08, 1, -3.72529e-08, 1.49012e-08, -7.45058e-09, 1, 0.120035, 0, 0)
+shape = SubResource("SphereShape3D_csoio")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hitbox/Area3D/CollisionShape3D"]
+transform = Transform3D(1, -2.98023e-08, 0, -5.96046e-08, 1, 2.98023e-08, -5.21541e-08, 2.23517e-08, 1, -0.120035, 0, 0)
+visible = false
+mesh = SubResource("SphereMesh_bp3ct")
+skeleton = NodePath("")
+
+[node name="HitSFX" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("6_xlerl")
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="."]
+transform = Transform3D(-1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0)
+bone_name = "Bone.013"
+bone_idx = 0
+use_external_skeleton = true
+external_skeleton = NodePath("../Body/snek/Armature/Skeleton3D")
+
+[node name="Marker3D" type="Marker3D" parent="BoneAttachment3D"]
+
+[editable path="Body/snek"]

@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bb6dtcv4gyriu"]
+
+[ext_resource type="Texture2D" uid="uid://dwwemune5v5do" path="res://Assets/glow.png" id="1_kjflr"]
+[ext_resource type="Script" path="res://Scripts/Loot/Loot.gd" id="1_qwlkq"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xg1og"]
+
+[node name="Area3D" type="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.027616, 0.0588818, -0.0265892)
+collision_mask = 3
+script = ExtResource("1_qwlkq")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0158173, 0)
+pixel_size = 0.0465
+billboard = 1
+texture_filter = 0
+texture = ExtResource("1_kjflr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_xg1og")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

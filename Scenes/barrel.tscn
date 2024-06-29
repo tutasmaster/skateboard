@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://wqsmbkyh28n0"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy/Lootable.gd" id="1_e6bvn"]
+[ext_resource type="AudioStream" uid="uid://dprmget8dvn6j" path="res://bone-crack-121580.mp3" id="2_fvn38"]
+[ext_resource type="Script" path="res://Scripts/AI/AIBase.gd" id="3_wuenm"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_amcp2"]
+height = 1.0
+radius = 0.4
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_61gle"]
+top_radius = 0.4
+bottom_radius = 0.4
+height = 1.0
+
+[node name="Barrel" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.43116, 1.02263, 3.3887)
+script = ExtResource("1_e6bvn")
+hp = 1
+
+[node name="Body" type="CharacterBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.520718, 0)
+shape = SubResource("CylinderShape3D_amcp2")
+
+[node name="Node3D" type="Node3D" parent="Body/CollisionShape3D"]
+transform = Transform3D(0.693275, 0, 0, 0, 0.693275, 0, 0, 0, 0.693275, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Body/CollisionShape3D/Node3D"]
+transform = Transform3D(1.44243, 0, 0, 0, 1.44243, 0, 0, 0, 1.44243, 0, 0, 0)
+mesh = SubResource("CylinderMesh_61gle")
+skeleton = NodePath("../../../..")
+
+[node name="HitSFX" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_fvn38")
+
+[node name="Node3D" type="Node3D" parent="."]
+script = ExtResource("3_wuenm")
+
+[node name="Area3D" type="Area3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.529299, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/Area3D"]
+shape = SubResource("CylinderShape3D_amcp2")

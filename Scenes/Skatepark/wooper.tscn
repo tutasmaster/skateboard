@@ -1,0 +1,158 @@
+[gd_scene load_steps=4 format=3 uid="uid://7fvi2whbg4yg"]
+
+[ext_resource type="Script" path="res://Scripts/Player/WooperNextGen.gd" id="1_ea8to"]
+[ext_resource type="PackedScene" uid="uid://4p64crc5rs2h" path="res://Scenes/decal.tscn" id="2_u1lca"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_364gf"]
+radius = 0.202398
+
+[node name="Wooper" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, -0.000471205, 0, 0.000471205, 1, 0, 0.588162, 0)
+script = ExtResource("1_ea8to")
+SPEED_CAP = 30
+DEBUG_GRIND = true
+STICKER = ExtResource("2_u1lca")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+
+[node name="SlapRay" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.3714e-08, 1, 0, -1, -4.3714e-08, 0, 0.189181, -8.91429e-05)
+visible = false
+target_position = Vector3(0, -0.75, 0)
+hit_back_faces = false
+
+[node name="GravityRay" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0868204, 0)
+target_position = Vector3(0, -0.2, 0)
+collision_mask = 5
+hit_back_faces = false
+
+[node name="ResetRay" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0868204, 0)
+target_position = Vector3(0, -0.6, 0)
+hit_back_faces = false
+
+[node name="Up" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0.000353941, 1.83955e-05, 0.000353925, -1, 0.000816431, 1.86999e-05, -0.000816424, -1, 0, 0.182277, -3.70711e-05)
+target_position = Vector3(0, -0.29, 0)
+hit_back_faces = false
+
+[node name="WallCheck" type="Node3D" parent="."]
+
+[node name="Forward" type="RayCast3D" parent="WallCheck"]
+transform = Transform3D(1, 0, 0, 0, -4.3714e-08, 1, 0, -1, -4.3714e-08, 0, 0.182277, -3.70712e-05)
+target_position = Vector3(0, -0.42, 0)
+hit_back_faces = false
+
+[node name="Backward" type="RayCast3D" parent="WallCheck"]
+transform = Transform3D(-1, 8.74228e-08, 3.82137e-15, 0, -4.3714e-08, 1, 8.74228e-08, 1, 4.3714e-08, 0, 0.182277, -3.70712e-05)
+target_position = Vector3(0, -0.42, 0)
+hit_back_faces = false
+
+[node name="Left" type="RayCast3D" parent="WallCheck"]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 0, 0, 0.145374, -1.96822e-05)
+target_position = Vector3(0, -0.225, 0)
+hit_back_faces = false
+
+[node name="Right" type="RayCast3D" parent="WallCheck"]
+transform = Transform3D(1.31134e-07, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, -1.31134e-07, 0, 0, 0.145374, -1.96822e-05)
+target_position = Vector3(0, -0.225, 0)
+hit_back_faces = false
+
+[node name="Left2" type="RayCast3D" parent="WallCheck"]
+transform = Transform3D(0.866025, -0.5, -0.000408097, 0.000235603, -0.000408119, 1, -0.5, -0.866025, -0.00023564, 0, 0.156175, -2.47718e-05)
+target_position = Vector3(0, -0.27, 0)
+hit_back_faces = false
+
+[node name="Right2" type="RayCast3D" parent="WallCheck"]
+transform = Transform3D(-0.866025, 0.5, -0.000408054, -0.000235602, 0.000408032, 1, 0.5, 0.866025, -0.000235565, 0, 0.156175, -2.47718e-05)
+target_position = Vector3(0, -0.27, 0)
+hit_back_faces = false
+
+[node name="Left3" type="RayCast3D" parent="WallCheck"]
+transform = Transform3D(0.866025, 0.5, -0.000408054, 0.000706807, -0.000408119, 1, 0.499999, -0.866025, -0.000706845, 0, 0.156175, -2.47718e-05)
+target_position = Vector3(0, -0.27, 0)
+hit_back_faces = false
+
+[node name="Right3" type="RayCast3D" parent="WallCheck"]
+transform = Transform3D(-0.866025, -0.5, -0.000408097, -0.000706807, 0.000408032, 1, -0.499999, 0.866025, -0.000706769, 0, 0.156175, -2.47718e-05)
+target_position = Vector3(0, -0.27, 0)
+hit_back_faces = false
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.167769, -7.90537e-05)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.91038e-11)
+shape = SubResource("SphereShape3D_364gf")
+
+[node name="Balance" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HORIZONTAL_BALANCE" type="HSlider" parent="Balance"]
+visible = false
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -8.0
+offset_right = 4.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+step = 0.001
+value = 50.0
+editable = false
+scrollable = false
+
+[node name="VScrollBar" type="VScrollBar" parent="Balance/HORIZONTAL_BALANCE"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -4.0
+offset_right = 4.0
+offset_bottom = 8.0
+grow_horizontal = 2
+
+[node name="VERTICAL_BALANCE" type="VSlider" parent="Balance"]
+visible = false
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -134.0
+offset_top = 23.0
+offset_right = -118.0
+offset_bottom = 223.0
+grow_horizontal = 2
+grow_vertical = 2
+step = 0.001
+value = 50.0
+editable = false
+scrollable = false
+
+[node name="VScrollBar2" type="VScrollBar" parent="Balance/VERTICAL_BALANCE"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -4.0
+offset_right = 8.0
+offset_bottom = 4.0
+grow_vertical = 2

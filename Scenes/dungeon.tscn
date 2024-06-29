@@ -1,0 +1,344 @@
+[gd_scene load_steps=16 format=3 uid="uid://byl7parei014d"]
+
+[ext_resource type="PackedScene" uid="uid://bmw53dsdvyupe" path="res://Scenes/player.tscn" id="2_22q5h"]
+[ext_resource type="Material" uid="uid://cv4cf1duqcu6m" path="res://Assets/Materials/Test/Dungeon Steel.tres" id="4_3xycm"]
+[ext_resource type="Script" path="res://Scripts/CameraArea.gd" id="4_6bpab"]
+[ext_resource type="PackedScene" uid="uid://wqsmbkyh28n0" path="res://Scenes/barrel.tscn" id="5_ricju"]
+[ext_resource type="PackedScene" uid="uid://twaceoaugqdx" path="res://Assets/map.glb" id="7_dp2d5"]
+[ext_resource type="PackedScene" uid="uid://dwkobcopcr3cy" path="res://Scenes/skeleton.tscn" id="7_njh8p"]
+[ext_resource type="Script" path="res://Scripts/Player/FixedCamera.gd" id="8_0lshj"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rrs72"]
+sky_top_color = Color(0.0588235, 0.12549, 0.117647, 1)
+sky_horizon_color = Color(0.0745098, 0.129412, 0.113725, 1)
+sky_curve = 0.382369
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0.298039, 0.329412, 0.290196, 1)
+sun_angle_max = 22.55
+
+[sub_resource type="Sky" id="Sky_4cjlu"]
+sky_material = SubResource("ProceduralSkyMaterial_rrs72")
+
+[sub_resource type="Environment" id="Environment_ccemg"]
+background_mode = 1
+background_energy_multiplier = 0.0
+sky = SubResource("Sky_4cjlu")
+ambient_light_source = 2
+ambient_light_color = Color(0.32549, 0.188235, 0.117647, 1)
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 1.3
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s5vgr"]
+albedo_color = Color(1, 0.494118, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tkffc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gy7mv"]
+size = Vector3(29.4128, 14.0904, 31.2015)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ke31m"]
+size = Vector3(44.666, 20.0082, 50.0568)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xtw8j"]
+size = Vector3(22.4653, 20.0082, 15.4624)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.799475, -0.592448, 0.0992248, -0.151999, 0.359325, 0.920751, -0.581151, 0.721035, -0.377323, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ccemg")
+
+[node name="Player" parent="." instance=ExtResource("2_22q5h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00920205, 0.772488, -0.199634)
+
+[node name="Skeleton3D" parent="Player/CharacterBody3D/Humanoid/LegMan" index="0"]
+bones/1/position = Vector3(1.02416e-15, 5.10451, 0.00898901)
+bones/1/rotation = Quaternion(0.0746872, 0.00320888, 0.0248992, 0.996891)
+bones/2/rotation = Quaternion(0.0187632, -0.0180031, 0.00614444, 0.999643)
+bones/3/rotation = Quaternion(0.133827, -0.0274238, -0.0323979, 0.990095)
+bones/3/scale = Vector3(1, 0.999999, 1)
+bones/4/rotation = Quaternion(0.191641, -0.0495615, -0.0271154, 0.979838)
+bones/5/position = Vector3(-0.780695, 1.9474, 0.281904)
+bones/5/rotation = Quaternion(0.737821, -0.370814, -0.562814, -0.0368494)
+bones/6/rotation = Quaternion(-0.267132, -0.00444937, -0.0160368, 0.963516)
+bones/7/rotation = Quaternion(-0.096004, -0.0186452, 0.130306, 0.986639)
+bones/9/scale = Vector3(1, 1, 0.999999)
+bones/17/scale = Vector3(1, 1, 0.999999)
+bones/18/scale = Vector3(1, 0.999999, 1)
+bones/19/scale = Vector3(1, 1, 0.999999)
+bones/22/scale = Vector3(1, 1, 0.999999)
+bones/24/rotation = Quaternion(-0.685836, -8.97083e-09, -0.0388662, 0.726718)
+bones/25/position = Vector3(0.780695, 1.98122, 0.247066)
+bones/25/rotation = Quaternion(0.641096, 0.0668396, 0.670242, -0.367839)
+bones/26/rotation = Quaternion(-0.253252, 0.013936, 0.0394578, 0.966495)
+bones/27/rotation = Quaternion(-0.0863626, 0.013134, -0.201761, 0.975531)
+bones/28/rotation = Quaternion(0.125905, 0.0992625, -0.210546, 0.964347)
+bones/29/rotation = Quaternion(-0.0868841, -0.0897012, -0.0103042, 0.992118)
+bones/29/scale = Vector3(1, 1, 0.999999)
+bones/30/rotation = Quaternion(-0.132192, -0.136478, 0.041706, 0.980897)
+bones/31/rotation = Quaternion(-0.033519, -0.0325161, 0.00274008, 0.998905)
+bones/32/rotation = Quaternion(-0.0766078, -0.0782678, -0.00448093, 0.993975)
+bones/33/rotation = Quaternion(-0.097948, -0.0992547, 0.0311628, 0.989739)
+bones/35/rotation = Quaternion(-0.0903992, -0.0861576, 0.0293503, 0.991738)
+bones/36/rotation = Quaternion(-0.107059, -0.102036, -0.00547906, 0.988988)
+bones/37/scale = Vector3(1, 1, 0.999999)
+bones/38/rotation = Quaternion(-0.0910164, -0.0855055, 0.0364795, 0.991501)
+bones/38/scale = Vector3(1, 0.999999, 1)
+bones/39/rotation = Quaternion(-0.0902828, -0.0848162, -0.0455958, 0.99125)
+bones/39/scale = Vector3(1, 1, 0.999999)
+bones/40/rotation = Quaternion(-0.164321, -0.175273, 0.0336462, 0.970127)
+bones/41/rotation = Quaternion(0.0594428, 0.0129848, -0.263258, 0.962805)
+bones/42/rotation = Quaternion(-0.051156, -0.0848633, 0.0201704, 0.994874)
+bones/42/scale = Vector3(1, 1, 0.999999)
+bones/43/rotation = Quaternion(-0.0340619, -0.0639086, -0.0379099, 0.996654)
+bones/44/rotation = Quaternion(-0.685836, 4.48541e-08, 0.0388662, 0.726718)
+bones/45/position = Vector3(-0.615481, 5.222, 0.0834057)
+bones/45/rotation = Quaternion(0.848346, 0.0642584, -0.511986, -0.118535)
+bones/46/rotation = Quaternion(0.0867113, 0.46107, -0.142736, 0.871506)
+bones/47/rotation = Quaternion(-0.702029, 0.238435, -0.199587, 0.640679)
+bones/48/position = Vector3(0.615231, 4.8895, 0.065611)
+bones/48/rotation = Quaternion(0.956963, 0.0625089, 0.0389448, 0.280711)
+bones/49/rotation = Quaternion(0.0863435, -0.092109, 0.0919115, 0.987731)
+bones/50/rotation = Quaternion(0.164307, -0.747316, 0.426936, -0.48192)
+
+[node name="Cylinder2" parent="Player/CharacterBody3D/Humanoid/LegMan/Skeleton3D" index="0"]
+material_override = ExtResource("4_3xycm")
+
+[node name="Hitbox" parent="Player" index="2"]
+transform = Transform3D(-0.117046, -0.118666, -0.986011, -0.541642, -0.82455, 0.163531, -0.832421, 0.553205, 0.0322364, -1.4997, 3.86057, 1.24779)
+
+[node name="RootMotionView" parent="Player" index="3"]
+visible = false
+
+[node name="Camera3D2" type="Camera3D" parent="." node_paths=PackedStringArray("node")]
+transform = Transform3D(0.677469, 0.482124, -0.55551, 0, 0.75523, 0.65546, 0.735551, -0.444054, 0.511645, -6.94484, 7.48931, 6.72496)
+fov = 60.0
+script = ExtResource("8_0lshj")
+node = NodePath("../Player/CharacterBody3D")
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="CSGCombiner3D2" type="CSGCombiner3D" parent="Node3D"]
+material_override = SubResource("StandardMaterial3D_s5vgr")
+use_collision = true
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Node3D/CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 1.07875, -4.64049, 11.3109)
+use_collision = true
+size = Vector3(6.60165, 1, 16.9173)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Node3D/CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.43863, -0.484445, -0.222931)
+use_collision = true
+size = Vector3(13.2983, 1, 8.93927)
+
+[node name="CSGCombiner3D2" type="CSGCombiner3D" parent="Node3D/CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.43863, 2.77483, -4.32816)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Node3D/CSGCombiner3D2/CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -2.94229, 0)
+radius = 6.59692
+height = 0.414307
+sides = 10
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Node3D/CSGCombiner3D2/CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.17366, -2.39846, 0)
+operation = 2
+size = Vector3(1.49, 14.171, 1)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Node3D/CSGCombiner3D2/CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0430231, -2.39846, 0)
+operation = 2
+size = Vector3(1.49, 14.171, 1)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Node3D/CSGCombiner3D2/CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.25425, -2.39846, 0)
+operation = 2
+size = Vector3(1.49, 14.171, 1)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Node3D/CSGCombiner3D2/CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.99882, -2.39846, 0)
+operation = 2
+size = Vector3(1.49, 14.171, 1)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Node3D/CSGCombiner3D2/CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.13182, -2.39846, 0)
+operation = 2
+size = Vector3(1.49, 14.171, 1)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Node3D/CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.578342, -8.77075, 29.3973)
+use_collision = true
+size = Vector3(21.5337, 1, 21.7822)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="Node3D/CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.602239, -8.77075, 49.9372)
+use_collision = true
+size = Vector3(5.83034, 1, 21.7822)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Node3D/CSGCombiner3D2"]
+transform = Transform3D(0.929654, 0, 0.368433, 0.0218953, 0.998232, -0.0552478, -0.367782, 0.0594283, 0.928011, 22.787, -8.74062, 26.0516)
+use_collision = true
+size = Vector3(25.6392, 1, 5.71379)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Node3D/CSGCombiner3D2"]
+transform = Transform3D(-0.441506, -1.86003e-09, -0.897258, -0.0533226, 0.998233, 0.026238, 0.895673, 0.0594283, -0.440726, 31.5255, -8.93025, 29.2369)
+use_collision = true
+size = Vector3(20.425, 1, 5.71379)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Node3D/CSGCombiner3D2"]
+transform = Transform3D(0.71468, 0, -0.699451, 0, 1, 0, 0.699451, 0, 0.71468, 65.3082, -9.80063, 47.2546)
+use_collision = true
+radius = 19.7957
+height = 1.20385
+sides = 6
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Node3D/CSGCombiner3D2"]
+transform = Transform3D(0.71468, 0, -0.699451, 0, 1, 0, 0.699451, 0, 0.71468, 0.495811, -9.80063, 100.814)
+use_collision = true
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="Node3D/CSGCombiner3D2/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01432, 0)
+use_collision = true
+radius = 42.1369
+height = 1.20385
+sides = 16
+
+[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="Node3D/CSGCombiner3D2/CSGCombiner3D"]
+operation = 2
+use_collision = true
+radius = 31.8575
+height = 3.44687
+sides = 16
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Node3D/CSGCombiner3D2"]
+transform = Transform3D(0.71468, 0, -0.699451, 0, 1, 0, 0.699451, 0, 0.71468, 76.4689, -8.15463, 49.875)
+use_collision = true
+radius = 10.5134
+height = 6.71812
+sides = 6
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Node3D/CSGCombiner3D2"]
+transform = Transform3D(0.960973, 9.30016e-10, -0.276644, -0.0164405, 0.998233, -0.057109, 0.276155, 0.0594283, 0.959274, 39.5712, -9.54182, 39.5096)
+use_collision = true
+size = Vector3(20.425, 1, 5.71379)
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="Node3D/CSGCombiner3D2"]
+transform = Transform3D(0.902496, -0.3513, -0.249177, 0.362232, 0.932086, -0.00212311, 0.233001, -0.0883439, 0.968455, 62.5863, -9.54792, 46.0472)
+use_collision = true
+size = Vector3(13.3164, 5.03204, 5.71379)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.598267, -5.63309, 40.9449)
+size = Vector3(5.83423, 6.0874, 1)
+material = SubResource("StandardMaterial3D_tkffc")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("4_6bpab")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.207748, -8.7897, 29.6125)
+shape = SubResource("BoxShape3D_gy7mv")
+
+[node name="Camera3D" type="Camera3D" parent="Area3D"]
+transform = Transform3D(-4.37114e-08, 0.848048, -0.529919, 0, 0.529919, 0.848048, 1, 3.70694e-08, -2.31635e-08, -12.132, 7.192, 29.81)
+fov = 60.0
+
+[node name="Area3D2" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.9041, 0, 46.8832)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("4_6bpab")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2"]
+transform = Transform3D(0.969702, 0, -0.244292, 0, 1, 0, 0.244292, 0, 0.969702, -4.14864, -5.83079, 1.80212)
+shape = SubResource("BoxShape3D_ke31m")
+
+[node name="Camera3D" type="Camera3D" parent="Area3D2"]
+transform = Transform3D(-0.260471, 0.664035, -0.700865, 0, 0.725923, 0.687776, 0.965482, 0.179146, -0.189082, -32.1622, 9.84234, -7.82336)
+fov = 64.5
+
+[node name="Area3D3" type="Area3D" parent="."]
+transform = Transform3D(0.963331, 0, 0.268315, 0, 1, 0, -0.268315, 0, 0.963331, 5.33418, 0, 46.8832)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("4_6bpab")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D3"]
+transform = Transform3D(0.969702, 0, -0.244292, 0, 1, 0, 0.244292, 0, 0.969702, -6.4732, -5.83079, 1.96949)
+shape = SubResource("BoxShape3D_xtw8j")
+
+[node name="Camera3D" type="Camera3D" parent="Area3D3"]
+transform = Transform3D(0.972738, -0.00423281, -0.231869, 0, 0.999833, -0.0182522, 0.231907, 0.0177546, 0.972576, -8.71795, -6.66612, 11.6753)
+fov = 64.5
+
+[node name="Barrel" parent="." instance=ExtResource("5_ricju")]
+
+[node name="Barrel5" parent="." instance=ExtResource("5_ricju")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.27297, -7.47502, 19.2459)
+
+[node name="Barrel6" parent="." instance=ExtResource("5_ricju")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.53528, -7.47502, 20.612)
+
+[node name="Barrel7" parent="." instance=ExtResource("5_ricju")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0136, -7.47502, 27.5613)
+
+[node name="Barrel8" parent="." instance=ExtResource("5_ricju")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.76588, -7.47502, 19.3904)
+
+[node name="Barrel9" parent="." instance=ExtResource("5_ricju")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.7421, -7.47501, 28.7845)
+
+[node name="Barrel10" parent="." instance=ExtResource("5_ricju")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.35513, -7.47501, 29.5909)
+
+[node name="Barrel11" parent="." instance=ExtResource("5_ricju")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.2626, -7.47502, 30.7593)
+
+[node name="Barrel12" parent="." instance=ExtResource("5_ricju")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.672, -7.47502, 32.3678)
+
+[node name="Barrel13" parent="." instance=ExtResource("5_ricju")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.27433, -7.47501, 32.3879)
+
+[node name="Barrel14" parent="." instance=ExtResource("5_ricju")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.99114, -7.47501, 31.6893)
+
+[node name="Barrel15" parent="." instance=ExtResource("5_ricju")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.5542, -7.18989, 23.6737)
+
+[node name="Barrel16" parent="." instance=ExtResource("5_ricju")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.5478, -8.35456, 31.7987)
+
+[node name="Barrel17" parent="." instance=ExtResource("5_ricju")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.5478, -8.35456, 64.6786)
+
+[node name="Barrel2" parent="." instance=ExtResource("5_ricju")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.51599, 1.02263, 3.45097)
+
+[node name="Barrel3" parent="." instance=ExtResource("5_ricju")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.48736, 1.02263, 2.73253)
+
+[node name="Barrel4" parent="." instance=ExtResource("5_ricju")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.74258, 1.77721, 3.32876)
+
+[node name="map" parent="." instance=ExtResource("7_dp2d5")]
+
+[node name="Enemy" parent="." instance=ExtResource("7_njh8p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.61303, -8.27075, 32.5429)
+
+[node name="Enemy2" parent="." node_paths=PackedStringArray("_hitbox_list") instance=ExtResource("7_njh8p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.62607, -8.27075, 30.0215)
+_hitbox_list = [NodePath("../Enemy/Hitbox")]
+
+[node name="Enemy3" parent="." node_paths=PackedStringArray("_hitbox_list") instance=ExtResource("7_njh8p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.98244, -8.27075, 31.1088)
+_hitbox_list = [NodePath("../Enemy/Hitbox")]
+
+[editable path="Player"]

@@ -1,0 +1,64 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://dss8qgv1w0dxm"
+path="res://.godot/imported/map.glb-5ccd191a130d98ce13102928a68e12a8.scn"
+
+[deps]
+
+source_file="res://Assets/Skatepark/map.glb"
+dest_files=["res://.godot/imported/map.glb-5ccd191a130d98ce13102928a68e12a8.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+import_script/path=""
+_subresources={
+"materials": {
+"Material_10": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Materials/Test/TestTexture.tres"
+},
+"Material_8": {
+"use_external/enabled": true,
+"use_external/path": "res://Assets/Materials/Test/TestTexture2.tres"
+}
+},
+"nodes": {
+"PATH:BézierCircle": {
+"generate/physics": true,
+"physics/shape_type": 2
+},
+"PATH:CSGCombiner3D3_001": {
+"generate/physics": true,
+"physics/shape_type": 2
+},
+"PATH:Cylinder3_001": {
+"generate/physics": true,
+"physics/shape_type": 2
+},
+"PATH:Cylinder_001": {
+"generate/physics": true,
+"physics/layer": 5,
+"physics/shape_type": 2
+}
+}
+}
+gltf/naming_version=1
+gltf/embedded_image_handling=1

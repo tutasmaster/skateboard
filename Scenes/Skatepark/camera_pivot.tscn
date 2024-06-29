@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://pqlomjxlleb5"]
+
+[ext_resource type="Script" path="res://Scripts/Player/skateCam.gd" id="1_tvtkb"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_qeif0"]
+
+[node name="CameraPivot" type="Node3D"]
+script = ExtResource("1_tvtkb")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.891, 0.1)
+spring_length = 3.0
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
+fov = 76.0
+size = 0.21
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.105)
+visible = false
+mesh = SubResource("CapsuleMesh_qeif0")

@@ -1,0 +1,876 @@
+[gd_scene load_steps=15 format=3 uid="uid://dfocju8lp0xlw"]
+
+[ext_resource type="PackedScene" uid="uid://7fvi2whbg4yg" path="res://Scenes/Skatepark/wooper.tscn" id="1_2rhwu"]
+[ext_resource type="PackedScene" uid="uid://dss8qgv1w0dxm" path="res://Assets/Skatepark/map.glb" id="1_y7imk"]
+[ext_resource type="PackedScene" uid="uid://chwvu3wpe0fc1" path="res://Scenes/Skatepark/clone_wooper.tscn" id="2_ibdp2"]
+[ext_resource type="PackedScene" uid="uid://bsqroyiqnc48r" path="res://Scenes/Skatepark/menu.tscn" id="3_7iskk"]
+[ext_resource type="PackedScene" uid="uid://pqlomjxlleb5" path="res://Scenes/Skatepark/camera_pivot.tscn" id="4_gu6i7"]
+[ext_resource type="Material" uid="uid://c5vpvypo2kyk4" path="res://Assets/Materials/Test/TestTexture.tres" id="5_3u6dy"]
+[ext_resource type="PackedScene" uid="uid://kl0o5c68shap" path="res://Assets/Skatepark/Quarterpipe.glb" id="5_hog18"]
+[ext_resource type="Script" path="res://Scripts/Skate/VertTrigger.gd" id="5_nn6sb"]
+[ext_resource type="Script" path="res://Scripts/MarkerGenerator.gd" id="8_07u6o"]
+[ext_resource type="PackedScene" uid="uid://bqasctgum7v4e" path="res://Assets/Skatepark/Pipe end.blend" id="9_5gjaw"]
+[ext_resource type="Material" uid="uid://u78gsialrinq" path="res://Assets/Materials/Test/TestTexture2.tres" id="9_qqxe7"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_y6b5f"]
+sky_top_color = Color(0.279393, 0.443746, 0.725473, 1)
+sky_horizon_color = Color(0.488689, 0.0677514, 0.453214, 1)
+sky_curve = 0.00874716
+sky_energy_multiplier = 0.25
+ground_bottom_color = Color(0.125624, 0.103521, 0.077845, 1)
+ground_horizon_color = Color(0.0356502, 0.0401702, 0.0335141, 1)
+sun_angle_max = 3.75
+sun_curve = 1.28613
+
+[sub_resource type="Sky" id="Sky_1pwrj"]
+sky_material = SubResource("ProceduralSkyMaterial_y6b5f")
+
+[sub_resource type="Environment" id="Environment_13ako"]
+background_mode = 2
+sky = SubResource("Sky_1pwrj")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Node3D" type="Node3D"]
+
+[node name="map" parent="." instance=ExtResource("1_y7imk")]
+
+[node name="MarkerGenerator" type="Node3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.8948, -7.02842, 6.35843)
+script = ExtResource("8_07u6o")
+shape_size = 10.0
+detail = 128
+type = 1
+fall_on_low_speed = null
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_13ako")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.0811873, -0.164073, 0.983102, 0.674259, 0.717362, 0.175405, -0.734019, 0.677106, 0.0523868, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Wooper" parent="." node_paths=PackedStringArray("CLONE_WOOPER") instance=ExtResource("1_2rhwu")]
+CLONE_WOOPER = NodePath("../CloneWooper")
+
+[node name="CloneWooper" parent="." instance=ExtResource("2_ibdp2")]
+
+[node name="Menu" parent="." instance=ExtResource("3_7iskk")]
+
+[node name="CameraPivot" parent="." node_paths=PackedStringArray("target") instance=ExtResource("4_gu6i7")]
+target = NodePath("../Wooper")
+
+[node name="Quarterpipe2" parent="." instance=ExtResource("5_hog18")]
+transform = Transform3D(-0.994192, 0, 0.107618, 0, 1, 0, -0.107618, 0, -0.994192, -1, -15.988, 80.5065)
+
+[node name="VertTrigger" type="Node3D" parent="Quarterpipe2"]
+transform = Transform3D(-1, 0, 8.9407e-08, 0, 1, 0, -8.9407e-08, 0, -1, -2.00448, -0.592101, -0.740059)
+script = ExtResource("5_nn6sb")
+pointList = Array[Vector3]([Vector3(1.90283, -14.9613, 81.5651), Vector3(-2.06237, -14.9613, 81.1359)])
+
+[node name="Marker3D" type="Marker3D" parent="Quarterpipe2/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.995416, 1.61882, 0)
+
+[node name="Marker3D2" type="Marker3D" parent="Quarterpipe2/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.99295, 1.61882, 0)
+
+[node name="Quarterpipe" parent="Quarterpipe2" instance=ExtResource("5_hog18")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="CSGCombiner3D2" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.299938, 0)
+
+[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 0.241837, 0.970317, 0, -0.970317, 0.241837, 0, -8.28045, 39.1629)
+radius = 0.085
+height = 71.8391
+sides = 4
+material = ExtResource("9_qqxe7")
+
+[node name="MainRail" type="Node3D" parent="CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.216993, -6.96357, 31.3569)
+script = ExtResource("5_nn6sb")
+type = 1
+pointList = Array[Vector3]([Vector3(0.004575, 0.783718, 4.3171), Vector3(0.004575, -16.533, 73.8008)])
+
+[node name="Marker3D" type="Marker3D" parent="CSGCombiner3D2/MainRail"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.212418, 7.44735, -27.0398)
+
+[node name="Marker3D2" type="Marker3D" parent="CSGCombiner3D2/MainRail"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.212418, -9.86939, 42.4439)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.923953, 0, 0.382506, 0, 1, 0, -0.382506, 0, 0.923953, 0, -21.152, 0)
+radius = 4.67
+height = 42.4181
+material = ExtResource("5_3u6dy")
+
+[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.923953, 0, 0.382506, 0, 1, 0, -0.382506, 0, 0.923953, 22.772, -30.8805, 6.24067)
+radius = 24.1677
+height = 42.4181
+material = ExtResource("5_3u6dy")
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.923953, 0, 0.382506, 0, 1, 0, -0.382506, 0, 0.923953, 0, -21.152, 0)
+radius = 4.67
+height = 42.4181
+material = ExtResource("5_3u6dy")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.923953, 0, 0.382506, 0, 1, 0, -0.382506, 0, 0.923953, 0, -38.152, 77)
+radius = 4.67
+height = 42.625
+material = ExtResource("5_3u6dy")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.1129e-08, -1.48017e-08, -1, -0.239906, 0.970796, -4.50231e-09, 0.970796, 0.239906, -4.34789e-08, -0.0559167, -25.9811, 39.9102)
+size = Vector3(81.6134, 33.5103, 3.18774)
+material = ExtResource("5_3u6dy")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.990861, 0.134885, 7.11857e-10, -0.134885, 0.990861, -4.45175e-09, -1.30584e-09, 4.31508e-09, 1, 5.52936, -17.2358, -0.183073)
+size = Vector3(7.21369, 33.5103, 3.18774)
+material = ExtResource("5_3u6dy")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.207686, 0.0282722, -0.977787, -0.235518, 0.971622, -0.0219312, 0.94942, 0.234842, 0.208451, 10.2032, -18.2544, 0.48799)
+size = Vector3(6.31241, 33.5103, 4.10559)
+material = ExtResource("5_3u6dy")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.652182, 0.122922, -0.748031, -0.201121, 0.97946, -0.0143984, 0.730896, 0.159835, 0.663508, 11.1988, -19.7818, 6.95581)
+size = Vector3(7.21369, 33.5103, 7.25641)
+material = ExtResource("5_3u6dy")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.855057, 0.219259, -0.469897, -0.363895, 0.899308, -0.242541, 0.369403, 0.378379, 0.848747, 12.6357, -20.4423, 6.96071)
+size = Vector3(4.43692, 33.5103, 8.4534)
+material = ExtResource("5_3u6dy")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.819706, 0.297569, -0.489423, -0.351537, 0.935966, -0.0197012, 0.452221, 0.1882, 0.871824, 15.5683, -24.2632, 13.1338)
+size = Vector3(9.00347, 33.5103, 11.2594)
+material = ExtResource("5_3u6dy")
+
+[node name="@Node3D@167055" type="Node3D" parent="."]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, 22.8948, -8.82467, 6.35843)
+script = ExtResource("5_nn6sb")
+type = 1
+fall_on_low_speed = null
+pointList = Array[Vector3]([Vector3(7.63805, -8.82467, -8.89832), Vector3(8.40504, -8.82467, -9.62855), Vector3(9.20695, -8.82467, -10.3203), Vector3(10.0418, -8.82467, -10.9718), Vector3(10.9077, -8.82467, -11.5816), Vector3(11.8024, -8.82467, -12.1482), Vector3(12.7238, -8.82467, -12.6702), Vector3(13.6697, -8.82467, -13.1463), Vector3(14.6379, -8.82467, -13.5755), Vector3(15.626, -8.82467, -13.9566), Vector3(16.6315, -8.82467, -14.2888), Vector3(17.6522, -8.82467, -14.5712), Vector3(18.6855, -8.82467, -14.8033), Vector3(19.7289, -8.82467, -14.9843), Vector3(20.78, -8.82467, -15.114), Vector3(21.8361, -8.82467, -15.1919), Vector3(22.8948, -8.82467, -15.2179), Vector3(23.9535, -8.82467, -15.1919), Vector3(25.0096, -8.82467, -15.114), Vector3(26.0607, -8.82467, -14.9843), Vector3(27.1041, -8.82467, -14.8033), Vector3(28.1374, -8.82467, -14.5712), Vector3(29.1581, -8.82467, -14.2888), Vector3(30.1636, -8.82467, -13.9566), Vector3(31.1517, -8.82467, -13.5755), Vector3(32.1199, -8.82467, -13.1463), Vector3(33.0658, -8.82467, -12.6702), Vector3(33.9872, -8.82467, -12.1482), Vector3(34.8819, -8.82467, -11.5816), Vector3(35.7478, -8.82467, -10.9718), Vector3(36.5827, -8.82467, -10.3203), Vector3(37.3846, -8.82467, -9.62855), Vector3(38.1516, -8.82467, -8.89832), Vector3(38.8818, -8.82467, -8.13133), Vector3(39.5735, -8.82467, -7.32942), Vector3(40.225, -8.82467, -6.49455), Vector3(40.8348, -8.82467, -5.62871), Vector3(41.4014, -8.82467, -4.73401), Vector3(41.9234, -8.82467, -3.81257), Vector3(42.3995, -8.82467, -2.86662), Vector3(42.8287, -8.82467, -1.89845), Vector3(43.2098, -8.82467, -0.91041), Vector3(43.542, -8.82467, 0.0951538), Vector3(43.8245, -8.82467, 1.11582), Vector3(44.0565, -8.82467, 2.14911), Vector3(44.2376, -8.82467, 3.19254), Vector3(44.3672, -8.82467, 4.24358), Vector3(44.4451, -8.82467, 5.29973), Vector3(44.4711, -8.82467, 6.35843), Vector3(44.4451, -8.82467, 7.41713), Vector3(44.3672, -8.82467, 8.47328), Vector3(44.2376, -8.82467, 9.52432), Vector3(44.0565, -8.82467, 10.5677), Vector3(43.8245, -8.82467, 11.601), Vector3(43.542, -8.82467, 12.6217), Vector3(43.2098, -8.82467, 13.6273), Vector3(42.8287, -8.82467, 14.6153), Vector3(42.3996, -8.82467, 15.5835), Vector3(41.9234, -8.82467, 16.5294), Vector3(41.4014, -8.82467, 17.4509), Vector3(40.8348, -8.82467, 18.3456), Vector3(40.225, -8.82467, 19.2114), Vector3(39.5735, -8.82467, 20.0463), Vector3(38.8818, -8.82467, 20.8482), Vector3(38.1516, -8.82467, 21.6152), Vector3(37.3846, -8.82467, 22.3454), Vector3(36.5827, -8.82467, 23.0371), Vector3(35.7478, -8.82467, 23.6887), Vector3(34.8819, -8.82467, 24.2985), Vector3(33.9872, -8.82467, 24.865), Vector3(33.0658, -8.82467, 25.387), Vector3(32.1199, -8.82467, 25.8632), Vector3(31.1517, -8.82467, 26.2923)])
+
+[node name="@Marker3D@167136" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.07107, 0, -7.07107)
+
+[node name="@Marker3D@167137" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.71559, 0, -7.40951)
+
+[node name="@Marker3D@167138" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.34393, 0, -7.7301)
+
+[node name="@Marker3D@167139" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.95699, 0, -8.03207)
+
+[node name="@Marker3D@167140" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5557, 0, -8.3147)
+
+[node name="@Marker3D@167141" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.14103, 0, -8.57729)
+
+[node name="@Marker3D@167142" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.71397, 0, -8.81921)
+
+[node name="@Marker3D@167143" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.27555, 0, -9.03989)
+
+[node name="@Marker3D@167144" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.82683, 0, -9.2388)
+
+[node name="@Marker3D@167145" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.3689, 0, -9.41544)
+
+[node name="@Marker3D@167146" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.90285, 0, -9.5694)
+
+[node name="@Marker3D@167147" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4298, 0, -9.70031)
+
+[node name="@Marker3D@167148" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9509, 0, -9.80785)
+
+[node name="@Marker3D@167149" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4673, 0, -9.89176)
+
+[node name="@Marker3D@167150" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.980171, 0, -9.95185)
+
+[node name="@Marker3D@167151" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.490677, 0, -9.98795)
+
+[node name="@Marker3D@167152" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.83691e-15, 0, -10)
+
+[node name="@Marker3D@167153" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.490677, 0, -9.98795)
+
+[node name="@Marker3D@167154" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.980171, 0, -9.95185)
+
+[node name="@Marker3D@167155" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4673, 0, -9.89176)
+
+[node name="@Marker3D@167156" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9509, 0, -9.80785)
+
+[node name="@Marker3D@167157" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4298, 0, -9.70031)
+
+[node name="@Marker3D@167158" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.90285, 0, -9.5694)
+
+[node name="@Marker3D@167159" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3689, 0, -9.41544)
+
+[node name="@Marker3D@167160" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.82683, 0, -9.2388)
+
+[node name="@Marker3D@167161" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.27555, 0, -9.03989)
+
+[node name="@Marker3D@167162" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.71397, 0, -8.81921)
+
+[node name="@Marker3D@167163" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.14103, 0, -8.57729)
+
+[node name="@Marker3D@167164" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5557, 0, -8.3147)
+
+[node name="@Marker3D@167165" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.95699, 0, -8.03207)
+
+[node name="@Marker3D@167166" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.34393, 0, -7.7301)
+
+[node name="@Marker3D@167167" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.71559, 0, -7.40951)
+
+[node name="@Marker3D@167168" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.07107, 0, -7.07107)
+
+[node name="@Marker3D@167169" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.40951, 0, -6.71559)
+
+[node name="@Marker3D@167170" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.7301, 0, -6.34393)
+
+[node name="@Marker3D@167171" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.03207, 0, -5.95699)
+
+[node name="@Marker3D@167172" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.3147, 0, -5.5557)
+
+[node name="@Marker3D@167173" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.57729, 0, -5.14103)
+
+[node name="@Marker3D@167174" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.81921, 0, -4.71397)
+
+[node name="@Marker3D@167175" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.03989, 0, -4.27555)
+
+[node name="@Marker3D@167176" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.2388, 0, -3.82683)
+
+[node name="@Marker3D@167177" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.41544, 0, -3.3689)
+
+[node name="@Marker3D@167178" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5694, 0, -2.90285)
+
+[node name="@Marker3D@167179" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.70031, 0, -2.4298)
+
+[node name="@Marker3D@167180" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.80785, 0, -1.9509)
+
+[node name="@Marker3D@167181" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.89176, 0, -1.4673)
+
+[node name="@Marker3D@167182" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.95185, 0, -0.980171)
+
+[node name="@Marker3D@167183" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.98795, 0, -0.490677)
+
+[node name="_Marker3D_167056" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+
+[node name="_Marker3D_167057" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.98795, 0, 0.490677)
+
+[node name="_Marker3D_167058" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.95185, 0, 0.980171)
+
+[node name="_Marker3D_167059" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.89176, 0, 1.4673)
+
+[node name="_Marker3D_167060" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.80785, 0, 1.9509)
+
+[node name="_Marker3D_167061" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.70031, 0, 2.4298)
+
+[node name="_Marker3D_167062" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5694, 0, 2.90285)
+
+[node name="_Marker3D_167063" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.41544, 0, 3.3689)
+
+[node name="_Marker3D_167064" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.2388, 0, 3.82683)
+
+[node name="_Marker3D_167065" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.0399, 0, 4.27555)
+
+[node name="_Marker3D_167066" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.81921, 0, 4.71397)
+
+[node name="_Marker3D_167067" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.57728, 0, 5.14103)
+
+[node name="_Marker3D_167068" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.3147, 0, 5.5557)
+
+[node name="_Marker3D_167069" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.03207, 0, 5.95699)
+
+[node name="_Marker3D_167070" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.7301, 0, 6.34393)
+
+[node name="_Marker3D_167071" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.40951, 0, 6.71559)
+
+[node name="_Marker3D_167072" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.07107, 0, 7.07107)
+
+[node name="_Marker3D_167073" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.71559, 0, 7.40951)
+
+[node name="_Marker3D_167074" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.34393, 0, 7.7301)
+
+[node name="_Marker3D_167075" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.95699, 0, 8.03207)
+
+[node name="_Marker3D_167076" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5557, 0, 8.3147)
+
+[node name="_Marker3D_167077" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.14103, 0, 8.57729)
+
+[node name="_Marker3D_167078" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.71397, 0, 8.81921)
+
+[node name="_Marker3D_167079" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.27555, 0, 9.03989)
+
+[node name="_Marker3D_167080" type="Marker3D" parent="@Node3D@167055"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.82684, 0, 9.2388)
+
+[node name="VertTrigger" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.8948, -7.02842, 6.35843)
+script = ExtResource("5_nn6sb")
+type = 1
+pointList = Array[Vector3]([Vector3(13.6698, -8.82468, 25.8631), Vector3(12.7238, -8.82468, 25.387), Vector3(11.8024, -8.82468, 24.865), Vector3(10.9077, -8.82468, 24.2984), Vector3(10.0418, -8.82468, 23.6886), Vector3(9.2069, -8.82468, 23.0371), Vector3(8.405, -8.82468, 22.3454), Vector3(7.6381, -8.82468, 21.6151), Vector3(6.9078, -8.82468, 20.8482), Vector3(6.2161, -8.82468, 20.0463), Vector3(5.5646, -8.82468, 19.2114), Vector3(4.9548, -8.82468, 18.3455), Vector3(4.3882, -8.82468, 17.4508), Vector3(3.8662, -8.82468, 16.5294), Vector3(3.3901, -8.82468, 15.5835), Vector3(2.9609, -8.82468, 14.6153), Vector3(2.5798, -8.82468, 13.6273), Vector3(2.2476, -8.82468, 12.6217), Vector3(1.9651, -8.82468, 11.601)])
+
+[node name="@Marker3D@167097" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, -9.22505, -1.79626, 19.5047)
+
+[node name="@Marker3D@167098" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, -10.171, -1.79626, 19.0286)
+
+[node name="@Marker3D@167099" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, -11.0924, -1.79626, 18.5066)
+
+[node name="@Marker3D@167100" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, -11.9871, -1.79626, 17.94)
+
+[node name="@Marker3D@167101" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, -12.853, -1.79626, 17.3302)
+
+[node name="@Marker3D@167102" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, -13.6879, -1.79626, 16.6787)
+
+[node name="@Marker3D@167103" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, -14.4898, -1.79626, 15.987)
+
+[node name="@Marker3D@167104" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, -15.2567, -1.79626, 15.2567)
+
+[node name="@Marker3D@167105" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, -15.987, -1.79626, 14.4898)
+
+[node name="@Marker3D@167106" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, -16.6787, -1.79626, 13.6879)
+
+[node name="@Marker3D@167107" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, -17.3302, -1.79626, 12.853)
+
+[node name="@Marker3D@167108" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, -17.94, -1.79626, 11.9871)
+
+[node name="@Marker3D@167109" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, -18.5066, -1.79626, 11.0924)
+
+[node name="@Marker3D@167110" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, -19.0286, -1.79626, 10.171)
+
+[node name="@Marker3D@167111" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, -19.5047, -1.79626, 9.22505)
+
+[node name="@Marker3D@167112" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, -19.9339, -1.79626, 8.25689)
+
+[node name="@Marker3D@167113" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, -20.315, -1.79626, 7.26883)
+
+[node name="@Marker3D@167114" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, -20.6472, -1.79626, 6.26327)
+
+[node name="@Marker3D@167115" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(2.15763, 0, 0, 0, 2.15763, 0, 0, 0, 2.15763, -20.9297, -1.79626, 5.24261)
+
+[node name="Quarterpipe3" parent="." instance=ExtResource("5_hog18")]
+transform = Transform3D(0.0171907, 0, 0.999852, 0, 1, 0, -0.999852, 0, 0.0171907, 34.1676, -8.82587, 6)
+
+[node name="VertTrigger" type="Node3D" parent="Quarterpipe3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0281, 1.02241, -1.63432)
+script = ExtResource("5_nn6sb")
+type = 2
+pointList = Array[Vector3]([Vector3(33.4045, -7.80346, 7.00603), Vector3(33.4309, -7.80346, 5.01666)])
+
+[node name="Marker3D" type="Marker3D" parent="Quarterpipe3/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.990895, 0, 0.888611)
+
+[node name="Marker3D2" type="Marker3D" parent="Quarterpipe3/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.998629, 0, 0.880804)
+
+[node name="Pipe end" parent="." instance=ExtResource("9_5gjaw")]
+transform = Transform3D(2.13117, 0, 0, 0, 2.13117, 0, 0, 0, 2.13117, 0, -1.02842, -8.64157)
+
+[node name="_Node3D_28833" type="Node3D" parent="Pipe end"]
+transform = Transform3D(0.637167, 0, 0, 0, 0.637167, 0, 0, 0, 0.637167, 0, 0.53699, 0)
+script = ExtResource("5_nn6sb")
+type = 2
+is_loop = true
+fall_on_low_speed = null
+pointList = Array[Vector3]([Vector3(4.07373, 0.115997, -8.64157), Vector3(4.06883, 0.115997, -8.44168), Vector3(4.05411, 0.115997, -8.24228), Vector3(4.02964, 0.115997, -8.04383), Vector3(3.99546, 0.115997, -7.84682), Vector3(3.95164, 0.115997, -7.65173), Vector3(3.89832, 0.115997, -7.45903), Vector3(3.8356, 0.115997, -7.26917), Vector3(3.76364, 0.115997, -7.08262), Vector3(3.68261, 0.115997, -6.89982), Vector3(3.59271, 0.115997, -6.72123), Vector3(3.49416, 0.115997, -6.54725), Vector3(3.38719, 0.115997, -6.37833), Vector3(3.27205, 0.115997, -6.21485), Vector3(3.14904, 0.115997, -6.05722), Vector3(3.01843, 0.115997, -5.90581), Vector3(2.88056, 0.115997, -5.76101), Vector3(2.73576, 0.115997, -5.62314), Vector3(2.58435, 0.115997, -5.49253), Vector3(2.42672, 0.115997, -5.36952), Vector3(2.26324, 0.115997, -5.25438), Vector3(2.09432, 0.115997, -5.14741), Vector3(1.92034, 0.115997, -5.04886), Vector3(1.74175, 0.115997, -4.95896), Vector3(1.55895, 0.115997, -4.87793), Vector3(1.3724, 0.115997, -4.80597), Vector3(1.18254, 0.115997, -4.74325), Vector3(0.989837, 0.115997, -4.68993), Vector3(0.794746, 0.115997, -4.64611), Vector3(0.59774, 0.115997, -4.61193), Vector3(0.399295, 0.115997, -4.58746), Vector3(0.199889, 0.115997, -4.57274), Vector3(2.49436e-16, 0.115997, -4.56784), Vector3(-0.199889, 0.115997, -4.57274), Vector3(-0.399295, 0.115997, -4.58746), Vector3(-0.59774, 0.115997, -4.61193), Vector3(-0.794746, 0.115997, -4.64611), Vector3(-0.989837, 0.115997, -4.68993), Vector3(-1.18254, 0.115997, -4.74325), Vector3(-1.3724, 0.115997, -4.80597), Vector3(-1.55895, 0.115997, -4.87793), Vector3(-1.74175, 0.115997, -4.95896), Vector3(-1.92034, 0.115997, -5.04886), Vector3(-2.09432, 0.115997, -5.14741), Vector3(-2.26324, 0.115997, -5.25438), Vector3(-2.42672, 0.115997, -5.36952), Vector3(-2.58435, 0.115997, -5.49253), Vector3(-2.73576, 0.115997, -5.62314), Vector3(-2.88056, 0.115997, -5.76101), Vector3(-3.01843, 0.115997, -5.90581), Vector3(-3.14904, 0.115997, -6.05722), Vector3(-3.27205, 0.115997, -6.21485), Vector3(-3.38719, 0.115997, -6.37833), Vector3(-3.49416, 0.115997, -6.54725), Vector3(-3.59271, 0.115997, -6.72123), Vector3(-3.68261, 0.115997, -6.89982), Vector3(-3.76364, 0.115997, -7.08262), Vector3(-3.8356, 0.115997, -7.26917), Vector3(-3.89832, 0.115997, -7.45903), Vector3(-3.95164, 0.115997, -7.65173), Vector3(-3.99546, 0.115997, -7.84682), Vector3(-4.02964, 0.115997, -8.04383), Vector3(-4.05411, 0.115997, -8.24228), Vector3(-4.06883, 0.115997, -8.44168), Vector3(-4.07373, 0.115997, -8.64157), Vector3(-4.06883, 0.115997, -8.84146), Vector3(-4.05411, 0.115997, -9.04086), Vector3(-4.02964, 0.115997, -9.23931), Vector3(-3.99546, 0.115997, -9.43632), Vector3(-3.95164, 0.115997, -9.63141), Vector3(-3.89832, 0.115997, -9.82411), Vector3(-3.8356, 0.115997, -10.014), Vector3(-3.76364, 0.115997, -10.2005), Vector3(-3.68261, 0.115997, -10.3833), Vector3(-3.59271, 0.115997, -10.5619), Vector3(-3.49416, 0.115997, -10.7359), Vector3(-3.38719, 0.115997, -10.9048), Vector3(-3.27205, 0.115997, -11.0683), Vector3(-3.14904, 0.115997, -11.2259), Vector3(-3.01843, 0.115997, -11.3773), Vector3(-2.88056, 0.115997, -11.5221), Vector3(-2.73576, 0.115997, -11.66), Vector3(-2.58435, 0.115997, -11.7906), Vector3(-2.42672, 0.115997, -11.9136), Vector3(-2.26324, 0.115997, -12.0288), Vector3(-2.09432, 0.115997, -12.1357), Vector3(-1.92034, 0.115997, -12.2343), Vector3(-1.74175, 0.115997, -12.3242), Vector3(-1.55895, 0.115997, -12.4052), Vector3(-1.3724, 0.115997, -12.4772), Vector3(-1.18254, 0.115997, -12.5399), Vector3(-0.989837, 0.115997, -12.5932), Vector3(-0.794746, 0.115997, -12.637), Vector3(-0.59774, 0.115997, -12.6712), Vector3(-0.399295, 0.115997, -12.6957), Vector3(-0.199889, 0.115997, -12.7104), Vector3(-7.48308e-16, 0.115997, -12.7153), Vector3(0.199889, 0.115997, -12.7104), Vector3(0.399295, 0.115997, -12.6957), Vector3(0.59774, 0.115997, -12.6712), Vector3(0.794746, 0.115997, -12.637), Vector3(0.989837, 0.115997, -12.5932), Vector3(1.18254, 0.115997, -12.5399), Vector3(1.3724, 0.115997, -12.4772), Vector3(1.55895, 0.115997, -12.4052), Vector3(1.74175, 0.115997, -12.3242), Vector3(1.92034, 0.115997, -12.2343), Vector3(2.09432, 0.115997, -12.1357), Vector3(2.26324, 0.115997, -12.0288), Vector3(2.42672, 0.115997, -11.9136), Vector3(2.58435, 0.115997, -11.7906), Vector3(2.73576, 0.115997, -11.66), Vector3(2.88056, 0.115997, -11.5221), Vector3(3.01843, 0.115997, -11.3773), Vector3(3.14904, 0.115997, -11.2259), Vector3(3.27205, 0.115997, -11.0683), Vector3(3.38719, 0.115997, -10.9048), Vector3(3.49416, 0.115997, -10.7359), Vector3(3.59271, 0.115997, -10.5619), Vector3(3.68261, 0.115997, -10.3833), Vector3(3.76364, 0.115997, -10.2005), Vector3(3.8356, 0.115997, -10.014), Vector3(3.89832, 0.115997, -9.82411), Vector3(3.95164, 0.115997, -9.63141), Vector3(3.99546, 0.115997, -9.43632), Vector3(4.02964, 0.115997, -9.23931), Vector3(4.05411, 0.115997, -9.04086), Vector3(4.06883, 0.115997, -8.84146), Vector3(4.07373, 0.115997, -8.64157)])
+
+[node name="@Marker3D@28834" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+
+[node name="@Marker3D@28835" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.99639, 0, 0.147203)
+
+[node name="@Marker3D@28836" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.98555, 0, 0.294051)
+
+[node name="@Marker3D@28837" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.96753, 0, 0.440191)
+
+[node name="@Marker3D@28838" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.94236, 0, 0.585271)
+
+[node name="@Marker3D@28839" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.91009, 0, 0.728941)
+
+[node name="@Marker3D@28840" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.87082, 0, 0.870854)
+
+[node name="@Marker3D@28841" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.82463, 0, 1.01067)
+
+[node name="@Marker3D@28842" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.77164, 0, 1.14805)
+
+[node name="@Marker3D@28843" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.71197, 0, 1.28267)
+
+[node name="@Marker3D@28844" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.64576, 0, 1.41419)
+
+[node name="@Marker3D@28845" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.57319, 0, 1.54231)
+
+[node name="@Marker3D@28846" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.49441, 0, 1.66671)
+
+[node name="@Marker3D@28847" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.40962, 0, 1.7871)
+
+[node name="@Marker3D@28848" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.31903, 0, 1.90318)
+
+[node name="@Marker3D@28849" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.22285, 0, 2.01468)
+
+[node name="@Marker3D@28850" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.12132, 0, 2.12132)
+
+[node name="@Marker3D@28851" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.01468, 0, 2.22285)
+
+[node name="@Marker3D@28852" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.90318, 0, 2.31903)
+
+[node name="@Marker3D@28853" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7871, 0, 2.40962)
+
+[node name="@Marker3D@28854" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.66671, 0, 2.49441)
+
+[node name="@Marker3D@28855" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.54231, 0, 2.57319)
+
+[node name="@Marker3D@28856" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.41419, 0, 2.64576)
+
+[node name="@Marker3D@28857" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.28267, 0, 2.71197)
+
+[node name="@Marker3D@28858" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.14805, 0, 2.77164)
+
+[node name="@Marker3D@28859" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01067, 0, 2.82463)
+
+[node name="@Marker3D@28860" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.870854, 0, 2.87082)
+
+[node name="@Marker3D@28861" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.728941, 0, 2.91009)
+
+[node name="@Marker3D@28862" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.585271, 0, 2.94236)
+
+[node name="@Marker3D@28863" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.440191, 0, 2.96753)
+
+[node name="@Marker3D@28864" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.294051, 0, 2.98555)
+
+[node name="@Marker3D@28865" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.147203, 0, 2.99639)
+
+[node name="@Marker3D@28866" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.83691e-16, 0, 3)
+
+[node name="@Marker3D@28867" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.147203, 0, 2.99639)
+
+[node name="@Marker3D@28868" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.294051, 0, 2.98555)
+
+[node name="@Marker3D@28869" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.440191, 0, 2.96753)
+
+[node name="@Marker3D@28870" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.585271, 0, 2.94236)
+
+[node name="@Marker3D@28871" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.728941, 0, 2.91009)
+
+[node name="@Marker3D@28872" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.870854, 0, 2.87082)
+
+[node name="@Marker3D@28873" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.01067, 0, 2.82463)
+
+[node name="@Marker3D@28874" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.14805, 0, 2.77164)
+
+[node name="@Marker3D@28875" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.28267, 0, 2.71197)
+
+[node name="@Marker3D@28876" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.41419, 0, 2.64576)
+
+[node name="@Marker3D@28877" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.54231, 0, 2.57319)
+
+[node name="@Marker3D@28878" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.66671, 0, 2.49441)
+
+[node name="@Marker3D@28879" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7871, 0, 2.40962)
+
+[node name="@Marker3D@28880" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.90318, 0, 2.31903)
+
+[node name="@Marker3D@28881" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.01468, 0, 2.22285)
+
+[node name="@Marker3D@28882" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.12132, 0, 2.12132)
+
+[node name="@Marker3D@28883" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.22285, 0, 2.01468)
+
+[node name="@Marker3D@28884" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.31903, 0, 1.90318)
+
+[node name="@Marker3D@28885" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40962, 0, 1.7871)
+
+[node name="@Marker3D@28886" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.49441, 0, 1.66671)
+
+[node name="@Marker3D@28887" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.57319, 0, 1.54231)
+
+[node name="@Marker3D@28888" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.64576, 0, 1.41419)
+
+[node name="@Marker3D@28889" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.71197, 0, 1.28267)
+
+[node name="@Marker3D@28890" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.77164, 0, 1.14805)
+
+[node name="@Marker3D@28891" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.82463, 0, 1.01067)
+
+[node name="@Marker3D@28892" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.87082, 0, 0.870854)
+
+[node name="@Marker3D@28893" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.91009, 0, 0.728941)
+
+[node name="@Marker3D@28894" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.94236, 0, 0.585271)
+
+[node name="@Marker3D@28895" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.96753, 0, 0.440191)
+
+[node name="@Marker3D@28896" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.98555, 0, 0.294051)
+
+[node name="@Marker3D@28897" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.99639, 0, 0.147203)
+
+[node name="@Marker3D@28898" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 3.67382e-16)
+
+[node name="@Marker3D@28899" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.99639, 0, -0.147203)
+
+[node name="@Marker3D@28900" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.98555, 0, -0.294051)
+
+[node name="@Marker3D@28901" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.96753, 0, -0.440191)
+
+[node name="@Marker3D@28902" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.94236, 0, -0.585271)
+
+[node name="@Marker3D@28903" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.91009, 0, -0.728941)
+
+[node name="@Marker3D@28904" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.87082, 0, -0.870854)
+
+[node name="@Marker3D@28905" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.82463, 0, -1.01067)
+
+[node name="@Marker3D@28906" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.77164, 0, -1.14805)
+
+[node name="@Marker3D@28907" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.71197, 0, -1.28267)
+
+[node name="@Marker3D@28908" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.64576, 0, -1.41419)
+
+[node name="@Marker3D@28909" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.57319, 0, -1.54231)
+
+[node name="@Marker3D@28910" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.49441, 0, -1.66671)
+
+[node name="@Marker3D@28911" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40962, 0, -1.7871)
+
+[node name="@Marker3D@28912" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.31903, 0, -1.90318)
+
+[node name="@Marker3D@28913" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.22285, 0, -2.01468)
+
+[node name="@Marker3D@28914" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.12132, 0, -2.12132)
+
+[node name="@Marker3D@28915" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.01468, 0, -2.22285)
+
+[node name="@Marker3D@28916" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.90318, 0, -2.31903)
+
+[node name="@Marker3D@28917" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7871, 0, -2.40962)
+
+[node name="@Marker3D@28918" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.66671, 0, -2.49441)
+
+[node name="@Marker3D@28919" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.54231, 0, -2.57319)
+
+[node name="@Marker3D@28920" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.41419, 0, -2.64576)
+
+[node name="@Marker3D@28921" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.28267, 0, -2.71197)
+
+[node name="@Marker3D@28922" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.14805, 0, -2.77164)
+
+[node name="@Marker3D@28923" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.01067, 0, -2.82463)
+
+[node name="@Marker3D@28924" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.870854, 0, -2.87082)
+
+[node name="@Marker3D@28925" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.728941, 0, -2.91009)
+
+[node name="@Marker3D@28926" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.585271, 0, -2.94236)
+
+[node name="@Marker3D@28927" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.440191, 0, -2.96753)
+
+[node name="@Marker3D@28928" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.294051, 0, -2.98555)
+
+[node name="@Marker3D@28929" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.147203, 0, -2.99639)
+
+[node name="@Marker3D@28930" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.51073e-16, 0, -3)
+
+[node name="@Marker3D@28931" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.147203, 0, -2.99639)
+
+[node name="@Marker3D@28932" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.294051, 0, -2.98555)
+
+[node name="@Marker3D@28933" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.440191, 0, -2.96753)
+
+[node name="@Marker3D@28934" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.585271, 0, -2.94236)
+
+[node name="@Marker3D@28935" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.728941, 0, -2.91009)
+
+[node name="@Marker3D@28936" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.870854, 0, -2.87082)
+
+[node name="@Marker3D@28937" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01067, 0, -2.82463)
+
+[node name="@Marker3D@28938" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.14805, 0, -2.77164)
+
+[node name="@Marker3D@28939" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.28267, 0, -2.71197)
+
+[node name="@Marker3D@28940" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.41419, 0, -2.64576)
+
+[node name="@Marker3D@28941" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.54231, 0, -2.57319)
+
+[node name="@Marker3D@28942" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.66671, 0, -2.49441)
+
+[node name="@Marker3D@28943" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7871, 0, -2.40962)
+
+[node name="@Marker3D@28944" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.90318, 0, -2.31903)
+
+[node name="@Marker3D@28945" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.01468, 0, -2.22285)
+
+[node name="@Marker3D@28946" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.12132, 0, -2.12132)
+
+[node name="@Marker3D@28947" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.22285, 0, -2.01468)
+
+[node name="@Marker3D@28948" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.31903, 0, -1.90318)
+
+[node name="@Marker3D@28949" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.40962, 0, -1.7871)
+
+[node name="@Marker3D@28950" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.49441, 0, -1.66671)
+
+[node name="@Marker3D@28951" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.57319, 0, -1.54231)
+
+[node name="@Marker3D@28952" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.64576, 0, -1.41419)
+
+[node name="@Marker3D@28953" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.71197, 0, -1.28267)
+
+[node name="@Marker3D@28954" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.77164, 0, -1.14805)
+
+[node name="@Marker3D@28955" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.82463, 0, -1.01067)
+
+[node name="@Marker3D@28956" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.87082, 0, -0.870854)
+
+[node name="@Marker3D@28957" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.91009, 0, -0.728941)
+
+[node name="@Marker3D@28958" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.94236, 0, -0.585271)
+
+[node name="@Marker3D@28959" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.96753, 0, -0.440191)
+
+[node name="@Marker3D@28960" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.98555, 0, -0.294051)
+
+[node name="@Marker3D@28961" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.99639, 0, -0.147203)
+
+[node name="@Marker3D@28962" type="Marker3D" parent="Pipe end/_Node3D_28833"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+
+[node name="VertTrigger2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.2746, -7.80767, -1.64319)
+script = ExtResource("5_nn6sb")
+type = 2
+pointList = Array[Vector3]([Vector3(37.2746, -7.80767, -1.64319), Vector3(39.0468, -7.82225, 3.5632), Vector3(38.7029, -7.82225, 8.72811), Vector3(37.3692, -7.82225, 13.4059)])
+
+[node name="Marker3D" type="Marker3D" parent="VertTrigger2"]
+
+[node name="Marker3D2" type="Marker3D" parent="VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.77224, -0.014576, 5.20639)
+
+[node name="Marker3D3" type="Marker3D" parent="VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.42832, -0.014576, 10.3713)
+
+[node name="Marker3D4" type="Marker3D" parent="VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0946465, -0.014576, 15.0491)

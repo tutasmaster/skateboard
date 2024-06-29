@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://u78gsialrinq"]
+
+[ext_resource type="Texture2D" uid="uid://5mwx2e577db0" path="res://Assets/Textures/TestTexture.png" id="1_d38ke"]
+
+[resource]
+albedo_color = Color(1, 0.406399, 0.237171, 1)
+albedo_texture = ExtResource("1_d38ke")
+roughness = 0.45
+normal_enabled = true
+normal_scale = 1.45
+uv1_triplanar = true

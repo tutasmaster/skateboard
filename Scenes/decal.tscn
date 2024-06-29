@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://4p64crc5rs2h"]
+
+[ext_resource type="Texture2D" uid="uid://8y4kka3rxp3y" path="res://Assets/Textures/Sticker.png" id="1_r7typ"]
+
+[node name="Decal" type="Node3D"]
+
+[node name="Decal" type="Decal" parent="."]
+transform = Transform3D(0.592699, 0, 0, 0, -2.59077e-08, -0.592699, 0, 0.592699, -2.59077e-08, 0, 0, 0)
+texture_albedo = ExtResource("1_r7typ")
+normal_fade = 0.5

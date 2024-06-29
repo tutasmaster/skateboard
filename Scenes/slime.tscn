@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://c66378m7q3tks"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy/Slime.gd" id="1_w8f66"]
+[ext_resource type="Texture2D" uid="uid://m4l56bv615ds" path="res://Assets/slime.png" id="3_5e85r"]
+[ext_resource type="AudioStream" uid="uid://dprmget8dvn6j" path="res://bone-crack-121580.mp3" id="4_8mx3m"]
+[ext_resource type="Script" path="res://Scripts/AI/AIBase.gd" id="5_q3ju7"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qk5rh"]
+radius = 0.331605
+
+[sub_resource type="SphereMesh" id="SphereMesh_dntdk"]
+radius = 0.4
+height = 0.4
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4r4sv"]
+radius = 0.764428
+
+[node name="Slime" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.52553, 1.0268, 0.37539)
+script = ExtResource("1_w8f66")
+
+[node name="Body" type="CharacterBody3D" parent="."]
+
+[node name="Sprite3D" type="Sprite3D" parent="Body"]
+transform = Transform3D(4.793, 0, 0, 0, 4.793, 0, 0, 0, 4.793, 0.0923371, -0.258947, 0)
+billboard = 2
+texture_filter = 0
+texture = ExtResource("3_5e85r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1.44243, 0, 0, 0, 1.44243, 0, 0, 0, 1.44243, 0, -0.520718, 0)
+shape = SubResource("SphereShape3D_qk5rh")
+
+[node name="Node3D" type="Node3D" parent="Body/CollisionShape3D"]
+transform = Transform3D(0.693275, 0, 0, 0, 0.693275, 0, 0, 0, 0.693275, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Body/CollisionShape3D/Node3D"]
+transform = Transform3D(1.44243, 0, 0, 0, 1.44243, 0, 0, 0, 1.44243, 0, 0, 0)
+cast_shadow = 3
+mesh = SubResource("SphereMesh_dntdk")
+skeleton = NodePath("../../../..")
+
+[node name="HitSFX" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_8mx3m")
+
+[node name="Node3D" type="Node3D" parent="."]
+script = ExtResource("5_q3ju7")
+
+[node name="Area3D" type="Area3D" parent="Node3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/Area3D"]
+shape = SubResource("SphereShape3D_4r4sv")

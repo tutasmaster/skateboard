@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://bj82o1gst4tex"]
+
+[ext_resource type="Script" path="res://Scripts/UI/FloatProperty.gd" id="1_nyuf2"]
+
+[node name="PROPERTY" type="HBoxContainer"]
+size_flags_vertical = 3
+script = ExtResource("1_nyuf2")
+
+[node name="PROPERTY_NAME" type="LineEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "PROPERTY_NAME"
+editable = false
+
+[node name="PROPERTY_VALUE" type="SpinBox" parent="."]
+layout_mode = 2
+min_value = -10000.0
+max_value = 10000.0
+step = 0.001
+
+[connection signal="value_changed" from="PROPERTY_VALUE" to="." method="_on_spin_box_value_changed"]

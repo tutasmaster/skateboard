@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://diq5v2c06aciy"]
+
+[ext_resource type="Script" path="res://Scripts/DamageNumbers.gd" id="1_484oj"]
+
+[node name="Label3D" type="Label3D"]
+transform = Transform3D(0.994269, 0, -0.106906, 0, 1, 0, 0.106906, 0, 0.994269, 0, 0, 0)
+pixel_size = 0.001
+billboard = 1
+no_depth_test = true
+fixed_size = true
+render_priority = 2
+outline_render_priority = 1
+text = "100"
+script = ExtResource("1_484oj")

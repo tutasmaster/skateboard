@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://coc75moiu6rqv"]
+
+[ext_resource type="Script" path="res://Scripts/UI/CheckboxProperty.gd" id="1_r1qvb"]
+
+[node name="PROPERTY" type="HBoxContainer"]
+size_flags_vertical = 3
+script = ExtResource("1_r1qvb")
+
+[node name="PROPERTY_NAME" type="LineEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "PROPERTY_NAME"
+editable = false
+
+[node name="PROPERTY_VALUE" type="CheckButton" parent="."]
+layout_mode = 2
+
+[connection signal="toggled" from="PROPERTY_VALUE" to="." method="_on_property_value_toggled"]
