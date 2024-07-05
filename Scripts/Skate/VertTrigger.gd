@@ -99,7 +99,12 @@ func _process(delta):
 			curve.add_point(p)
 		DebugDraw3D.draw_line_path(pointList, col)
 	else:
-		if(GameManager.is_debug_rail()):
-			DebugDraw3D.draw_line_path(pointList, col)
+		if(type == TYPE.RAIL || type == TYPE.BOTH):
+			if(GameManager.is_debug_rail()):
+				DebugDraw3D.draw_line_path(pointList, col)
+		elif(type == TYPE.VERT || type == TYPE.BOTH):
+			if(GameManager.is_debug_vert()):
+				DebugDraw3D.draw_line_path(pointList, col)
+				
 		
 	pass

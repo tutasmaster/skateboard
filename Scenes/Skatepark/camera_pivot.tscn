@@ -13,6 +13,7 @@ spring_length = 3.0
 
 [node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
+cull_mask = 524287
 fov = 76.0
 size = 0.21
 

@@ -3,8 +3,6 @@ extends Node
 var player : Node3D
 var playerScript : Player
 var camera : Node3D
-var loot : PackedScene = preload("res://Scenes/loot.tscn")
-var dmg_num : PackedScene = preload("res://Scenes/damage.tscn")
 var clone_player : PackedScene = preload("res://Scenes/Skatepark/clone_wooper.tscn")
 var _loot_player : AudioStreamPlayer
 
@@ -34,14 +32,13 @@ var clothing = {
 func _ready():
 	_rails = []
 	_targets = []
-	_loot_player = AudioStreamPlayer.new()
-	_loot_player.stream = load("res://Assets/Sounds/powerup.wav")
-	_loot_player.max_polyphony = 5
-	_loot_player.volume_db = 0.5
 	add_child(_loot_player)
 
 func is_debug_rail():
 	return player.DEBUG_GRIND
+	
+func is_debug_vert():
+	return player.DEBUG_VERT
 
 func toggle_menu():
 	menu.toggle_open()
@@ -71,9 +68,6 @@ func load_map(map):
 		for p in dict:
 			_multiplayer_manager.add_child(dict[p])
 
-func play_loot_sound():
-	_loot_player.pitch_scale = randf_range(0.2,1.8)
-	_loot_player.play()
 
 var _targets : Array[Node3D] = []	
 

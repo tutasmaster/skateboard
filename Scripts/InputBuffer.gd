@@ -94,7 +94,7 @@ func is_combo_pressed(actions : Array[String]):
 		var pos = (input_history.size()-1) - i
 		if(input_history[pos][0] == actions[(actions.size() - 1) - count]):
 			if(count > 0):
-				if(abs(prev_time - input_history[pos][1]) < 500):
+				if(abs(prev_time - input_history[pos][1]) < 500 && input_history[pos][1] > Time.get_ticks_msec() - 500):
 					prev_time = input_history[pos][1]
 					count += 1
 			else:

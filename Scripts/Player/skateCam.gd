@@ -39,7 +39,7 @@ func _process(delta):
 		$SpringArm3D.rotation = Quaternion.from_euler($SpringArm3D.rotation).slerp(Quaternion.from_euler(-Vector3(0.3,PI,0)),delta*3).get_euler()
 		var rot = target.rotation
 		if(GameManager.player.velocity.z < -0.5):
-			rot.y -= PI
+			rot = target.BACKWARDS.global_rotation
 		global_rotation = Quaternion.from_euler(global_rotation).slerp(Quaternion.from_euler(rot),delta*3).get_euler()
 		global_position = target.position
 	elif(target.state != Wooper.STATE.airborne):

@@ -1,6 +1,8 @@
 extends Node3D
 class_name Wooper
 
+@onready var BACKWARDS : Node3D = $Backwards
+
 @export_subgroup("Special Properties")
 @export var SLOW_MOTION = 0.1
 @export var SPEED_CAP = 15
@@ -78,7 +80,10 @@ class_name Wooper
 @onready var _multiplayer_manager = get_node("/root/MultiplayerManager")
 @onready var horizontal_balance = $Balance/HORIZONTAL_BALANCE
 @onready var vertical_balance = $Balance/VERTICAL_BALANCE
-
+@onready var score_label = $Balance/SCORE_LABEL
+@onready var final_score_label = $Balance/FINAL_SCORE_LABEL
+@onready var move_label = $Balance/MOVE_LABEL
+@onready var balance_animation = $Balance/AnimationPlayer
 @onready var area = $Area3D
 
 func _ready():
@@ -104,6 +109,10 @@ var to_position = Vector3.ZERO
 var to_rotation = Quaternion.IDENTITY
 var velocity = Vector3(0,0,0)
 var angle = 0
+
+var score = 0
+var multiplier = 0
+var move_list = []
 
 var preparing_vert = false
 
@@ -134,11 +143,25 @@ func _process(delta):
 	if(CLONE_WOOPER != null):
 		CLONE_WOOPER.rotation = Quaternion.from_euler(CLONE_WOOPER.rotation).slerp(Quaternion.from_euler($MeshInstance3D.global_rotation), min(delta * (LERP_SPEED),1)).get_euler()
 		CLONE_WOOPER.position = position
+	
+	if(score > 0):
+		score_label.text = str(round(score)*100) + " x " + str(multiplier)
+	else:
+		score_label.text = ""
+	move_label.text = ""
+	for i in range(5):
+		if(i < move_list.size()):
+			if(i > 0):
+				move_label.text += " + "
+			move_label.text += move_list[i]
+	if(move_list.size() > 5):
+		move_label.text += " + ..."
+			
 
 func _physics_process(delta):
 	angle = normalize_angle(angle)
 	physics_framerate = 1/delta
-	if(Input.is_action_just_pressed("start")):
+	if(Input.is_action_just_pressed("debug_menu")):
 		Engine.time_scale = 1
 		GameManager.toggle_menu()
 	if(GameManager.paused):
@@ -195,18 +218,52 @@ func trick_animation():
 	if(Input.is_action_pressed("down")):
 		set_transition("Flip", "shuvit")
 		start_animation("Kickflip")
+		multiplier+=1
+		score += 40
+		move_list.push_front("Pop Shuvit")
 	elif(Input.is_action_pressed("left")):
 		set_transition("Flip", "kickflip")
 		start_animation("Kickflip")
+		move_list.push_front("Kickflip")
+		score += 30
+		multiplier+=1
 	elif(Input.is_action_pressed("right")):
 		set_transition("Flip", "heelflip")
 		start_animation("Kickflip")
+		move_list.push_front("Heelflip")
+		score += 30
+		multiplier+=1
 	elif(Input.is_action_pressed("up")):
 		set_transition("Flip", "impossible")
 		start_animation("Kickflip")
+		move_list.push_front("Impossible")
+		score += 50
+		multiplier+=1
+
+func clear_score():
+	score = 0
+	multiplier = 0
+
+func end_combo():
+	if(score != 0):
+		var f_score = int(round(score)*100 * multiplier)
+		var text = ""
+		while f_score >= 1000:
+			text += ",%03d" % (f_score % 1000)
+			f_score /= 1000
+		final_score_label.text = str(f_score) + text
+		score = 0
+		multiplier = 0
+		move_list = []
+		balance_animation.play("Sucess")
+	
+func fail_combo():
+	move_list = []
+	balance_animation.play("Fail")
 
 #Resets and bails the player
 func reset():
+	fail_combo()
 	manual = false
 	set_animation("Manual", 0)
 	rotation = Vector3.ZERO
@@ -219,6 +276,7 @@ func reset():
 	
 #Resets and crashes the player
 func crash():
+	fail_combo()
 	set_animation("Manual", 0)
 	rotation = Vector3.ZERO
 	rotate_object_local(Vector3.UP, angle)
@@ -233,9 +291,14 @@ func jump():
 	start_animation("OneShot")
 	InputBuffer._invalidate_action("jump")
 	if(preparing_vert):
-		velocity += basis.inverse().y * JUMP_VERT_FORCE * jump_factor
+		var vel_base = velocity + (basis.inverse().y * JUMP_VERT_FORCE * jump_factor)
+		var vel_mod = velocity + global_to_local_vector(Vector3(0,JUMP_FORCE * jump_factor,0))
+		var ratio = basis.y.dot(Vector3(0,1,0))
+		print(ratio)
+		velocity = vel_base * (1.0-ratio) + vel_mod * ratio
 		if(check_vert()):
 			set_animation("Manual", 0)
+			$AudioStreamPlayer3D.play()
 			has_jumped = true
 			return
 	else:
@@ -243,11 +306,11 @@ func jump():
 	jump_timer = JUMP_TIMER - (jump_factor * JUMP_TIMER)
 	#preparing_vert = false
 	CLONE_WOOPER.ANIMATION_TREE["parameters/Prepare/blend_amount"] = 0
-	if(!preparing_vert):
-		state = STATE.airborne
+	state = STATE.airborne
 	set_animation("Manual", 0)
 	airborne_angle = 0
 	has_jumped = true
+	$AudioStreamPlayer3D.play()
 
 func cap_velocity():
 	if(velocity.length() > SPEED_CAP):
@@ -346,16 +409,52 @@ func ground_physics(delta):
 		position += basis.y * velocity.y * delta
 		position += basis.x * velocity.x * delta
 		return
-		
+	var manual_type = "base"
+	var manual1 = InputBuffer.is_combo_pressed(["up","down"]) 
+	var manual2 = InputBuffer.is_combo_pressed(["down","up"]) 
+	if((manual1 || manual2) && !manual):
+		balance = randf_range(-BALANCE_MANUAL_START_RANGE,BALANCE_MANUAL_START_RANGE)
+		if(balance == 0):
+			balance = 0.1
+		balance_diff = BALANCE_MANUAL_MIN_DIFFICULTY
+		bal_speed = 0
+		manual = true
+		set_animation("Manual", 1)
+		if(manual2):
+			if(velocity.z < 0):
+				manual_type = "special"
+		if(manual1):
+			if(velocity.z > 0):
+				manual_type = "special"
+		if(manual_type == "base"):
+			move_list.push_front("Manual")
+		else:
+			move_list.push_front("Nose Manual")
+		set_transition("ManualType", manual_type)
+		multiplier += 1
+		score += 20
 	if(manual):
 		if(InputBuffer.is_combo_pressed(["grind", "trick"])):
 			set_transition("ManualType", "pogo")
+			move_list.push_front("Pogo")
+			multiplier += 1
+			score += 10
 		if(InputBuffer.is_combo_pressed(["trick", "grind"])):
 			set_transition("ManualType", "spin")
+			move_list.push_front("Manual Spin")
+			multiplier += 1
+			score += 10
 		if(InputBuffer.is_combo_pressed(["trick", "trick"])):
 			set_transition("ManualType", "special")
+			move_list.push_front("Nose Manual")
+			multiplier += 1
+			score += 10
 		if(InputBuffer.is_combo_pressed(["grind", "grind"])):
 			set_transition("ManualType", "base")
+			move_list.push_front("Manual")
+			multiplier += 1
+			score += 10
+		score += delta
 		vertical_balance.show()
 		balance_diff += delta * BALANCE_MANUAL_DIFF_INCREASE
 		bal_speed += (balance * (BALANCE_MANUAL_MULT_DIFFICULTY + balance_diff)) * delta
@@ -367,6 +466,9 @@ func ground_physics(delta):
 			vertical_balance.hide()
 			set_animation("Manual", 0)
 			reset()
+			
+	else:
+		end_combo()
 	CLONE_WOOPER.ANIMATION_TREE.set("parameters/Kickflip/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT)
 	CLONE_WOOPER.ANIMATION_TREE.set("parameters/Falling/blend_amount", 0)
 	snap_to_ground()
@@ -449,25 +551,6 @@ func ground_physics(delta):
 		
 	if(state == STATE.vert):
 		return
-		
-	var manual_type = "base"
-	var manual1 = InputBuffer.is_combo_pressed(["up","down"]) 
-	var manual2 = InputBuffer.is_combo_pressed(["down","up"]) 
-	if((manual1 || manual2) && !manual):
-		balance = randf_range(-BALANCE_MANUAL_START_RANGE,BALANCE_MANUAL_START_RANGE)
-		if(balance == 0):
-			balance = 0.1
-		balance_diff = BALANCE_MANUAL_MIN_DIFFICULTY
-		bal_speed = 0
-		manual = true
-		set_animation("Manual", 1)
-		if(manual2):
-			if(velocity.z < 0):
-				manual_type = "special"
-		if(manual1):
-			if(velocity.z > 0):
-				manual_type = "special"
-		set_transition("ManualType", manual_type)
 
 #AIRBORNE STATE
 #INCLUDES STUFF FOR WHEN THE PLAYER IS IN THE AIR
@@ -562,7 +645,7 @@ func airborne_physics(delta):
 				DebugDraw3D.draw_arrow(global_position,global_position + trans.basis.y,Color.BLUE, DEBUG_ARROW_THICKNESS)
 				DebugDraw3D.draw_arrow(global_position,global_position + trans.basis.z,Color.RED, DEBUG_ARROW_THICKNESS)
 			
-			basis = basis.orthonormalized().slerp(trans.basis.orthonormalized(),delta*4)
+			basis = basis.orthonormalized().slerp(trans.basis.orthonormalized(),min(1,delta * max(4,(SPEED_CAP - velocity.length())/SPEED_CAP*4)))
 		else:
 			rotation = rotation.slerp(target.get_euler(), delta)
 	else:
@@ -605,6 +688,7 @@ func airborne_physics(delta):
 		velocity.z += sign(velocity.z) * abs(velocity.y) * (1 - AIR_TO_GROUND_MOMENTUM_LOSS)
 		velocity.y = 0
 		start_animation("Floor")
+		$DropAudio.play()
 		if(CLONE_WOOPER.ANIMATION_TREE["parameters/Kickflip/active"]):
 			reset()
 		
@@ -625,6 +709,7 @@ func airborne_physics(delta):
 				wallplant_speed.x = 0
 				velocity = (global_to_local_vector(normal)) * wallplant_speed.length()
 				velocity.y += 2
+				velocity.z *= 1.5
 				global_position = point
 				global_position += normal * 0.2
 				if(DEBUG_WALLPLANTS):
@@ -638,6 +723,9 @@ func airborne_physics(delta):
 					obj.global_position = global_position
 					obj.global_rotation = global_rotation
 					start_animation("Wallplant")
+					score += 40
+					multiplier += 1
+					move_list.push_front("Wallplant")
 				CLONE_WOOPER.rotation = rotation
 				
 				return
@@ -716,9 +804,16 @@ func check_rail():
 				balance = 0.1
 			balance_diff = BALANCE_MIN_DIFFICULTY
 			bal_speed = 0
+			
+			move_list.push_front("Grind")
+			score += 20
+			multiplier += 1
+			
+			$RailAudio.play()
 			return
 	
 func drop_rail():
+	$RailAudio.stop()
 	var v = basis.z
 	v.y = 0
 	v.normalized()
@@ -738,6 +833,7 @@ var balance_diff = 0.2
 var bal_speed = 0
 	
 func rail_physics(delta):	
+	score += delta * 2
 	manual = false
 	horizontal_balance.show()
 	balance_diff += delta
@@ -749,12 +845,24 @@ func rail_physics(delta):
 		drop_rail()
 		return
 	if(InputBuffer.is_combo_pressed(["grind","grind"])):
+		move_list.push_front("Straight Grind")
+		score += 20
+		multiplier += 1
 		set_transition("GrindTricks", "manual")
 	if(InputBuffer.is_combo_pressed(["grind","trick"])):
+		move_list.push_front("Other Grind")
+		score += 20
+		multiplier += 1
 		set_transition("GrindTricks", "manual2")
 	if(InputBuffer.is_combo_pressed(["trick","trick"])):
+		move_list.push_front("Wierd Grind")
+		score += 20
+		multiplier += 1
 		set_transition("GrindTricks", "manual3")
 	if(InputBuffer.is_combo_pressed(["trick","grind"])):
+		move_list.push_front("Grind")
+		score += 20
+		multiplier += 1
 		set_transition("GrindTricks", "base")
 	
 	set_animation("Grinding",1)
@@ -846,6 +954,8 @@ func snap_to_ground_vert():
 		rotate_object_local(Vector3.UP, angle)
 		if(CLONE_WOOPER.ANIMATION_TREE["parameters/Kickflip/active"]):
 			start_animation("Bail")
+		return true
+	return false
 
 func drop_vert():
 	velocity = global_to_local_vector(Vector3(0,vert_vel.y,0))
@@ -967,12 +1077,19 @@ func check_walls_vert(_delta):
 			var res = Vector2(-c.get_collision_normal().dot(angle.basis.z), c.get_collision_normal().dot(angle.basis.y)).normalized()
 			movement += res * distance * 1.1
 			pushback += res
+			if(c.get_collision_normal().y > 0.5):
+				drop_vert()
+				rotation = Vector3.ZERO
+				reset()
+				return true
 	vert_coords += movement
 	vert_vel += pushback
+	return false
 
 func vert_physics(delta):
 	manual = false
-	check_walls_vert(delta)
+	if check_walls_vert(delta):
+		return
 	var input_dir = Input.get_vector("left", "right", "down", "up")
 	var prev_angle = angle
 	if(vert.get_angle_offset(vert_coords.x) == null):
@@ -1004,7 +1121,8 @@ func vert_physics(delta):
 	position = vert.get_pos_from_offset(vert_coords.x)
 	position.y += vert_coords.y 
 	if(vert_timer > 0.1):
-		snap_to_ground_vert()
+		if(snap_to_ground_vert()):
+			return
 	else:
 		vert_timer += delta
 		
