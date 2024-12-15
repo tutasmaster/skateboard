@@ -1,0 +1,1202 @@
+[gd_scene load_steps=29 format=3 uid="uid://dr1421vuf1k0p"]
+
+[ext_resource type="PackedScene" uid="uid://7fvi2whbg4yg" path="res://Scenes/Skatepark/wooper.tscn" id="3_e2xob"]
+[ext_resource type="PackedScene" uid="uid://chwvu3wpe0fc1" path="res://Scenes/Skatepark/clone_wooper.tscn" id="4_f50sa"]
+[ext_resource type="PackedScene" uid="uid://dqiccu8a7uvub" path="res://Assets/Skatepark/awning.blend" id="5_5qmun"]
+[ext_resource type="PackedScene" uid="uid://bsqroyiqnc48r" path="res://Scenes/Skatepark/menu.tscn" id="5_5y1oc"]
+[ext_resource type="PackedScene" uid="uid://pqlomjxlleb5" path="res://Scenes/Skatepark/camera_pivot.tscn" id="6_7slm7"]
+[ext_resource type="PackedScene" uid="uid://b30rlvxnx1j7i" path="res://Assets/Skatepark/parasol.blend" id="7_vrfov"]
+[ext_resource type="Script" uid="uid://bvyma6a8cyjsj" path="res://Scripts/Skate/VertTrigger.gd" id="8_4x43h"]
+[ext_resource type="PackedScene" uid="uid://bdcjpfghape0j" path="res://Assets/Skatepark/rail.blend" id="8_fry5h"]
+[ext_resource type="PackedScene" uid="uid://ed41qsw7cvx" path="res://Assets/Skatepark/beach.blend" id="9_a4plq"]
+[ext_resource type="Material" uid="uid://c5vpvypo2kyk4" path="res://Assets/Materials/Test/TestTexture.tres" id="10_0p0ns"]
+[ext_resource type="PackedScene" uid="uid://b122o0cmfv8or" path="res://Assets/Skatepark/Pipes.glb" id="10_bus40"]
+[ext_resource type="Script" uid="uid://cy5s4l2l8sa3b" path="res://Scenes/SpeedArea.gd" id="12_cnsj8"]
+[ext_resource type="PackedScene" uid="uid://wpxi5jho8foh" path="res://Assets/Skatepark/QuarterPipeTest.blend" id="13_ldgyv"]
+[ext_resource type="Material" uid="uid://u78gsialrinq" path="res://Assets/Materials/Test/TestTexture2.tres" id="14_qer7p"]
+[ext_resource type="Script" uid="uid://rd7ri2yxpjx5" path="res://Scripts/Skate/Pickup.gd" id="15_13us3"]
+[ext_resource type="PackedScene" uid="uid://cik0e030gx5lb" path="res://Assets/fonts.blend" id="15_dxlpg"]
+[ext_resource type="Script" uid="uid://bxdj3f885icva" path="res://Scripts/AutoPlay.gd" id="17_1kxw2"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0uwqc"]
+sky_top_color = Color(0.0379661, 0.469661, 0.739622, 1)
+sky_horizon_color = Color(0.52168, 0.645658, 0.733897, 1)
+ground_bottom_color = Color(0.0487534, 0.112973, 0.195967, 1)
+ground_horizon_color = Color(0.52168, 0.645658, 0.733897, 1)
+
+[sub_resource type="Sky" id="Sky_41vq0"]
+sky_material = SubResource("ProceduralSkyMaterial_0uwqc")
+
+[sub_resource type="Environment" id="Environment_x2gjh"]
+background_mode = 2
+sky = SubResource("Sky_41vq0")
+tonemap_mode = 2
+
+[sub_resource type="TorusMesh" id="TorusMesh_orisc"]
+inner_radius = 1.9
+outer_radius = 2.0
+rings = 16
+ring_segments = 8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tbiuo"]
+radius = 2.015
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1kxw2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_13us3"]
+albedo_color = Color(1.10701e-06, 0.607153, 0.476212, 1)
+emission_enabled = true
+emission = Color(0.503491, 0.435209, 9.62615e-08, 1)
+emission_energy_multiplier = 3.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1kxw2"]
+emission_enabled = true
+emission = Color(0.968627, 0.588235, 0, 1)
+emission_energy_multiplier = 61.2
+
+[sub_resource type="Animation" id="Animation_13us3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_dxlpg"]
+resource_name = "Wobble"
+length = 10.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.46667, 3, 4.53333, 6, 7.53333, 9, 10.5333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.15, 0), Vector3(0, -0.15, 0), Vector3(0, 0.15, 0), Vector3(0, -0.15, 0), Vector3(0, 0.15, 0), Vector3(0, -0.15, 0), Vector3(0, 0.15, 0), Vector3(0, -0.15, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1kxw2"]
+_data = {
+&"RESET": SubResource("Animation_13us3"),
+&"Wobble": SubResource("Animation_dxlpg")
+}
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_x2gjh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Wooper" parent="." node_paths=PackedStringArray("CLONE_WOOPER") instance=ExtResource("3_e2xob")]
+transform = Transform3D(1, 0, 0, 0, 1, -0.000471205, 0, 0.000471205, 1, -4.86617, 5.28976, 0)
+CLONE_WOOPER = NodePath("../CloneWooper")
+
+[node name="CloneWooper" parent="." instance=ExtResource("4_f50sa")]
+
+[node name="Menu" parent="." instance=ExtResource("5_5y1oc")]
+
+[node name="CameraPivot" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_7slm7")]
+target = NodePath("../Wooper")
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="awning" parent="Node3D" instance=ExtResource("5_5qmun")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.85889, 3.36579, 3.47818)
+
+[node name="VertTrigger" type="Node3D" parent="Node3D/awning"]
+script = ExtResource("8_4x43h")
+pointList = Array[Vector3]([Vector3(-8.48633, 6.2608, -19.5218), Vector3(-8.48633, 6.2608, 29.4782)])
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/awning/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 2.89501, 3.62744)
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/awning/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 2.89501, 3.62744)
+
+[node name="VertTrigger2" type="Node3D" parent="Node3D/awning"]
+script = ExtResource("8_4x43h")
+type = 1
+pointList = Array[Vector3]([Vector3(-2.02106, 2.91536, -1.52182), Vector3(-2.02106, 2.91536, 8.47818)])
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/awning/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -0.450431, -2.83783)
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/awning/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -0.450431, -2.83783)
+
+[node name="beach" parent="Node3D" instance=ExtResource("9_a4plq")]
+transform = Transform3D(0.949923, 0, 0.312484, 1.86265e-08, 1, 5.96046e-08, -0.312484, 0, 0.949923, -5.87264, 0.027602, -4.38266)
+
+[node name="parasol" parent="Node3D/beach" instance=ExtResource("7_vrfov")]
+transform = Transform3D(1.49013, 0.0363922, -0.0748274, -3.27153e-08, 1.34214, 0.65275, 0.0832056, -0.651735, 1.34005, -0.297695, -2.78772, 0.497393)
+
+[node name="@Node3D@110799" type="Node3D" parent="Node3D/beach/parasol"]
+transform = Transform3D(1.87115, 0, 0, 0, 1.87115, 0, 0, 0, 1.87115, 0, 3.59076, 0)
+script = ExtResource("8_4x43h")
+type = 1
+is_loop = true
+pointList = Array[Vector3]([Vector3(-3.90987, 2.05918, -6.80441), Vector3(-3.83479, 2.29747, -6.31729), Vector3(-3.86624, 2.52659, -5.8211), Vector3(-4.00303, 2.73775, -5.33489), Vector3(-4.23989, 2.92284, -4.87736), Vector3(-4.56773, 3.07474, -4.46608), Vector3(-4.97393, 3.18761, -4.11686), Vector3(-5.44291, 3.25711, -3.84313), Vector3(-5.95662, 3.28058, -3.6554), Vector3(-6.49533, 3.25711, -3.56088), Vector3(-7.03834, 3.18761, -3.5632), Vector3(-7.56478, 3.07474, -3.66229), Vector3(-8.05442, 2.92284, -3.85433), Vector3(-8.48844, 2.73775, -4.13194), Vector3(-8.85017, 2.52659, -4.48445), Vector3(-9.12569, 2.29747, -4.89831), Vector3(-9.30443, 2.05918, -5.35762), Vector3(-9.37951, 1.8209, -5.84474), Vector3(-9.34806, 1.59178, -6.34093), Vector3(-9.21127, 1.38061, -6.82714), Vector3(-8.97441, 1.19553, -7.28468), Vector3(-8.64658, 1.04363, -7.69595), Vector3(-8.24037, 0.930764, -8.04517), Vector3(-7.77139, 0.86126, -8.3189), Vector3(-7.25768, 0.837791, -8.50664), Vector3(-6.71897, 0.86126, -8.60116), Vector3(-6.17596, 0.930764, -8.59883), Vector3(-5.64952, 1.04363, -8.49974), Vector3(-5.15988, 1.19553, -8.30771), Vector3(-4.72586, 1.38061, -8.0301), Vector3(-4.36414, 1.59178, -7.67759), Vector3(-4.08861, 1.8209, -7.26372), Vector3(-3.90987, 2.05918, -6.80441)])
+
+[node name="@Marker3D@110800" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="@Marker3D@110801" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.980785, 0, 0.19509)
+
+[node name="@Marker3D@110802" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.92388, 0, 0.382683)
+
+[node name="@Marker3D@110803" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.83147, 0, 0.55557)
+
+[node name="@Marker3D@110804" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.707107, 0, 0.707107)
+
+[node name="@Marker3D@110805" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55557, 0, 0.83147)
+
+[node name="@Marker3D@110806" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.382683, 0, 0.92388)
+
+[node name="@Marker3D@110807" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19509, 0, 0.980785)
+
+[node name="@Marker3D@110808" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.12303e-17, 0, 1)
+
+[node name="@Marker3D@110809" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19509, 0, 0.980785)
+
+[node name="@Marker3D@110810" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.382683, 0, 0.92388)
+
+[node name="@Marker3D@110811" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55557, 0, 0.83147)
+
+[node name="@Marker3D@110812" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.707107, 0, 0.707107)
+
+[node name="@Marker3D@110813" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.83147, 0, 0.55557)
+
+[node name="@Marker3D@110814" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.92388, 0, 0.382683)
+
+[node name="@Marker3D@110815" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.980785, 0, 0.19509)
+
+[node name="@Marker3D@110816" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1.22461e-16)
+
+[node name="@Marker3D@110817" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.980785, 0, -0.19509)
+
+[node name="@Marker3D@110818" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.92388, 0, -0.382683)
+
+[node name="@Marker3D@110819" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.83147, 0, -0.55557)
+
+[node name="@Marker3D@110820" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.707107, 0, -0.707107)
+
+[node name="@Marker3D@110821" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55557, 0, -0.83147)
+
+[node name="@Marker3D@110822" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.382683, 0, -0.92388)
+
+[node name="@Marker3D@110823" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19509, 0, -0.980785)
+
+[node name="@Marker3D@110824" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.83691e-16, 0, -1)
+
+[node name="@Marker3D@110825" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19509, 0, -0.980785)
+
+[node name="@Marker3D@110826" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.382683, 0, -0.92388)
+
+[node name="@Marker3D@110827" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55557, 0, -0.83147)
+
+[node name="@Marker3D@110828" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.707107, 0, -0.707107)
+
+[node name="@Marker3D@110829" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.83147, 0, -0.55557)
+
+[node name="@Marker3D@110830" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.92388, 0, -0.382683)
+
+[node name="@Marker3D@110831" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.980785, 0, -0.19509)
+
+[node name="@Marker3D@110832" type="Marker3D" parent="Node3D/beach/parasol/@Node3D@110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="beach2" parent="Node3D" instance=ExtResource("9_a4plq")]
+transform = Transform3D(-0.725615, -1.83381e-15, 0.688101, 1.86264e-08, 1, 5.96046e-08, -0.688102, 3.60731e-16, -0.725614, -0.544025, 0.027602, -5.04378)
+
+[node name="parasol" parent="Node3D/beach2" instance=ExtResource("7_vrfov")]
+transform = Transform3D(1.39368, 0.459216, -0.272361, -0.526996, 1.3053, -0.495864, 0.0856323, 0.559221, 1.38107, -0.297693, -2.78772, 0.497392)
+
+[node name="_Node3D_110799" type="Node3D" parent="Node3D/beach2/parasol"]
+transform = Transform3D(1.87115, 0, 0, 0, 1.87115, 0, 0, 0, 1.87115, 0, 3.59076, 0)
+script = ExtResource("8_4x43h")
+type = 1
+is_loop = true
+pointList = Array[Vector3]([Vector3(-1.58252, 0.940812, -9.70223), Vector3(-1.12923, 0.778748, -9.96292), Vector3(-0.624877, 0.660806, -10.1402), Vector3(-0.0888454, 0.59152, -10.2272), Vector3(0.458266, 0.573552, -10.2205), Vector3(0.995433, 0.607592, -10.1206), Vector3(1.50201, 0.692333, -9.93113), Vector3(1.95853, 0.824517, -9.65945), Vector3(2.34745, 0.999065, -9.31599), Vector3(2.65383, 1.20927, -8.91394), Vector3(2.86589, 1.44705, -8.46876), Vector3(2.97548, 1.70327, -7.99755), Vector3(2.97839, 1.96809, -7.51843), Vector3(2.8745, 2.23133, -7.0498), Vector3(2.66782, 2.48286, -6.60967), Vector3(2.36628, 2.71303, -6.21497), Vector3(1.98147, 2.91299, -5.88085), Vector3(1.52818, 3.07505, -5.62016), Vector3(1.02383, 3.193, -5.44291), Vector3(0.487798, 3.26228, -5.35592), Vector3(-0.0593138, 3.28025, -5.36253), Vector3(-0.596481, 3.24621, -5.46249), Vector3(-1.10306, 3.16147, -5.65195), Vector3(-1.55958, 3.02928, -5.92363), Vector3(-1.9485, 2.85474, -6.26709), Vector3(-2.25488, 2.64453, -6.66914), Vector3(-2.46694, 2.40675, -7.11432), Vector3(-2.57652, 2.15053, -7.58553), Vector3(-2.57943, 1.88571, -8.06465), Vector3(-2.47555, 1.62248, -8.53328), Vector3(-2.26887, 1.37094, -8.97341), Vector3(-1.96732, 1.14077, -9.36811), Vector3(-1.58252, 0.940812, -9.70223)])
+
+[node name="_Marker3D_110800" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="_Marker3D_110801" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.980785, 0, 0.19509)
+
+[node name="_Marker3D_110802" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.92388, 0, 0.382683)
+
+[node name="_Marker3D_110803" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.83147, 0, 0.55557)
+
+[node name="_Marker3D_110804" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.707107, 0, 0.707107)
+
+[node name="_Marker3D_110805" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55557, 0, 0.83147)
+
+[node name="_Marker3D_110806" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.382683, 0, 0.92388)
+
+[node name="_Marker3D_110807" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19509, 0, 0.980785)
+
+[node name="_Marker3D_110808" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.12303e-17, 0, 1)
+
+[node name="_Marker3D_110809" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19509, 0, 0.980785)
+
+[node name="_Marker3D_110810" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.382683, 0, 0.92388)
+
+[node name="_Marker3D_110811" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55557, 0, 0.83147)
+
+[node name="_Marker3D_110812" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.707107, 0, 0.707107)
+
+[node name="_Marker3D_110813" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.83147, 0, 0.55557)
+
+[node name="_Marker3D_110814" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.92388, 0, 0.382683)
+
+[node name="_Marker3D_110815" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.980785, 0, 0.19509)
+
+[node name="_Marker3D_110816" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1.22461e-16)
+
+[node name="_Marker3D_110817" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.980785, 0, -0.19509)
+
+[node name="_Marker3D_110818" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.92388, 0, -0.382683)
+
+[node name="_Marker3D_110819" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.83147, 0, -0.55557)
+
+[node name="_Marker3D_110820" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.707107, 0, -0.707107)
+
+[node name="_Marker3D_110821" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55557, 0, -0.83147)
+
+[node name="_Marker3D_110822" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.382683, 0, -0.92388)
+
+[node name="_Marker3D_110823" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19509, 0, -0.980785)
+
+[node name="_Marker3D_110824" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.83691e-16, 0, -1)
+
+[node name="_Marker3D_110825" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19509, 0, -0.980785)
+
+[node name="_Marker3D_110826" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.382683, 0, -0.92388)
+
+[node name="_Marker3D_110827" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55557, 0, -0.83147)
+
+[node name="_Marker3D_110828" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.707107, 0, -0.707107)
+
+[node name="_Marker3D_110829" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.83147, 0, -0.55557)
+
+[node name="_Marker3D_110830" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.92388, 0, -0.382683)
+
+[node name="_Marker3D_110831" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.980785, 0, -0.19509)
+
+[node name="_Marker3D_110832" type="Marker3D" parent="Node3D/beach2/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="beach3" parent="Node3D" instance=ExtResource("9_a4plq")]
+transform = Transform3D(0.849893, 1.17073e-16, 0.526956, 1.86264e-08, 1, 5.96046e-08, -0.526956, -1.86529e-15, 0.849893, 3.71067, 0.027602, -6.9083)
+
+[node name="parasol" parent="Node3D/beach3" instance=ExtResource("7_vrfov")]
+transform = Transform3D(1.22621, 0.848225, -0.0659468, -0.84838, 1.22775, 0.0169582, 0.0638865, 0.0235528, 1.4909, -0.297698, -2.78772, 0.497391)
+
+[node name="_Node3D_110799" type="Node3D" parent="Node3D/beach3/parasol"]
+transform = Transform3D(1.87115, 0, 0, 0, 1.87115, 0, 0, 0, 1.87115, 0, 3.59076, 0)
+script = ExtResource("8_4x43h")
+type = 1
+is_loop = true
+pointList = Array[Vector3]([Vector3(8.36592, 0.0609912, -8.96927), Vector3(8.59357, 0.0976845, -8.47276), Vector3(8.73511, 0.193971, -7.95277), Vector3(8.78511, 0.346153, -7.42928), Vector3(8.74164, 0.548381, -6.92241), Vector3(8.60638, 0.792884, -6.45165), Vector3(8.38451, 1.07026, -6.03507), Vector3(8.08457, 1.36986, -5.6887), Vector3(7.71808, 1.68017, -5.42584), Vector3(7.29913, 1.98925, -5.25659), Vector3(6.84382, 2.28524, -5.18746), Vector3(6.36964, 2.55676, -5.2211), Vector3(5.89482, 2.79337, -5.35622), Vector3(5.4376, 2.98598, -5.58763), Vector3(5.01556, 3.12719, -5.90644), Vector3(4.64491, 3.21157, -6.30039), Vector3(4.3399, 3.23588, -6.75434), Vector3(4.11225, 3.19919, -7.25086), Vector3(3.9707, 3.1029, -7.77085), Vector3(3.9207, 2.95072, -8.29434), Vector3(3.96417, 2.74849, -8.8012), Vector3(4.09944, 2.50399, -9.27197), Vector3(4.32131, 2.22661, -9.68854), Vector3(4.62125, 1.92701, -10.0349), Vector3(4.98773, 1.61671, -10.2978), Vector3(5.40668, 1.30762, -10.467), Vector3(5.86199, 1.01163, -10.5362), Vector3(6.33617, 0.740116, -10.5025), Vector3(6.811, 0.503505, -10.3674), Vector3(7.26821, 0.310894, -10.136), Vector3(7.69026, 0.169685, -9.81717), Vector3(8.0609, 0.0853034, -9.42322), Vector3(8.36592, 0.0609912, -8.96927)])
+
+[node name="_Marker3D_110800" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="_Marker3D_110801" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.980785, 0, 0.19509)
+
+[node name="_Marker3D_110802" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.92388, 0, 0.382683)
+
+[node name="_Marker3D_110803" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.83147, 0, 0.55557)
+
+[node name="_Marker3D_110804" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.707107, 0, 0.707107)
+
+[node name="_Marker3D_110805" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55557, 0, 0.83147)
+
+[node name="_Marker3D_110806" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.382683, 0, 0.92388)
+
+[node name="_Marker3D_110807" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19509, 0, 0.980785)
+
+[node name="_Marker3D_110808" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.12303e-17, 0, 1)
+
+[node name="_Marker3D_110809" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19509, 0, 0.980785)
+
+[node name="_Marker3D_110810" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.382683, 0, 0.92388)
+
+[node name="_Marker3D_110811" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55557, 0, 0.83147)
+
+[node name="_Marker3D_110812" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.707107, 0, 0.707107)
+
+[node name="_Marker3D_110813" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.83147, 0, 0.55557)
+
+[node name="_Marker3D_110814" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.92388, 0, 0.382683)
+
+[node name="_Marker3D_110815" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.980785, 0, 0.19509)
+
+[node name="_Marker3D_110816" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1.22461e-16)
+
+[node name="_Marker3D_110817" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.980785, 0, -0.19509)
+
+[node name="_Marker3D_110818" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.92388, 0, -0.382683)
+
+[node name="_Marker3D_110819" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.83147, 0, -0.55557)
+
+[node name="_Marker3D_110820" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.707107, 0, -0.707107)
+
+[node name="_Marker3D_110821" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55557, 0, -0.83147)
+
+[node name="_Marker3D_110822" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.382683, 0, -0.92388)
+
+[node name="_Marker3D_110823" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19509, 0, -0.980785)
+
+[node name="_Marker3D_110824" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.83691e-16, 0, -1)
+
+[node name="_Marker3D_110825" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19509, 0, -0.980785)
+
+[node name="_Marker3D_110826" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.382683, 0, -0.92388)
+
+[node name="_Marker3D_110827" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55557, 0, -0.83147)
+
+[node name="_Marker3D_110828" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.707107, 0, -0.707107)
+
+[node name="_Marker3D_110829" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.83147, 0, -0.55557)
+
+[node name="_Marker3D_110830" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.92388, 0, -0.382683)
+
+[node name="_Marker3D_110831" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.980785, 0, -0.19509)
+
+[node name="_Marker3D_110832" type="Marker3D" parent="Node3D/beach3/parasol/_Node3D_110799"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="VertTrigger" type="Node3D" parent="Node3D"]
+transform = Transform3D(0.668088, 0, 0, 0, 0.668088, 0, 0, 0, 0.668088, 5.06195, -0.652561, -1.17308)
+script = ExtResource("8_4x43h")
+type = 1
+speedup = 2
+pointList = Array[Vector3]([Vector3(1.71283, 0.527282, -1.17308), Vector3(2.18123, 0.55122, -1.17308), Vector3(2.67705, 0.657099, -1.17308), Vector3(3.12174, 0.673794, -1.17308), Vector3(3.81841, 0.673794, -1.17308), Vector3(4.2616, 0.619879, -1.17308), Vector3(4.68828, 0.532133, -1.17308), Vector3(5.09839, 0.520434, -1.17308), Vector3(5.49588, 0.529781, -1.17308), Vector3(5.90071, 0.613927, -1.17308), Vector3(6.20715, 0.673814, -1.17308), Vector3(6.75293, 0.673814, -1.17308), Vector3(7.20949, 0.616105, -1.17308), Vector3(7.60988, 0.527176, -1.17308), Vector3(8.40872, 0.527282, -1.17308), Vector3(8.87713, 0.55122, -1.17308), Vector3(9.37294, 0.657099, -1.17308), Vector3(9.81764, 0.673794, -1.17308), Vector3(10.5143, 0.673794, -1.17308), Vector3(10.9575, 0.619879, -1.17308), Vector3(11.3842, 0.532133, -1.17308), Vector3(11.7943, 0.520434, -1.17308), Vector3(12.1918, 0.529781, -1.17308), Vector3(12.5966, 0.613927, -1.17308), Vector3(12.903, 0.673814, -1.17308), Vector3(13.4488, 0.673814, -1.17308), Vector3(13.9054, 0.616105, -1.17308), Vector3(14.3057, 0.527176, -1.17308), Vector3(14.7831, 0.527282, -1.17308), Vector3(15.2515, 0.55122, -1.17308), Vector3(15.7473, 0.657099, -1.17308), Vector3(16.192, 0.673794, -1.17308), Vector3(16.8886, 0.673794, -1.17308), Vector3(17.3319, 0.619879, -1.17308), Vector3(17.7586, 0.532133, -1.17308), Vector3(18.1686, 0.520434, -1.17308), Vector3(18.5661, 0.529781, -1.17308), Vector3(18.9709, 0.613927, -1.17308), Vector3(19.2774, 0.673814, -1.17308), Vector3(19.8232, 0.673814, -1.17308), Vector3(20.2797, 0.616105, -1.17308), Vector3(20.6801, 0.527176, -1.17308), Vector3(20.6801, 0.527176, -1.17308), Vector3(21.5123, 0.527282, -1.17308)])
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.013, 1.766, 0)
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.31188, 1.80183, 0)
+
+[node name="Marker3D3" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.56974, 1.96031, 0)
+
+[node name="Marker3D4" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.90412, 1.9853, 0)
+
+[node name="Marker3D5" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.86134, 1.9853, 0)
+
+[node name="Marker3D6" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.19797, 1.9046, 0)
+
+[node name="Marker3D7" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.559317, 1.77326, 0)
+
+[node name="Marker3D8" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0545406, 1.75575, 0)
+
+[node name="Marker3D9" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.649506, 1.76974, 0)
+
+[node name="Marker3D10" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25546, 1.89569, 0)
+
+[node name="Marker3D11" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.71415, 1.98533, 0)
+
+[node name="Marker3D12" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.53108, 1.98533, 0)
+
+[node name="Marker3D13" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.21445, 1.89895, 0)
+
+[node name="Marker3D14" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.81376, 1.76584, 0)
+
+[node name="Marker3D16" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.00947, 1.766, 0)
+
+[node name="Marker3D17" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7106, 1.80183, 0)
+
+[node name="Marker3D18" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.45273, 1.96031, 0)
+
+[node name="Marker3D19" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.11836, 1.9853, 0)
+
+[node name="Marker3D20" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.16114, 1.9853, 0)
+
+[node name="Marker3D21" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.82451, 1.9046, 0)
+
+[node name="Marker3D22" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.46316, 1.77326, 0)
+
+[node name="Marker3D23" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.077, 1.75575, 0)
+
+[node name="Marker3D24" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.672, 1.76974, 0)
+
+[node name="Marker3D25" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2779, 1.89569, 0)
+
+[node name="Marker3D26" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.7366, 1.98533, 0)
+
+[node name="Marker3D27" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5535, 1.98533, 0)
+
+[node name="Marker3D28" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2369, 1.89895, 0)
+
+[node name="Marker3D29" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.8362, 1.76584, 0)
+
+[node name="Marker3D31" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5507, 1.766, 0)
+
+[node name="Marker3D32" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.2518, 1.80183, 0)
+
+[node name="Marker3D33" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.9939, 1.96031, 0)
+
+[node name="Marker3D34" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6596, 1.9853, 0)
+
+[node name="Marker3D35" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7023, 1.9853, 0)
+
+[node name="Marker3D36" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.3657, 1.9046, 0)
+
+[node name="Marker3D37" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.0044, 1.77326, 0)
+
+[node name="Marker3D38" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.6182, 1.75575, 0)
+
+[node name="Marker3D39" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.2132, 1.76974, 0)
+
+[node name="Marker3D40" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.8191, 1.89569, 0)
+
+[node name="Marker3D41" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.2778, 1.98533, 0)
+
+[node name="Marker3D42" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.0948, 1.98533, 0)
+
+[node name="Marker3D43" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.7781, 1.89895, 0)
+
+[node name="Marker3D44" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.3774, 1.76584, 0)
+
+[node name="Marker3D45" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.3774, 1.76584, 0)
+
+[node name="Marker3D46" type="Marker3D" parent="Node3D/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.623, 1.766, 0)
+
+[node name="rail" parent="Node3D" instance=ExtResource("8_fry5h")]
+transform = Transform3D(0.668088, 0, 0, 0, 0.668088, 0, 0, 0, 0.668088, 11.619, -0.701683, -1.17308)
+
+[node name="rail3" parent="Node3D" instance=ExtResource("8_fry5h")]
+transform = Transform3D(0.668088, 0, 0, 0, 0.668088, 0, 0, 0, 0.668088, 18.158, -0.701683, -1.17308)
+
+[node name="rail2" parent="Node3D" instance=ExtResource("8_fry5h")]
+transform = Transform3D(0.668088, 0, 0, 0, 0.668088, 0, 0, 0, 0.668088, 4.99794, -0.701683, -1.17308)
+
+[node name="VertTrigger2" type="Node3D" parent="Node3D"]
+transform = Transform3D(0.668088, 0, 0, 0, 0.668088, 0, 0, 0, 0.668088, 5.06195, -0.652561, 8.24712)
+script = ExtResource("8_4x43h")
+type = 1
+speedup = 1
+pointList = Array[Vector3]([Vector3(1.71283, 0.527282, 8.24712), Vector3(2.18123, 0.55122, 8.24712), Vector3(2.67705, 0.657099, 8.24712), Vector3(3.12174, 0.673794, 8.24712), Vector3(3.81841, 0.673794, 8.24712), Vector3(4.2616, 0.619879, 8.24712), Vector3(4.68828, 0.532133, 8.24712), Vector3(5.09839, 0.520434, 8.24712), Vector3(5.49588, 0.529781, 8.24712), Vector3(5.90071, 0.613927, 8.24712), Vector3(6.20715, 0.673814, 8.24712), Vector3(6.75293, 0.673814, 8.24712), Vector3(7.20949, 0.616105, 8.24712), Vector3(7.60988, 0.527176, 8.24712), Vector3(8.40872, 0.527282, 8.24712), Vector3(8.87713, 0.55122, 8.24712), Vector3(9.37294, 0.657099, 8.24712), Vector3(9.81764, 0.673794, 8.24712), Vector3(10.5143, 0.673794, 8.24712), Vector3(10.9575, 0.619879, 8.24712), Vector3(11.3842, 0.532133, 8.24712), Vector3(11.7943, 0.520434, 8.24712), Vector3(12.1918, 0.529781, 8.24712), Vector3(12.5966, 0.613927, 8.24712), Vector3(12.903, 0.673814, 8.24712), Vector3(13.4488, 0.673814, 8.24712), Vector3(13.9054, 0.616105, 8.24712), Vector3(14.3057, 0.527176, 8.24712), Vector3(14.7831, 0.527282, 8.24712), Vector3(15.2515, 0.55122, 8.24712), Vector3(15.7473, 0.657099, 8.24712), Vector3(16.192, 0.673794, 8.24712), Vector3(16.8886, 0.673794, 8.24712), Vector3(17.3319, 0.619879, 8.24712), Vector3(17.7586, 0.532133, 8.24712), Vector3(18.1686, 0.520434, 8.24712), Vector3(18.5661, 0.529781, 8.24712), Vector3(18.9709, 0.613927, 8.24712), Vector3(19.2774, 0.673814, 8.24712), Vector3(19.8232, 0.673814, 8.24712), Vector3(20.2797, 0.616105, 8.24712), Vector3(20.6801, 0.527176, 8.24712), Vector3(20.6801, 0.527176, 8.24712), Vector3(21.5123, 0.527282, 8.24712)])
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.013, 1.766, 0)
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.31188, 1.80183, 0)
+
+[node name="Marker3D3" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.56974, 1.96031, 0)
+
+[node name="Marker3D4" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.90412, 1.9853, 0)
+
+[node name="Marker3D5" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.86134, 1.9853, 0)
+
+[node name="Marker3D6" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.19797, 1.9046, 0)
+
+[node name="Marker3D7" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.559317, 1.77326, 0)
+
+[node name="Marker3D8" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0545406, 1.75575, 0)
+
+[node name="Marker3D9" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.649506, 1.76974, 0)
+
+[node name="Marker3D10" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25546, 1.89569, 0)
+
+[node name="Marker3D11" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.71415, 1.98533, 0)
+
+[node name="Marker3D12" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.53108, 1.98533, 0)
+
+[node name="Marker3D13" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.21445, 1.89895, 0)
+
+[node name="Marker3D14" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.81376, 1.76584, 0)
+
+[node name="Marker3D16" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.00947, 1.766, 0)
+
+[node name="Marker3D17" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7106, 1.80183, 0)
+
+[node name="Marker3D18" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.45273, 1.96031, 0)
+
+[node name="Marker3D19" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.11836, 1.9853, 0)
+
+[node name="Marker3D20" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.16114, 1.9853, 0)
+
+[node name="Marker3D21" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.82451, 1.9046, 0)
+
+[node name="Marker3D22" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.46316, 1.77326, 0)
+
+[node name="Marker3D23" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.077, 1.75575, 0)
+
+[node name="Marker3D24" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.672, 1.76974, 0)
+
+[node name="Marker3D25" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2779, 1.89569, 0)
+
+[node name="Marker3D26" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.7366, 1.98533, 0)
+
+[node name="Marker3D27" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5535, 1.98533, 0)
+
+[node name="Marker3D28" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2369, 1.89895, 0)
+
+[node name="Marker3D29" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.8362, 1.76584, 0)
+
+[node name="Marker3D31" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5507, 1.766, 0)
+
+[node name="Marker3D32" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.2518, 1.80183, 0)
+
+[node name="Marker3D33" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.9939, 1.96031, 0)
+
+[node name="Marker3D34" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6596, 1.9853, 0)
+
+[node name="Marker3D35" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7023, 1.9853, 0)
+
+[node name="Marker3D36" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.3657, 1.9046, 0)
+
+[node name="Marker3D37" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.0044, 1.77326, 0)
+
+[node name="Marker3D38" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.6182, 1.75575, 0)
+
+[node name="Marker3D39" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.2132, 1.76974, 0)
+
+[node name="Marker3D40" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.8191, 1.89569, 0)
+
+[node name="Marker3D41" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.2778, 1.98533, 0)
+
+[node name="Marker3D42" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.0948, 1.98533, 0)
+
+[node name="Marker3D43" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.7781, 1.89895, 0)
+
+[node name="Marker3D44" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.3774, 1.76584, 0)
+
+[node name="Marker3D45" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.3774, 1.76584, 0)
+
+[node name="Marker3D46" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.623, 1.766, 0)
+
+[node name="rail4" parent="Node3D" instance=ExtResource("8_fry5h")]
+transform = Transform3D(0.668088, 0, 0, 0, 0.668088, 0, 0, 0, 0.668088, 11.619, -0.701683, 8.24712)
+
+[node name="rail5" parent="Node3D" instance=ExtResource("8_fry5h")]
+transform = Transform3D(0.668088, 0, 0, 0, 0.668088, 0, 0, 0, 0.668088, 18.158, -0.701683, 8.24712)
+
+[node name="rail6" parent="Node3D" instance=ExtResource("8_fry5h")]
+transform = Transform3D(0.668088, 0, 0, 0, 0.668088, 0, 0, 0, 0.668088, 4.99794, -0.701683, 8.24712)
+
+[node name="VertTrigger3" type="Node3D" parent="Node3D"]
+transform = Transform3D(0.643612, 0, 0, 0, 0.648721, 0, 0, 0, 0.544565, 5.3294, -1.35057, -0.222934)
+script = ExtResource("8_4x43h")
+speedup = 4
+pointList = Array[Vector3]([Vector3(2.11231, 0.0139952, -0.222934), Vector3(41.8748, 0.0139952, -0.222934)])
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9985, 2.10347, 0)
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.7817, 2.10347, 0)
+
+[node name="VertTrigger4" type="Node3D" parent="Node3D"]
+transform = Transform3D(0.643612, 0, 0, 0, 0.648721, 0, 0, 0, 0.544565, 5.3294, -1.35057, 7.37745)
+script = ExtResource("8_4x43h")
+speedup = 4
+pointList = Array[Vector3]([Vector3(41.8748, 0.0139952, 7.37745), Vector3(2.11231, 0.0139952, 7.37745)])
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.7817, 2.10347, 0)
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9985, 2.10347, 0)
+
+[node name="VertTrigger9" type="Node3D" parent="Node3D"]
+transform = Transform3D(0.643612, 0, 0, 0, 0.648721, 0, 0, 0, 0.563066, 5.3294, -1.35057, -0.352044)
+script = ExtResource("8_4x43h")
+type = 1
+speedup = 4
+pointList = Array[Vector3]([Vector3(2.11231, 0.0139952, -0.352044), Vector3(21.3987, 0.0139952, -0.352044)])
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9985, 2.10347, 0)
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.9673, 2.10347, 0)
+
+[node name="VertTrigger10" type="Node3D" parent="Node3D"]
+transform = Transform3D(0.643612, 0, 0, 0, 0.648721, 0, 0, 0, 0.563066, 5.3294, -1.35057, 7.50656)
+script = ExtResource("8_4x43h")
+type = 1
+speedup = 4
+pointList = Array[Vector3]([Vector3(21.3987, 0.0139952, 7.50656), Vector3(2.11231, 0.0139952, 7.50656)])
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.9673, 2.10347, 0)
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9985, 2.10347, 0)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Node3D"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0, 0, 0)
+material_override = ExtResource("10_0p0ns")
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Node3D/CSGCombiner3D"]
+transform = Transform3D(0.999989, 0, 0, 0, 1, 0, 0, 0, 0.999989, 0, -4.40503, -11.2513)
+size = Vector3(50, 8.81006, 72.5029)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Node3D/CSGCombiner3D"]
+transform = Transform3D(-4.36217e-08, -0.0639572, 0.99795, -2.79567e-09, 0.997953, 0.0639575, -0.999997, 0, -4.37112e-08, 3.3234, 10.5207, 11.5)
+size = Vector3(6, 22, 9.97906)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Node3D/CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0.035667, 0.999364, 1.55905e-09, -0.999363, 0.035667, -4.36835e-08, 12, 5.5, 12.0455)
+size = Vector3(6, 22, 9)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Node3D/CSGCombiner3D"]
+transform = Transform3D(0.99994, 0, 0, 0, 1, 0, 0, 0, 0.99994, 3.58219, -2.40906, -11.6864)
+operation = 2
+size = Vector3(7.85373, 9.18091, 19.1062)
+
+[node name="Pipes" parent="Node3D/CSGCombiner3D/CSGBox3D5" instance=ExtResource("10_bus40")]
+transform = Transform3D(0, 0, 2.16246, 0, 2.16238, 0, -2.16246, 0, 0, -2.13772, 0.206668, 7.36592)
+
+[node name="Pipes2" parent="Node3D/CSGCombiner3D/CSGBox3D5" instance=ExtResource("10_bus40")]
+transform = Transform3D(0, 0, 2.16246, 0, 2.16238, 0, -2.16246, 0, 0, -2.13772, 0.206668, 3.36577)
+
+[node name="Pipes3" parent="Node3D/CSGCombiner3D/CSGBox3D5" instance=ExtResource("10_bus40")]
+transform = Transform3D(0, 0, 2.16246, 0, 2.16238, 0, -2.16246, 0, 0, -2.13772, 0.206668, -0.634375)
+
+[node name="Pipes4" parent="Node3D/CSGCombiner3D/CSGBox3D5" instance=ExtResource("10_bus40")]
+transform = Transform3D(0, 0, 2.16246, 0, 2.16238, 0, -2.16246, 0, 0, -2.13772, 0.206668, -4.63452)
+
+[node name="Pipes5" parent="Node3D/CSGCombiner3D/CSGBox3D5" instance=ExtResource("10_bus40")]
+transform = Transform3D(0, 0, 2.16246, 0, 2.16238, 0, -2.16246, 0, 0, -2.13772, 0.206668, -7.63463)
+
+[node name="Pipes6" parent="Node3D/CSGCombiner3D/CSGBox3D5" instance=ExtResource("10_bus40")]
+transform = Transform3D(-1.89048e-07, 0, -2.16246, 0, 2.16238, 0, 2.16246, 0, -1.89048e-07, 2.14296, 0.206668, -7.56453)
+
+[node name="Pipes7" parent="Node3D/CSGCombiner3D/CSGBox3D5" instance=ExtResource("10_bus40")]
+transform = Transform3D(-1.89048e-07, 0, -2.16246, 0, 2.16238, 0, 2.16246, 0, -1.89048e-07, 2.14296, 0.206668, -3.56438)
+
+[node name="Pipes8" parent="Node3D/CSGCombiner3D/CSGBox3D5" instance=ExtResource("10_bus40")]
+transform = Transform3D(-1.89048e-07, 0, -2.16246, 0, 2.16238, 0, 2.16246, 0, -1.89048e-07, 2.14296, 0.206668, 0.435769)
+
+[node name="Pipes9" parent="Node3D/CSGCombiner3D/CSGBox3D5" instance=ExtResource("10_bus40")]
+transform = Transform3D(-1.89048e-07, 0, -2.16246, 0, 2.16238, 0, 2.16246, 0, -1.89048e-07, 2.14296, 0.206668, 4.43591)
+
+[node name="Pipes10" parent="Node3D/CSGCombiner3D/CSGBox3D5" instance=ExtResource("10_bus40")]
+transform = Transform3D(-1.89048e-07, 0, -2.16246, 0, 2.16238, 0, 2.16246, 0, -1.89048e-07, 2.14296, 0.206668, 7.43603)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Node3D/CSGCombiner3D"]
+transform = Transform3D(0.999992, 0, 0, 0, 1, 0, 0, 0, 0.999992, -0.743656, 0, 4.5346)
+size = Vector3(0.59375, 1, 10.0692)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="Node3D/CSGCombiner3D"]
+transform = Transform3D(0.999992, 0, 0, 0, 1, 0, 0, 0, 0.999992, 8.27391, 0, 4.5346)
+size = Vector3(0.59375, 1, 10.0692)
+
+[node name="CSGTorus3D" type="CSGTorus3D" parent="Node3D/CSGCombiner3D"]
+transform = Transform3D(1.99427, 0, 0, 0, 0.543999, 0, 0, 0, 1.99427, 3.91539, 0, 3.50696)
+operation = 2
+inner_radius = 1.33339
+outer_radius = 1.82
+sides = 32
+
+[node name="CSGTorus3D2" type="CSGTorus3D" parent="Node3D/CSGCombiner3D"]
+transform = Transform3D(0.982136, 0, 0, 0, 0.267908, 0, 0, 0, 0.982136, 3.91539, 0, 3.50696)
+operation = 2
+inner_radius = 1.33339
+outer_radius = 2.5015
+sides = 16
+
+[node name="CSGTorus3D3" type="CSGTorus3D" parent="Node3D/CSGCombiner3D"]
+transform = Transform3D(0.373999, 0, 0, 0, 0.10202, 0, 0, 0, 0.373999, 3.91539, 0, 3.50696)
+operation = 2
+inner_radius = 0.647713
+outer_radius = 3.03033
+sides = 16
+
+[node name="VertTrigger5" type="Node3D" parent="Node3D"]
+script = ExtResource("8_4x43h")
+type = 1
+pointList = Array[Vector3]([Vector3(0.495279, 0.49942, -0.445353), Vector3(-8.41027, 0.49942, -0.445353)])
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.495279, 0.49942, -0.445353)
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.41027, 0.49942, -0.445353)
+
+[node name="VertTrigger6" type="Node3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.559863)
+script = ExtResource("8_4x43h")
+type = 1
+pointList = Array[Vector3]([Vector3(0.495279, 0.49942, -1.00522), Vector3(-8.41027, 0.49942, -1.00522)])
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.495279, 0.49942, -0.445353)
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.41027, 0.49942, -0.445353)
+
+[node name="VertTrigger7" type="Node3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
+script = ExtResource("8_4x43h")
+type = 1
+pointList = Array[Vector3]([Vector3(0.495279, 0.49942, 8.55465), Vector3(-8.41027, 0.49942, 8.55465)])
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.495279, 0.49942, -0.445353)
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.41027, 0.49942, -0.445353)
+
+[node name="VertTrigger8" type="Node3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.44014)
+script = ExtResource("8_4x43h")
+type = 1
+pointList = Array[Vector3]([Vector3(0.495279, 0.49942, 7.99479), Vector3(-8.41027, 0.49942, 7.99479)])
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.495279, 0.49942, -0.445353)
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.41027, 0.49942, -0.445353)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(-0.321935, -0.946762, 0, 0.946762, -0.321935, 0, 0, 0, 1, -0.234767, 4.8484, 3.67242)
+mesh = SubResource("TorusMesh_orisc")
+skeleton = NodePath("../..")
+
+[node name="Area3D" type="Area3D" parent="Node3D/MeshInstance3D"]
+script = ExtResource("12_cnsj8")
+velocity = Vector3(0, 10, 10)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/MeshInstance3D/Area3D"]
+shape = SubResource("SphereShape3D_tbiuo")
+debug_color = Color(0, 0.6, 0.7, 0.42)
+
+[node name="Node3D2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, -1.86687, -27.3507)
+
+[node name="QuarterPipeTest" parent="Node3D2" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.00699, 0.858304, -4.49644)
+
+[node name="QuarterPipeTest3" parent="Node3D2" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.00699, 0.858304, -4.49644)
+
+[node name="QuarterPipeTest4" parent="Node3D2" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.00699, 0.858304, -4.49644)
+
+[node name="QuarterPipeTest2" parent="Node3D2" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.99301, 0.858304, -4.49644)
+
+[node name="QuarterPipeTest5" parent="Node3D2" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.993, 0.858304, -4.49644)
+
+[node name="QuarterPipeTest6" parent="Node3D2" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.993, 0.858304, -4.49644)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Node3D2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.99348, 0.910736, -4.46013)
+material_override = ExtResource("14_qer7p")
+use_collision = true
+size = Vector3(1.90979, 1.88776, 4.09778)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Node3D2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 11.2789, 0.910736, -4.46013)
+material_override = ExtResource("14_qer7p")
+use_collision = true
+size = Vector3(1.90979, 1.88776, 0.642639)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Node3D2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 11.2789, 0.910736, 1.53987)
+material_override = ExtResource("14_qer7p")
+use_collision = true
+size = Vector3(1.90979, 1.88776, 0.642639)
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="Node3D2"]
+transform = Transform3D(-4.30703e-08, -0.170639, 0.985334, -7.45889e-09, 0.985334, 0.170639, -1, 0, -4.37114e-08, -17.4905, 0.533979, -4.46013)
+material_override = ExtResource("14_qer7p")
+use_collision = true
+size = Vector3(1.90979, 2.34378, 1.56227)
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="Node3D2"]
+transform = Transform3D(-4.30703e-08, -0.170639, 0.985334, -7.45889e-09, 0.985334, 0.170639, -1, 0, -4.37114e-08, -17.4905, 0.533979, 1.48421)
+material_override = ExtResource("14_qer7p")
+use_collision = true
+size = Vector3(1.90979, 2.34378, 1.56227)
+
+[node name="QuarterPipeTest7" parent="Node3D2" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.99314, 0.858304, 1.51393)
+
+[node name="QuarterPipeTest8" parent="Node3D2" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -10.9931, 0.858304, 1.51393)
+
+[node name="QuarterPipeTest9" parent="Node3D2" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -14.9931, 0.858304, 1.51393)
+
+[node name="QuarterPipeTest11" parent="Node3D2" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 5.00686, 0.858304, 1.51393)
+
+[node name="QuarterPipeTest12" parent="Node3D2" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 9.00686, 0.858304, 1.51393)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Node3D2"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -6.99267, 0.910736, 1.47762)
+material_override = ExtResource("14_qer7p")
+use_collision = true
+size = Vector3(1.90979, 1.88776, 4.09778)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Node3D2"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 1.00733, 0.910736, 1.47762)
+material_override = ExtResource("14_qer7p")
+use_collision = true
+size = Vector3(1.90979, 1.88776, 4.09778)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Node3D2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.25477, -1.00417, -1.50523)
+use_collision = true
+size = Vector3(4, 1.99426, 28.4248)
+material = ExtResource("10_0p0ns")
+
+[node name="VertTrigger" type="Node3D" parent="Node3D2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.99301, 1.83782, -5.28938)
+script = ExtResource("8_4x43h")
+pointList = Array[Vector3]([Vector3(-6.60901, -14.254, -32.6401), Vector3(17.6397, -0.253994, -32.6401), Vector3(19.007, -0.02905, -32.6401), Vector3(47.007, -0.02905, -32.6401)])
+
+[node name="Marker3D3" type="Marker3D" parent="Node3D2/VertTrigger"]
+transform = Transform3D(1, 2.18557e-08, 5.85622e-09, -2.18557e-08, 0.866025, 0.5, 5.85622e-09, -0.5, 0.866025, 0, -14.2249, -39.616)
+
+[node name="Marker3D4" type="Marker3D" parent="Node3D2/VertTrigger"]
+transform = Transform3D(1, 2.18557e-08, 5.85622e-09, -2.18557e-08, 0.866025, 0.5, 5.85622e-09, -0.5, 0.866025, 0, -0.224944, -15.3673)
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D2/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
+
+[node name="Marker3D" type="Marker3D" parent="Node3D2/VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 14)
+
+[node name="VertTrigger2" type="Node3D" parent="Node3D2"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -2.99301, 1.83782, 2.30628)
+script = ExtResource("8_4x43h")
+pointList = Array[Vector3]([Vector3(47.007, -0.02905, -25.1586), Vector3(19.007, -0.02905, -25.1586), Vector3(17.6397, -0.253994, -25.1586), Vector3(-6.60901, -14.254, -25.1586)])
+
+[node name="Marker3D8" type="Marker3D" parent="Node3D2/VertTrigger2"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.114182, 0, -14)
+
+[node name="Marker3D7" type="Marker3D" parent="Node3D2/VertTrigger2"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.114185, 0, 14)
+
+[node name="Marker3D6" type="Marker3D" parent="Node3D2/VertTrigger2"]
+transform = Transform3D(-1, -6.55671e-08, 6.98541e-08, -2.18557e-08, 0.866025, 0.5, -9.3279e-08, 0.5, -0.866025, -0.114185, -0.224944, 15.3673)
+
+[node name="Marker3D5" type="Marker3D" parent="Node3D2/VertTrigger2"]
+transform = Transform3D(-1, -6.55671e-08, 6.98541e-08, -2.18557e-08, 0.866025, 0.5, -9.3279e-08, 0.5, -0.866025, -0.114183, -14.2249, 39.616)
+
+[node name="Node3D3" type="Node3D" parent="."]
+transform = Transform3D(0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, 9.02625, -7.34909, -27.3507)
+
+[node name="QuarterPipeTest" parent="Node3D3" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.00699, 0.858304, -4.49644)
+
+[node name="QuarterPipeTest3" parent="Node3D3" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.00699, 0.858304, -4.49644)
+
+[node name="QuarterPipeTest4" parent="Node3D3" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.00699, 0.858304, -4.49644)
+
+[node name="QuarterPipeTest2" parent="Node3D3" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.99301, 0.858304, -4.49644)
+
+[node name="QuarterPipeTest5" parent="Node3D3" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.993, 0.858304, -4.49644)
+
+[node name="QuarterPipeTest6" parent="Node3D3" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.993, 0.858304, -4.49644)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Node3D3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.99348, 0.910736, -4.46013)
+material_override = ExtResource("14_qer7p")
+use_collision = true
+size = Vector3(1.90979, 1.88776, 4.09778)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="Node3D3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -17.2986, 0.910736, 1.53987)
+material_override = ExtResource("14_qer7p")
+use_collision = true
+size = Vector3(1.90979, 1.88776, 0.642639)
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="Node3D3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -17.2986, 0.910736, -4.46013)
+material_override = ExtResource("14_qer7p")
+use_collision = true
+size = Vector3(1.90979, 1.88776, 0.642639)
+
+[node name="QuarterPipeTest7" parent="Node3D3" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.99314, 0.858304, 1.51393)
+
+[node name="QuarterPipeTest8" parent="Node3D3" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -10.9931, 0.858304, 1.51393)
+
+[node name="QuarterPipeTest9" parent="Node3D3" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -14.9931, 0.858304, 1.51393)
+
+[node name="QuarterPipeTest11" parent="Node3D3" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 5.00686, 0.858304, 1.51393)
+
+[node name="QuarterPipeTest12" parent="Node3D3" instance=ExtResource("13_ldgyv")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 9.00686, 0.858304, 1.51393)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Node3D3"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -6.99267, 0.910736, 1.47762)
+material_override = ExtResource("14_qer7p")
+use_collision = true
+size = Vector3(1.90979, 1.88776, 4.09778)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Node3D3"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 1.00733, 0.910736, 1.47762)
+material_override = ExtResource("14_qer7p")
+use_collision = true
+size = Vector3(1.90979, 1.88776, 4.09778)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Node3D3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.25477, -1.00417, -1.50523)
+use_collision = true
+size = Vector3(4, 1.99426, 28.4248)
+material = ExtResource("10_0p0ns")
+
+[node name="VertTrigger" type="Node3D" parent="Node3D3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.99301, 1.83782, -5.28938)
+script = ExtResource("8_4x43h")
+
+[node name="VertTrigger2" type="Node3D" parent="Node3D3"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -2.99301, 1.83782, 2.30628)
+script = ExtResource("8_4x43h")
+pointList = Array[Vector3]([Vector3(17.6397, -0.253997, -25.0444), Vector3(-6.60903, -14.254, -25.0444)])
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D3/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
+
+[node name="Marker3D" type="Marker3D" parent="Node3D3/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 14)
+
+[node name="Node3D4" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09401, 0.741427, -1.18203)
+script = ExtResource("15_13us3")
+
+[node name="Area3D" type="Area3D" parent="Node3D4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D4/Area3D"]
+shape = SubResource("SphereShape3D_1kxw2")
+debug_color = Color(0, 0.6, 0.7, 0.42)
+
+[node name="fonts" parent="Node3D4" instance=ExtResource("15_dxlpg")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Text" parent="Node3D4/fonts" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_13us3")
+
+[node name="Text_001" parent="Node3D4/fonts" index="1"]
+visible = false
+surface_material_override/0 = SubResource("StandardMaterial3D_1kxw2")
+
+[node name="Text_002" parent="Node3D4/fonts" index="2"]
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Node3D4"]
+root_node = NodePath("../fonts")
+libraries = {
+&"": SubResource("AnimationLibrary_1kxw2")
+}
+script = ExtResource("17_1kxw2")
+animation = "Wobble"
+
+[connection signal="area_entered" from="Node3D4/Area3D" to="Node3D4" method="_on_area_3d_area_entered"]
+
+[editable path="Node3D4/fonts"]

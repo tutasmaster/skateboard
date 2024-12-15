@@ -10,9 +10,9 @@ func _ready():
 func _process(delta):
 	
 	var distance = 2.0
-	distance += GameManager.player.velocity.length()/GameManager.player.SPEED_CAP*2
+	distance += GameManager.player.velocity.length()/SkateData.SPEED_CAP*2
 	var fov = 76
-	fov += GameManager.player.velocity.length()/GameManager.player.SPEED_CAP*5
+	fov += GameManager.player.velocity.length()/SkateData.SPEED_CAP*5
 	if(GameManager.playerScript != null && GameManager.playerScript.target != null):
 		var difference = (GameManager.playerScript.target.global_position - GameManager.player.global_position)/2
 		look_at(GameManager.playerScript.target.global_position - difference,Vector3.UP)
@@ -24,7 +24,7 @@ func _process(delta):
 		#,Input.get_axis("camera_up","camera_down"))
 	if(target.state == Wooper.STATE.vert):
 		distance = 2.0
-		distance += GameManager.player.vert_vel.length()/GameManager.player.SPEED_CAP*2
+		distance += GameManager.player.vert_vel.length()/SkateData.SPEED_CAP*2
 		var angle = target.get_vert_plane_angle()
 		var angle_float = atan2(angle.basis.z.z,angle.basis.z.x)
 		$SpringArm3D.rotation = Quaternion.from_euler($SpringArm3D.rotation).slerp(Quaternion.from_euler(-Vector3(PI/2,target.vert_angle_offset if target.vert_side == 0 else -target.vert_angle_offset,0)),delta*3).get_euler()

@@ -13,5 +13,4 @@ func _ready():
 
 func _on_spin_box_value_changed(value):
 	self.prop_value = value
-	if(menu != null):
-		menu.update_property(prop_name, prop_value)
+	SkateData.update_property(prop_name, prop_value)

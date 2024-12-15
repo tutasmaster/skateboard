@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bpgxiehgclgyd"]
 
 [ext_resource type="PackedScene" uid="uid://bdcjpfghape0j" path="res://Assets/Skatepark/rail.blend" id="1_yelwd"]
-[ext_resource type="Script" path="res://Scripts/Skate/VertTrigger.gd" id="2_ur71e"]
+[ext_resource type="Script" uid="uid://bvyma6a8cyjsj" path="res://Scripts/Skate/VertTrigger.gd" id="2_ur71e"]
 
 [node name="rail" instance=ExtResource("1_yelwd")]
 

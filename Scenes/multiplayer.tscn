@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dvjriqefd60x8"]
 
-[ext_resource type="Script" path="res://Scripts/Multiplayer/MultiplayerMenu.gd" id="1_kcnl1"]
+[ext_resource type="Script" uid="uid://u8xpc078yxuu" path="res://Scripts/Multiplayer/MultiplayerMenu.gd" id="1_kcnl1"]
 
 [node name="Control" type="Control" node_paths=PackedStringArray("ip_address", "port", "nickname")]
 layout_mode = 3

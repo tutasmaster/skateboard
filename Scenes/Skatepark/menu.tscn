@@ -1,7 +1,7 @@
 [gd_scene load_steps=27 format=4 uid="uid://bsqroyiqnc48r"]
 
-[ext_resource type="Script" path="res://Scripts/Menu.gd" id="1_bvdke"]
-[ext_resource type="Script" path="res://Scripts/AutoPlay.gd" id="2_rs8et"]
+[ext_resource type="Script" uid="uid://b1tmnuoc5h042" path="res://Scripts/Menu.gd" id="1_bvdke"]
+[ext_resource type="Script" uid="uid://bxdj3f885icva" path="res://Scripts/AutoPlay.gd" id="2_rs8et"]
 [ext_resource type="PackedScene" uid="uid://bj82o1gst4tex" path="res://Scenes/UI/property.tscn" id="2_tlqlm"]
 [ext_resource type="Texture2D" uid="uid://cfjnkc0oy1tdb" path="res://Assets/Textures/BoardArt.png" id="3_2dw8i"]
 [ext_resource type="PackedScene" uid="uid://b2lulvsgmewsx" path="res://Scenes/UI/propertyCategory.tscn" id="3_3dqsu"]
@@ -66,8 +66,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_h8sef"]
 _data = {
-"Close": SubResource("Animation_6cgnt"),
-"Open": SubResource("Animation_pkg2k")
+&"Close": SubResource("Animation_6cgnt"),
+&"Open": SubResource("Animation_pkg2k")
 }
 
 [sub_resource type="Animation" id="Animation_q01nj"]
@@ -93,8 +93,8 @@ resource_name = "new_animation"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c74u4"]
 _data = {
-"SkateSpin": SubResource("Animation_q01nj"),
-"new_animation": SubResource("Animation_u0pji")
+&"SkateSpin": SubResource("Animation_q01nj"),
+&"new_animation": SubResource("Animation_u0pji")
 }
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3yism"]
@@ -275,7 +275,7 @@ property_category = ExtResource("3_3dqsu")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_h8sef")
+&"": SubResource("AnimationLibrary_h8sef")
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -306,7 +306,7 @@ render_target_update_mode = 4
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport"]
 root_node = NodePath(".")
 libraries = {
-"": SubResource("AnimationLibrary_c74u4")
+&"": SubResource("AnimationLibrary_c74u4")
 }
 script = ExtResource("2_rs8et")
 

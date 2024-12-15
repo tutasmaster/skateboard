@@ -7,8 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://pqlomjxlleb5" path="res://Scenes/Skatepark/camera_pivot.tscn" id="4_gu6i7"]
 [ext_resource type="Material" uid="uid://c5vpvypo2kyk4" path="res://Assets/Materials/Test/TestTexture.tres" id="5_3u6dy"]
 [ext_resource type="PackedScene" uid="uid://kl0o5c68shap" path="res://Assets/Skatepark/Quarterpipe.glb" id="5_hog18"]
-[ext_resource type="Script" path="res://Scripts/Skate/VertTrigger.gd" id="5_nn6sb"]
-[ext_resource type="Script" path="res://Scripts/MarkerGenerator.gd" id="8_07u6o"]
+[ext_resource type="Script" uid="uid://bvyma6a8cyjsj" path="res://Scripts/Skate/VertTrigger.gd" id="5_nn6sb"]
+[ext_resource type="Script" uid="uid://bsxyi8gwxln8o" path="res://Scripts/MarkerGenerator.gd" id="8_07u6o"]
 [ext_resource type="PackedScene" uid="uid://bqasctgum7v4e" path="res://Assets/Skatepark/Pipe end.blend" id="9_5gjaw"]
 [ext_resource type="Material" uid="uid://u78gsialrinq" path="res://Assets/Materials/Test/TestTexture2.tres" id="9_qqxe7"]
 

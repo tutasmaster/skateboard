@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6s1bu4iyxf4v"]
+
+[ext_resource type="Script" uid="uid://cq420obpods2j" path="res://Scripts/UI/option.gd" id="1_iakcp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_iakcp"]
+font_size = 76
+outline_color = Color(0, 0, 0, 0)
+shadow_size = 13
+shadow_color = Color(0, 0, 0, 0.521569)
+shadow_offset = Vector2(5, 5)
+
+[node name="Option" type="Node2D"]
+script = ExtResource("1_iakcp")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -11.5
+offset_right = 24.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "START"
+label_settings = SubResource("LabelSettings_iakcp")
+horizontal_alignment = 1

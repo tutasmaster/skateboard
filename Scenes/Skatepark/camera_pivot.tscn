@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://pqlomjxlleb5"]
 
-[ext_resource type="Script" path="res://Scripts/Player/skateCam.gd" id="1_tvtkb"]
+[ext_resource type="Script" uid="uid://6ba7ylln6j0o" path="res://Scripts/Player/skateCam.gd" id="1_tvtkb"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qeif0"]
 

@@ -1,11 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://7fvi2whbg4yg"]
+[gd_scene load_steps=15 format=3 uid="uid://7fvi2whbg4yg"]
 
-[ext_resource type="Script" path="res://Scripts/Player/WooperNextGen.gd" id="1_ea8to"]
+[ext_resource type="Script" uid="uid://c4g8fon7tfuff" path="res://Scripts/Player/WooperNextGen.gd" id="1_ea8to"]
 [ext_resource type="PackedScene" uid="uid://4p64crc5rs2h" path="res://Scenes/decal.tscn" id="2_u1lca"]
 [ext_resource type="AudioStream" uid="uid://dtjm1r7gstqbb" path="res://Assets/Sounds/Ollie.mp3" id="3_d6n7p"]
 [ext_resource type="AudioStream" uid="uid://bfikpphw0aa77" path="res://Assets/Sounds/rail2.mp3" id="4_ih6wk"]
 [ext_resource type="AudioStream" uid="uid://bi3oktvaw8ho6" path="res://Assets/Sounds/drop.mp3" id="5_hvx5u"]
-[ext_resource type="PackedScene" uid="uid://bjch3dhc8hymo" path="res://Assets/Skatepark/skate.blend" id="6_aonrd"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_364gf"]
 radius = 0.202398
@@ -121,30 +120,20 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_00nhy"]
 _data = {
-"Fail": SubResource("Animation_cdchw"),
-"RESET": SubResource("Animation_1ceji"),
-"Sucess": SubResource("Animation_v1t08")
+&"Fail": SubResource("Animation_cdchw"),
+&"RESET": SubResource("Animation_1ceji"),
+&"Sucess": SubResource("Animation_v1t08")
 }
-
-[sub_resource type="SystemFont" id="SystemFont_onntl"]
-font_names = PackedStringArray("Impact")
-
-[sub_resource type="LabelSettings" id="LabelSettings_amqa3"]
-font = SubResource("SystemFont_onntl")
-font_size = 61
 
 [node name="Wooper" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, -0.000471205, 0, 0.000471205, 1, 0, 0.588162, 0)
 script = ExtResource("1_ea8to")
-SPEED_CAP = 30
-DEBUG_GRIND = true
 STICKER = ExtResource("2_u1lca")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 
 [node name="SlapRay" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.3714e-08, 1, 0, -1, -4.3714e-08, 0, 0.189181, -8.91429e-05)
-visible = false
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.189181, -8.91429e-05)
 target_position = Vector3(0, -0.75, 0)
 hit_back_faces = false
 
@@ -168,12 +157,12 @@ hit_back_faces = false
 
 [node name="Forward" type="RayCast3D" parent="WallCheck"]
 transform = Transform3D(1, 0, 0, 0, -4.3714e-08, 1, 0, -1, -4.3714e-08, 0, 0.182277, -3.70712e-05)
-target_position = Vector3(0, -0.42, 0)
+target_position = Vector3(0, -0.335, 0)
 hit_back_faces = false
 
 [node name="Backward" type="RayCast3D" parent="WallCheck"]
 transform = Transform3D(-1, 8.74228e-08, 3.82137e-15, 0, -4.3714e-08, 1, 8.74228e-08, 1, 4.3714e-08, 0, 0.182277, -3.70712e-05)
-target_position = Vector3(0, -0.42, 0)
+target_position = Vector3(0, -0.34, 0)
 hit_back_faces = false
 
 [node name="Left" type="RayCast3D" parent="WallCheck"]
@@ -214,6 +203,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.167769, -7.90537e-05)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.91038e-11)
 shape = SubResource("SphereShape3D_364gf")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Balance" type="Control" parent="."]
 layout_mode = 3
@@ -339,7 +329,7 @@ horizontal_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Balance"]
 libraries = {
-"": SubResource("AnimationLibrary_00nhy")
+&"": SubResource("AnimationLibrary_00nhy")
 }
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
@@ -355,155 +345,3 @@ stream = ExtResource("5_hvx5u")
 
 [node name="Backwards" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0)
-
-[node name="Control" type="Control" parent="."]
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Control/HBoxContainer"]
-layout_mode = 2
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="Control/HBoxContainer/AspectRatioContainer"]
-custom_minimum_size = Vector2(400, 0)
-layout_mode = 2
-stretch = true
-
-[node name="SubViewport" type="SubViewport" parent="Control/HBoxContainer/AspectRatioContainer/SubViewportContainer"]
-transparent_bg = true
-handle_input_locally = false
-size = Vector2i(400, 400)
-render_target_update_mode = 0
-
-[node name="Node3D" type="Node3D" parent="Control/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport"]
-
-[node name="skate" parent="Control/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/Node3D" instance=ExtResource("6_aonrd")]
-
-[node name="Skeleton3D" parent="Control/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/Node3D/skate/Armature" index="0"]
-bones/0/position = Vector3(0, 0.463902, 0)
-bones/0/rotation = Quaternion(0, -0.22004, 0, 0.975491)
-bones/1/rotation = Quaternion(-0.167562, 0.0307915, -0.153473, 0.973356)
-bones/2/rotation = Quaternion(0.0882626, -0.0032248, -0.00196212, 0.99609)
-bones/3/rotation = Quaternion(0.0616015, 0.501494, -0.114684, 0.855311)
-bones/4/position = Vector3(-0.361902, 0.190306, -0.13153)
-bones/4/rotation = Quaternion(0.707107, -1.99496e-07, -1.99496e-07, 0.707107)
-bones/5/position = Vector3(0.310082, -0.136316, -0.143836)
-bones/5/rotation = Quaternion(0.671968, -0.171308, -0.171308, 0.699833)
-bones/6/position = Vector3(-0.142508, 0.167769, -0.263201)
-bones/6/rotation = Quaternion(-0.615437, -0.0448119, 0.0938319, 0.781297)
-bones/7/position = Vector3(-2.41701, 1.46318, 0.0259068)
-bones/7/rotation = Quaternion(-0.836717, -0.540963, -0.0628285, 0.0575788)
-
-[node name="Axolotl" parent="Control/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/Node3D/skate/Armature/Skeleton3D" index="0"]
-visible = false
-layers = 524288
-
-[node name="Eyes" parent="Control/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/Node3D/skate/Armature/Skeleton3D" index="1"]
-visible = false
-layers = 524288
-
-[node name="Helmet" parent="Control/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/Node3D/skate/Armature/Skeleton3D" index="2"]
-visible = false
-layers = 524288
-
-[node name="Maid Dress" parent="Control/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/Node3D/skate/Armature/Skeleton3D" index="3"]
-visible = false
-layers = 524288
-
-[node name="Maid Hat" parent="Control/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/Node3D/skate/Armature/Skeleton3D" index="4"]
-visible = false
-layers = 524288
-
-[node name="Skamtebord" parent="Control/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/Node3D/skate/Armature/Skeleton3D" index="5"]
-layers = 524288
-
-[node name="Stache" parent="Control/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/Node3D/skate/Armature/Skeleton3D" index="6"]
-visible = false
-layers = 524288
-
-[node name="TopHat" parent="Control/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/Node3D/skate/Armature/Skeleton3D" index="7"]
-visible = false
-layers = 524288
-
-[node name="Woopah" parent="Control/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/Node3D/skate/Armature/Skeleton3D" index="8"]
-layers = 524288
-
-[node name="Camera3D" type="Camera3D" parent="Control/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport"]
-transform = Transform3D(-0.715055, -0.318977, 0.622053, 0, 0.889831, 0.456289, -0.699068, 0.326272, -0.636278, 3.39537, 3.67641, -3.55468)
-cull_mask = 524288
-fov = 71.5
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/HBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/HBoxContainer/MarginContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="Control/HBoxContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "WOOP SKATE"
-label_settings = SubResource("LabelSettings_amqa3")
-
-[node name="Button" type="Button" parent="Control/HBoxContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "RESET"
-
-[node name="Button2" type="Button" parent="Control/HBoxContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "CHANGE LEVEL"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/HBoxContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="Button" type="Button" parent="Control/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "<"
-
-[node name="Button3" type="Button" parent="Control/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-disabled = true
-text = "CURRENT OUTFIT"
-
-[node name="Button2" type="Button" parent="Control/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = ">"
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Control/HBoxContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="Button" type="Button" parent="Control/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = "<"
-
-[node name="Button3" type="Button" parent="Control/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-disabled = true
-text = "CURRENT SKATE"
-
-[node name="Button2" type="Button" parent="Control/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = ">"
-
-[editable path="Control/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/Node3D/skate"]

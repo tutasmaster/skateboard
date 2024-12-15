@@ -16,5 +16,4 @@ func _on_property_value_toggled(toggled_on):
 	self.prop_value = toggled_on
 	value_box.button_pressed = toggled_on
 	on_toggle.emit(prop_name, prop_value)
-	if(menu != null):
-		menu.update_property(prop_name, prop_value)
+	SkateData.update_property(prop_name, prop_value)

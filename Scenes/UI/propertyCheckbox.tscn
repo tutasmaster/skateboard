@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://coc75moiu6rqv"]
 
-[ext_resource type="Script" path="res://Scripts/UI/CheckboxProperty.gd" id="1_r1qvb"]
+[ext_resource type="Script" uid="uid://cwyne53wwb71m" path="res://Scripts/UI/CheckboxProperty.gd" id="1_r1qvb"]
 
 [node name="PROPERTY" type="HBoxContainer"]
 size_flags_vertical = 3

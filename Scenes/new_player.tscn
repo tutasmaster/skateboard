@@ -1,11 +1,9 @@
-[gd_scene load_steps=36 format=3 uid="uid://baiuiombvsovj"]
+[gd_scene load_steps=34 format=3 uid="uid://baiuiombvsovj"]
 
-[ext_resource type="Script" path="res://Scripts/Player/PlayerMotion.gd" id="1_giofx"]
-[ext_resource type="Script" path="res://Assets/addons/stairs-character/stairs_character.gd" id="2_kcbif"]
-[ext_resource type="PackedScene" uid="uid://bcxhmge8ufxac" path="res://Assets/Humanoid_Alt2.blend" id="3_ek5ka"]
-[ext_resource type="Script" path="res://Scripts/Enemy/Hitbox.gd" id="4_518be"]
+[ext_resource type="Script" uid="uid://ciiw75vfr5h86" path="res://Scripts/Player/PlayerMotion.gd" id="1_giofx"]
+[ext_resource type="Script" uid="uid://2mtasoklp2gf" path="res://Assets/addons/stairs-character/stairs_character.gd" id="2_kcbif"]
+[ext_resource type="Script" uid="uid://d3ka4v5r2i8ex" path="res://Scripts/Enemy/Hitbox.gd" id="4_518be"]
 [ext_resource type="Material" uid="uid://daexjmi27j5g5" path="res://Assets/Materials/Debug/hitbox.tres" id="5_2ai4m"]
-[ext_resource type="AudioStream" uid="uid://dgoo2yyvkrb1q" path="res://clink1.wav" id="6_vk05m"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p7sf1"]
 
@@ -140,111 +138,29 @@ script = ExtResource("2_kcbif")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.250036, 0)
 visible = false
 shape = SubResource("CapsuleShape3D_p7sf1")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D/CollisionShape3D"]
 mesh = SubResource("CapsuleMesh_1p188")
 skeleton = NodePath("../../..")
 
-[node name="Humanoid_Alt3" parent="CharacterBody3D" instance=ExtResource("3_ek5ka")]
+[node name="Humanoid_Alt3" parent="CharacterBody3D"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.728831, 0.177998)
-
-[node name="Skeleton3D" parent="CharacterBody3D/Humanoid_Alt3/LegMan" index="0"]
-bones/1/position = Vector3(0, -0.0995861, 0)
-bones/2/rotation = Quaternion(0.0296195, -0.000284628, -0.164245, 0.985975)
-bones/3/rotation = Quaternion(0.0969372, -0.114208, 0.0380996, 0.987982)
-bones/4/rotation = Quaternion(0.0583433, -2.66755e-16, 5.56381e-16, 0.998297)
-bones/5/rotation = Quaternion(0.121548, -7.04718e-17, 1.88401e-16, 0.992585)
-bones/6/rotation = Quaternion(0.394725, -0.840373, -0.172464, -0.328971)
-bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.445597, 0.501194, 0.145627, 0.727352)
-bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(-0.060075, 0.403838, 0.260461, 0.874909)
-bones/9/rotation = Quaternion(0.295617, -0.099753, 0.0660746, 0.947784)
-bones/9/scale = Vector3(1, 1, 1)
-bones/10/rotation = Quaternion(-0.0868841, 0.0897013, 0.0103042, 0.992118)
-bones/11/rotation = Quaternion(-0.132192, 0.136478, -0.0417059, 0.980897)
-bones/11/scale = Vector3(1, 1, 1)
-bones/12/rotation = Quaternion(-0.033519, 0.032516, -0.00274008, 0.998905)
-bones/13/scale = Vector3(1, 1, 1)
-bones/14/rotation = Quaternion(-0.0979482, 0.0992549, -0.0311628, 0.989739)
-bones/14/scale = Vector3(1, 1, 1)
-bones/15/rotation = Quaternion(-0.111429, 0.108795, -0.0116689, 0.98773)
-bones/15/scale = Vector3(1, 1, 1)
-bones/16/rotation = Quaternion(-0.0903993, 0.0861576, -0.0293503, 0.991738)
-bones/16/scale = Vector3(1, 1, 1)
-bones/17/rotation = Quaternion(-0.107059, 0.102036, 0.00547909, 0.988988)
-bones/18/rotation = Quaternion(-0.115721, 0.115186, -0.0176495, 0.986422)
-bones/18/scale = Vector3(1, 1, 1)
-bones/19/rotation = Quaternion(-0.0910163, 0.0855054, -0.0364795, 0.991501)
-bones/19/scale = Vector3(1, 1, 1)
-bones/20/rotation = Quaternion(-0.0902827, 0.0848163, 0.0455958, 0.99125)
-bones/20/scale = Vector3(1, 1, 1)
-bones/21/rotation = Quaternion(-0.164321, 0.175273, -0.0336463, 0.970127)
-bones/22/rotation = Quaternion(0.0594427, -0.0129849, 0.263258, 0.962805)
-bones/22/scale = Vector3(1, 1, 1)
-bones/23/rotation = Quaternion(-0.0511559, 0.0848634, -0.0201704, 0.994874)
-bones/23/scale = Vector3(1, 1, 1)
-bones/24/rotation = Quaternion(-0.0340619, 0.0639088, 0.0379099, 0.996654)
-bones/25/rotation = Quaternion(0.316239, 0.90277, 0.0209804, -0.290791)
-bones/25/scale = Vector3(1, 1, 1)
-bones/26/rotation = Quaternion(-0.205906, -0.440505, -0.303783, 0.819313)
-bones/26/scale = Vector3(1, 1, 1)
-bones/27/rotation = Quaternion(0.037691, -0.24457, -0.487778, 0.837161)
-bones/28/rotation = Quaternion(0.265142, 0.124754, -0.108122, 0.949971)
-bones/28/scale = Vector3(1, 1, 1)
-bones/29/rotation = Quaternion(-0.0868841, -0.0897013, -0.0103042, 0.992118)
-bones/30/rotation = Quaternion(-0.132192, -0.136478, 0.0417059, 0.980897)
-bones/30/scale = Vector3(1, 1, 1)
-bones/31/rotation = Quaternion(-0.033519, -0.032516, 0.00274008, 0.998905)
-bones/32/scale = Vector3(1, 1, 1)
-bones/33/rotation = Quaternion(-0.0979482, -0.0992549, 0.0311628, 0.989739)
-bones/33/scale = Vector3(1, 1, 1)
-bones/34/rotation = Quaternion(-0.111429, -0.108795, 0.0116689, 0.98773)
-bones/34/scale = Vector3(1, 1, 1)
-bones/35/rotation = Quaternion(-0.0903993, -0.0861576, 0.0293503, 0.991738)
-bones/35/scale = Vector3(1, 1, 1)
-bones/36/rotation = Quaternion(-0.107059, -0.102036, -0.00547909, 0.988988)
-bones/37/rotation = Quaternion(-0.115721, -0.115186, 0.0176495, 0.986422)
-bones/37/scale = Vector3(1, 1, 1)
-bones/38/rotation = Quaternion(-0.0910163, -0.0855054, 0.0364795, 0.991501)
-bones/38/scale = Vector3(1, 1, 1)
-bones/39/rotation = Quaternion(-0.0902827, -0.0848163, -0.0455958, 0.99125)
-bones/39/scale = Vector3(1, 1, 1)
-bones/40/rotation = Quaternion(-0.164321, -0.175273, 0.0336463, 0.970127)
-bones/41/rotation = Quaternion(0.0594427, 0.0129849, -0.263258, 0.962805)
-bones/41/scale = Vector3(1, 1, 1)
-bones/42/rotation = Quaternion(-0.0511559, -0.0848634, 0.0201704, 0.994874)
-bones/42/scale = Vector3(1, 1, 1)
-bones/43/rotation = Quaternion(-0.0340619, -0.0639088, -0.0379099, 0.996654)
-bones/44/rotation = Quaternion(0.875612, -0.122903, -0.458969, 0.0868637)
-bones/44/scale = Vector3(1, 1, 1)
-bones/45/rotation = Quaternion(0.269395, 0.43129, -0.163247, 0.845438)
-bones/46/rotation = Quaternion(-0.615075, 0.288646, -0.187415, 0.709395)
-bones/46/scale = Vector3(1, 1, 1)
-bones/47/rotation = Quaternion(0.961719, 0.178943, -0.0297975, 0.205397)
-bones/47/scale = Vector3(1, 1, 1)
-bones/48/rotation = Quaternion(0.346101, -0.0801513, 0.130091, 0.925671)
-bones/49/rotation = Quaternion(0.445755, -0.451391, 0.707005, -0.312558)
-bones/50/position = Vector3(0.092167, 1.24051, 0.0184464)
-bones/50/rotation = Quaternion(0.106072, -0.129938, -0.128061, 0.977479)
-bones/51/position = Vector3(1.41931, 1.39017, -0.0162386)
-bones/51/rotation = Quaternion(0.2916, 0.64557, -0.628498, -0.321246)
-
-[node name="Cylinder" parent="CharacterBody3D/Humanoid_Alt3/LegMan/Skeleton3D" index="0"]
-transform = Transform3D(-0.421754, 0.264264, -0.867345, 0.902047, 0.219184, -0.371847, 0.0918421, -0.939214, -0.330821, 1.6371, 2.13317, 0.238229)
-
-[node name="Cylinder" parent="CharacterBody3D/Humanoid_Alt3/LegMan/Skeleton3D/Cylinder" index="0"]
-visible = false
-
-[node name="Sphere_002" parent="CharacterBody3D/Humanoid_Alt3/LegMan/Skeleton3D" index="2"]
-visible = false
-
-[node name="Plane" parent="CharacterBody3D/Humanoid_Alt3" index="1"]
-visible = false
+script = null
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 root_node = NodePath("../CharacterBody3D/Humanoid_Alt3")
 root_motion_track = NodePath("LegMan/Skeleton3D:Root")
+root_motion_local = false
 callback_mode_process = 0
 tree_root = SubResource("AnimationNodeStateMachine_k1jsk")
 anim_player = NodePath("../CharacterBody3D/Humanoid_Alt3/AnimationPlayer")
@@ -270,6 +186,7 @@ monitorable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox/Area3D"]
 transform = Transform3D(0.999999, 1.19209e-07, -5.36442e-07, 1.49012e-07, 1, 4.47035e-07, -1.49012e-08, -4.47035e-07, 1, 0.00146389, 0.218235, 2.05655)
 shape = SubResource("BoxShape3D_ffi0p")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Hitbox/Area3D/CollisionShape3D"]
 transform = Transform3D(0.998181, 0.041319, -0.0439095, -0.0418976, 0.999044, -0.012343, 0.0433577, 0.0141603, 0.99896, 0.00918317, -0.0100284, 0.0216308)
@@ -283,7 +200,6 @@ animation_path = NodePath("../AnimationTree")
 cell_size = 0.35
 
 [node name="HitSFX" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("6_vk05m")
 volume_db = -25.0
 
 [node name="Control" type="Control" parent="."]
@@ -308,5 +224,3 @@ alignment = 1
 custom_minimum_size = Vector2(0, 30.005)
 layout_mode = 2
 theme = SubResource("Theme_gwjed")
-
-[editable path="CharacterBody3D/Humanoid_Alt3"]

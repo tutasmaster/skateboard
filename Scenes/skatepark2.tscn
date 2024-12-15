@@ -1,15 +1,14 @@
-[gd_scene load_steps=43 format=4 uid="uid://bfhlpe5504uhr"]
+[gd_scene load_steps=42 format=4 uid="uid://bfhlpe5504uhr"]
 
-[ext_resource type="Shader" path="res://Assets/Shader/water.gdshader" id="2_v7nn4"]
+[ext_resource type="Shader" uid="uid://qi122372wgdg" path="res://Assets/Shader/water.gdshader" id="2_v7nn4"]
 [ext_resource type="PackedScene" uid="uid://7fvi2whbg4yg" path="res://Scenes/Skatepark/wooper.tscn" id="3_8umei"]
 [ext_resource type="Material" uid="uid://u78gsialrinq" path="res://Assets/Materials/Test/TestTexture2.tres" id="3_m2mbm"]
 [ext_resource type="PackedScene" uid="uid://pqlomjxlleb5" path="res://Scenes/Skatepark/camera_pivot.tscn" id="4_flr1f"]
 [ext_resource type="Material" uid="uid://c5vpvypo2kyk4" path="res://Assets/Materials/Test/TestTexture.tres" id="5_chv58"]
 [ext_resource type="PackedScene" uid="uid://chwvu3wpe0fc1" path="res://Scenes/Skatepark/clone_wooper.tscn" id="5_revvb"]
-[ext_resource type="PackedScene" uid="uid://bsqroyiqnc48r" path="res://Scenes/Skatepark/menu.tscn" id="8_m418a"]
-[ext_resource type="Script" path="res://Scripts/Skate/RailHolder.gd" id="9_k1mjo"]
+[ext_resource type="Script" uid="uid://bm5acfkp5fist" path="res://Scripts/Skate/RailHolder.gd" id="9_k1mjo"]
 [ext_resource type="PackedScene" uid="uid://kl0o5c68shap" path="res://Assets/Skatepark/Quarterpipe.glb" id="18_otrhp"]
-[ext_resource type="Script" path="res://Scripts/Skate/VertTrigger.gd" id="19_ppe15"]
+[ext_resource type="Script" uid="uid://bvyma6a8cyjsj" path="res://Scripts/Skate/VertTrigger.gd" id="19_ppe15"]
 [ext_resource type="PackedScene" uid="uid://bqasctgum7v4e" path="res://Assets/Skatepark/Pipe end.blend" id="20_erpix"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pn845"]
@@ -72,14 +71,14 @@ shader_parameter/deep_color = Color(0.152941, 0.352941, 0.560784, 1)
 shader_parameter/foam_amount = 0.637
 shader_parameter/foam_color = Color(1, 1, 1, 1)
 shader_parameter/roughness = 0.09
+shader_parameter/wave_texture = SubResource("NoiseTexture2D_2xdwh")
 shader_parameter/wave_scale = 38.41
 shader_parameter/height_scale = 2.255
+shader_parameter/normal1 = SubResource("NoiseTexture2D_fkqa7")
 shader_parameter/wave_dir1 = Vector2(9.29, 1.385)
+shader_parameter/normal2 = SubResource("NoiseTexture2D_vkbqf")
 shader_parameter/wave_dir2 = Vector2(0, -1)
 shader_parameter/wave_speed = 0.015
-shader_parameter/wave_texture = SubResource("NoiseTexture2D_2xdwh")
-shader_parameter/normal1 = SubResource("NoiseTexture2D_fkqa7")
-shader_parameter/normal2 = SubResource("NoiseTexture2D_vkbqf")
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_073c4"]
 material = SubResource("ShaderMaterial_2p4m4")
@@ -307,6 +306,7 @@ surface_material_override/0 = ExtResource("3_m2mbm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pipes/Corner/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_jf778")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Corner2" type="MeshInstance3D" parent="Pipes"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4, 0, -4)
@@ -318,6 +318,7 @@ surface_material_override/0 = ExtResource("3_m2mbm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pipes/Corner2/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_jf778")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Corner3" type="MeshInstance3D" parent="Pipes"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4, 0, 4)
@@ -329,6 +330,7 @@ surface_material_override/0 = ExtResource("3_m2mbm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pipes/Corner3/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_jf778")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Corner4" type="MeshInstance3D" parent="Pipes"]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -4, 0, 4)
@@ -340,6 +342,7 @@ surface_material_override/0 = ExtResource("3_m2mbm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pipes/Corner4/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_jf778")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Side" type="MeshInstance3D" parent="Pipes"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, 0, -4)
@@ -351,6 +354,7 @@ surface_material_override/0 = ExtResource("3_m2mbm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pipes/Side/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_mvbnf")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Side2" type="MeshInstance3D" parent="Pipes"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -4)
@@ -362,6 +366,7 @@ surface_material_override/0 = ExtResource("3_m2mbm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pipes/Side2/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_mvbnf")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Side3" type="MeshInstance3D" parent="Pipes"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2, 0, -4)
@@ -373,6 +378,7 @@ surface_material_override/0 = ExtResource("3_m2mbm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pipes/Side3/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_mvbnf")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Side4" type="MeshInstance3D" parent="Pipes"]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 2, 0, 4)
@@ -384,6 +390,7 @@ surface_material_override/0 = ExtResource("3_m2mbm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pipes/Side4/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_mvbnf")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Side5" type="MeshInstance3D" parent="Pipes"]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, 4)
@@ -395,6 +402,7 @@ surface_material_override/0 = ExtResource("3_m2mbm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pipes/Side5/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_mvbnf")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Side6" type="MeshInstance3D" parent="Pipes"]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -2, 0, 4)
@@ -406,6 +414,7 @@ surface_material_override/0 = ExtResource("3_m2mbm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pipes/Side6/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_mvbnf")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Side7" type="MeshInstance3D" parent="Pipes"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4, 0, -2)
@@ -417,6 +426,7 @@ surface_material_override/0 = ExtResource("3_m2mbm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pipes/Side7/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_mvbnf")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Side8" type="MeshInstance3D" parent="Pipes"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4, 0, -7.15256e-07)
@@ -428,6 +438,7 @@ surface_material_override/0 = ExtResource("3_m2mbm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pipes/Side8/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_mvbnf")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Side9" type="MeshInstance3D" parent="Pipes"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4, 0, 2)
@@ -439,6 +450,7 @@ surface_material_override/0 = ExtResource("3_m2mbm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pipes/Side9/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_mvbnf")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Side10" type="MeshInstance3D" parent="Pipes"]
 transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, -4, 0, 2)
@@ -450,6 +462,7 @@ surface_material_override/0 = ExtResource("3_m2mbm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pipes/Side10/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_mvbnf")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Side11" type="MeshInstance3D" parent="Pipes"]
 transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, -4, 0, -7.15256e-07)
@@ -461,6 +474,7 @@ surface_material_override/0 = ExtResource("3_m2mbm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pipes/Side11/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_mvbnf")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Side12" type="MeshInstance3D" parent="Pipes"]
 transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, -4, 0, -2)
@@ -472,6 +486,7 @@ surface_material_override/0 = ExtResource("3_m2mbm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pipes/Side12/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_mvbnf")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Pipes2" type="Node3D" parent="."]
 
@@ -1452,6 +1467,7 @@ transform = Transform3D(0.719238, -0.421974, -0.551937, 0.506034, 0.862514, 0, 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(0.709601, 0.177532, -0.681872, 0.157309, 0.903395, 0.398913, 0.68682, -0.390334, 0.613122, 1.28063, -0.821799, -3.58074)
 shape = SubResource("BoxShape3D_8csy5")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
 transform = Transform3D(0.709601, 0.177532, -0.681872, 0.157309, 0.903395, 0.398913, 0.68682, -0.390334, 0.613123, 1.28063, -0.821799, -3.58074)
@@ -1548,12 +1564,14 @@ surface_material_override/0 = ExtResource("3_m2mbm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="pipe/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_0ofwu")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="."]
 transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, -21.732, 3, 20)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
 shape = SubResource("BoxShape3D_i1jnv")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2"]
 material_override = ExtResource("3_m2mbm")
@@ -1564,12 +1582,11 @@ transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, -18.268,
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3"]
 shape = SubResource("BoxShape3D_i1jnv")
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D3"]
 material_override = ExtResource("3_m2mbm")
 mesh = SubResource("BoxMesh_d13f5")
-
-[node name="Menu" parent="." instance=ExtResource("8_m418a")]
 
 [node name="Quarterpipe" parent="." instance=ExtResource("18_otrhp")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.46917, 0.85484, 25)
@@ -1618,6 +1635,12 @@ transform = Transform3D(-4.37112e-08, 0, 1, 0, 1, 0, -1, 0, -4.37112e-08, 7.0661
 
 [node name="Quarterpipe16" parent="." instance=ExtResource("18_otrhp")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -1.70376, 0.85484, 12)
+
+[node name="CollisionShape3D" parent="Quarterpipe16/Cylinder/StaticBody3D" index="0"]
+debug_color = Color(0, 0.6, 0.7, 0.42)
+
+[node name="CollisionShape3D" parent="Quarterpipe16/Plane/StaticBody3D" index="0"]
+debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Quarterpipe17" parent="." instance=ExtResource("18_otrhp")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -3.70376, 0.85484, 12)

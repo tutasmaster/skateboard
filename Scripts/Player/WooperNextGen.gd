@@ -3,80 +3,6 @@ class_name Wooper
 
 @onready var BACKWARDS : Node3D = $Backwards
 
-@export_subgroup("Special Properties")
-@export var SLOW_MOTION = 0.1
-@export var SPEED_CAP = 15
-@export var CRASH_VELOCITY = 20
-
-@export_subgroup("Debug Properties")
-@export var DEBUG_ARROW_THICKNESS = 0.05
-@export var DEBUG_WALLPLANTS = false
-@export var DEBUG_VERT = false
-@export var DEBUG_GRIND = false
-@export var DEBUG_NORMAL = true
-@export var DEBUG_DIRECTION = true
-
-@export_subgroup("Grounded Properties")
-@export var GRAVITY = 9.8
-@export var FRICTION = 0.5
-@export var HORIZONTAL_DRAG = 0.99
-@export var DRAG = 0.99
-@export var MINIMUM_SPEED = 5
-@export var JUMP_ALWAYS_HOLD = false
-@export var JUMP_FORCE = 4
-@export var JUMP_VERT_FORCE = 2
-@export var JUMP_TIMER = 0.1
-@export var JUMP_MINIMUM_FACTOR = 0.5
-@export var JUMP_HOLD_FRICTION = 0.2 #Friction before an Ollie
-@export var JUMP_HOLD_DRAG = 0.99 #Friction before an Ollie
-@export var JUMP_HOLD_SPEED = 0.5
-@export var DRIFT_FORCE = 5
-@export var DRIFT_FORCE_DRAG = 0.99
-@export var TURN_MULTIPLIER = 0.1
-@export var GROUND_OFFSET = 0.05
-@export var UP_SLOPE_ACCELERATION = 10
-@export var DOWN_SLOPE_ACCELERATION = 30
-@export var UP_VERT_SLOPE_ACCELERATION = 10
-@export var DOWN_VERT_SLOPE_ACCELERATION = 30
-@export var KICK_FORCE = 10
-
-@export_subgroup("Airborne Properties")
-@export var AIR_TURN_SPEED = 5
-@export var WALLPLANT_DECAY_MULTIPLIER = 5
-@export var AIR_TO_GROUND_MOMENTUM_LOSS = 0.75
-@export var AIR_TO_GROUND_SIDE_MOMENTUM_LOSS = 0.25
-@export var VERT_MAGNETISM = 1
-
-@export_subgroup("Rail Properties")
-@export var GRIND_FRICTION = 0
-@export var GRIND_DRAG = 0.995
-@export var GRIND_MAGNETISM = 1.5
-@export var UP_GRIND_SLOPE_ACCELERATION = 5
-@export var DOWN_GRIND_SLOPE_ACCELERATION = 40
-@export var MINIMUM_GRIND_SPEED = 0.1
-
-@export_subgroup("Balance Properties")
-@export var BALANCE_MIN_DIFFICULTY = 0.2
-@export var BALANCE_START_RANGE = 0.2
-@export var BALANCE_MULT_DIFFICULTY = 1
-@export var BALANCE_MULT_INPUT = 10
-@export var BALANCE_MANUAL_MIN_DIFFICULTY = 0.2
-@export var BALANCE_MANUAL_START_RANGE = 0.2
-@export var BALANCE_MANUAL_MULT_DIFFICULTY = 1
-@export var BALANCE_MANUAL_MULT_INPUT = 10
-@export var BALANCE_MANUAL_TURN_SPEED = 3
-@export var BALANCE_MANUAL_DIFF_INCREASE = 0.25
-
-@export_subgroup("Visual Properties")
-@export var LERP_SPEED = 20
-@export var BAIL_DRAG = 0.95
-@export var STICKER : PackedScene
-@export var CLONE_WOOPER : Node3D;
-
-@export_subgroup("Multiplayer Properties")
-@export var MP_INTERPOLATION_SPEED = 3
-@export var MP_COLLISIONS_ENABLED = false
-
 @onready var _multiplayer_manager = get_node("/root/MultiplayerManager")
 @onready var horizontal_balance = $Balance/HORIZONTAL_BALANCE
 @onready var vertical_balance = $Balance/VERTICAL_BALANCE
@@ -85,6 +11,9 @@ class_name Wooper
 @onready var move_label = $Balance/MOVE_LABEL
 @onready var balance_animation = $Balance/AnimationPlayer
 @onready var area = $Area3D
+
+@export var STICKER : PackedScene
+@export var CLONE_WOOPER : Node3D;
 
 func _ready():
 	GameManager.player = self
@@ -100,8 +29,8 @@ enum STATE {
 	transition
 }
 
-var friction = FRICTION
-var drag = DRAG
+var friction = SkateData.FRICTION
+var drag = SkateData.DRAG
 
 var state = STATE.grounded
 var to_state = STATE.transition
@@ -129,19 +58,19 @@ func _process(delta):
 	DebugDraw2D.set_text("forward_speed", velocity.z,1)
 	DebugDraw2D.set_text("last_angle",prev_ground_angle)
 	DebugDraw2D.set_text("angle",angle)
-	if(DEBUG_VERT):
+	if(SkateData.DEBUG_VERT):
 		DebugDraw2D.set_text("vert", preparing_vert,1,Color.WHITE if !preparing_vert else Color.RED)
 		DebugDraw2D.set_text("vert_coords", vert_coords,2,Color.WHITE)
 		DebugDraw2D.set_text("vert_dir", vert_dir,2,Color.WHITE)
-	if(DEBUG_WALLPLANTS):
+	if(SkateData.DEBUG_WALLPLANTS):
 		DebugDraw2D.set_text("wallplant", wallplant_speed,1)
-	if(DEBUG_DIRECTION):
-		DebugDraw3D.draw_arrow(position, position + local_to_global_vector(velocity),Color.WHITE, DEBUG_ARROW_THICKNESS)
-		DebugDraw3D.draw_arrow(position, position + Vector3(0,-5,0),Color.RED, DEBUG_ARROW_THICKNESS)
+	if(SkateData.DEBUG_DIRECTION):
+		DebugDraw3D.draw_arrow(position, position + local_to_global_vector(velocity),Color.WHITE, SkateData.DEBUG_ARROW_THICKNESS)
+		DebugDraw3D.draw_arrow(position, position + Vector3(0,-5,0),Color.RED, SkateData.DEBUG_ARROW_THICKNESS)
 		DebugDraw2D.set_text("velocity",velocity)
 
 	if(CLONE_WOOPER != null):
-		CLONE_WOOPER.rotation = Quaternion.from_euler(CLONE_WOOPER.rotation).slerp(Quaternion.from_euler($MeshInstance3D.global_rotation), min(delta * (LERP_SPEED),1)).get_euler()
+		CLONE_WOOPER.rotation = Quaternion.from_euler(CLONE_WOOPER.rotation).slerp(Quaternion.from_euler($MeshInstance3D.global_rotation), min(delta * (SkateData.LERP_SPEED),1)).get_euler()
 		CLONE_WOOPER.position = position
 	
 	if(score > 0):
@@ -156,6 +85,14 @@ func _process(delta):
 			move_label.text += move_list[i]
 	if(move_list.size() > 5):
 		move_label.text += " + ..."
+	
+	var forward = 1 if is_facing_forward() else -1
+	
+	if(state == STATE.grounded && manual):
+		CLONE_WOOPER.rotation.x += balance * forward * SkateData.BALANCE_MANUAL_SCALE * delta
+		
+	if(state == STATE.railed):
+		CLONE_WOOPER.rotation.z += balance * forward * SkateData.BALANCE_GRIND_SCALE * delta
 			
 
 func _physics_process(delta):
@@ -166,11 +103,11 @@ func _physics_process(delta):
 		GameManager.toggle_menu()
 	if(GameManager.paused):
 		return
-	wallplant_speed *= 1 - min(delta * WALLPLANT_DECAY_MULTIPLIER,1)
+	wallplant_speed *= 1 - min(delta * SkateData.WALLPLANT_DECAY_MULTIPLIER,1)
 	if(Input.is_action_just_pressed("reset")):
 		GameManager.reload()
 	if(Input.is_action_pressed("slow")):
-		Engine.time_scale = SLOW_MOTION
+		Engine.time_scale = SkateData.SLOW_MOTION
 	else:
 		Engine.time_scale = 1
 	
@@ -215,6 +152,8 @@ func set_transition(anim,value):
 	CLONE_WOOPER.ANIMATION_TREE.set("parameters/" + anim + "/transition_request", value)
 	
 func trick_animation():
+	if(!SkateData.FLIPS_ENABLED):
+		return
 	if(Input.is_action_pressed("down")):
 		set_transition("Flip", "shuvit")
 		start_animation("Kickflip")
@@ -287,12 +226,14 @@ func crash():
 
 			
 func jump():
-	var jump_factor = JUMP_MINIMUM_FACTOR + CLONE_WOOPER.ANIMATION_TREE["parameters/Prepare/blend_amount"] * (1 - JUMP_MINIMUM_FACTOR)
+	if(CLONE_WOOPER.ANIMATION_TREE["parameters/Prepare/blend_amount"] < SkateData.JUMP_MINIMUM_ANIMATION_FACTOR):
+		return
+	var jump_factor = SkateData.JUMP_MINIMUM_FACTOR + CLONE_WOOPER.ANIMATION_TREE["parameters/Prepare/blend_amount"] * (1 - SkateData.JUMP_MINIMUM_FACTOR)
 	start_animation("OneShot")
 	InputBuffer._invalidate_action("jump")
 	if(preparing_vert):
-		var vel_base = velocity + (basis.inverse().y * JUMP_VERT_FORCE * jump_factor)
-		var vel_mod = velocity + global_to_local_vector(Vector3(0,JUMP_FORCE * jump_factor,0))
+		var vel_base = velocity + (basis.inverse().y * SkateData.JUMP_VERT_FORCE * jump_factor)
+		var vel_mod = velocity + global_to_local_vector(Vector3(0,SkateData.JUMP_FORCE * jump_factor,0))
 		var ratio = basis.y.dot(Vector3(0,1,0))
 		print(ratio)
 		velocity = vel_base * (1.0-ratio) + vel_mod * ratio
@@ -302,8 +243,8 @@ func jump():
 			has_jumped = true
 			return
 	else:
-		velocity.y += JUMP_FORCE * jump_factor
-	jump_timer = JUMP_TIMER - (jump_factor * JUMP_TIMER)
+		velocity.y += SkateData.JUMP_FORCE * jump_factor
+	jump_timer = SkateData.JUMP_TIMER - (jump_factor * SkateData.JUMP_TIMER)
 	#preparing_vert = false
 	CLONE_WOOPER.ANIMATION_TREE["parameters/Prepare/blend_amount"] = 0
 	state = STATE.airborne
@@ -313,8 +254,11 @@ func jump():
 	$AudioStreamPlayer3D.play()
 
 func cap_velocity():
-	if(velocity.length() > SPEED_CAP):
-		velocity = velocity.normalized() * SPEED_CAP
+	if(velocity.length() > SkateData.SPEED_CAP):
+		velocity = velocity.normalized() * SkateData.SPEED_CAP
+		
+func is_facing_forward():
+	return velocity.z >= 0
 	
 func global_to_local_vector(vec):
 	return basis.inverse() * vec
@@ -345,9 +289,9 @@ func snap_to_ground():
 		var point = $GravityRay.get_collision_point()
 		var layer = $GravityRay.get_collider().get_collision_layer()
 		var ground_angle = atan2($GravityRay.get_collision_normal().z, $GravityRay.get_collision_normal().x)
-		if(layer == 5 || layer == 4):
+		if((layer == 5 || layer == 4) && SkateData.VERT_WALLS_ENABLED):
 			preparing_vert = true
-		position = point + basis.y * GROUND_OFFSET
+		position = point + basis.y * SkateData.GROUND_OFFSET
 		rotation = Quaternion(Vector3.UP, $GravityRay.get_collision_normal()).get_euler()
 		var off_angle = angle_difference(prev_ground_angle, ground_angle )
 		angle -= (1 - abs(basis.y.y)) * off_angle
@@ -358,7 +302,7 @@ func force_snap_to_ground():
 	force_check_airborne()
 	if(state == STATE.grounded):
 		var point = $ResetRay.get_collision_point()
-		position = point + basis.y * GROUND_OFFSET
+		position = point + basis.y * SkateData.GROUND_OFFSET
 		rotation = Quaternion(Vector3.UP, $ResetRay.get_collision_normal()).get_euler()
 		rotate_object_local(Vector3.UP, angle)
 		
@@ -367,7 +311,7 @@ func check_walls():
 	var movement = Vector3.ZERO
 	var pushback = Vector3.ZERO
 	$WallCheck/Forward.force_raycast_update()
-	if($WallCheck/Forward.is_colliding() && velocity.length() > CRASH_VELOCITY):
+	if($WallCheck/Forward.is_colliding() && velocity.length() > SkateData.CRASH_VELOCITY):
 		var point = $WallCheck/Forward.get_collision_point()
 		var distance = abs($WallCheck/Forward.target_position.y) - $WallCheck/Forward.global_position.distance_to(point)
 		global_position += $WallCheck/Forward.global_transform.basis.y * distance * 1.1
@@ -378,7 +322,7 @@ func check_walls():
 	for c in checks:
 		c.force_raycast_update()
 		if(c.is_colliding()):
-			if(c.get_collision_normal().dot(Vector3.UP) >= 0.9):
+			if(c.get_collision_normal().dot(Vector3.UP) >= 0.8):
 				reset()
 				return
 			count += 1
@@ -401,8 +345,8 @@ var manual = false
 func ground_physics(delta):
 	wallplant_speed = Vector3.ZERO
 	if(CLONE_WOOPER.ANIMATION_TREE["parameters/Bail/active"] || CLONE_WOOPER.ANIMATION_TREE["parameters/Crash/active"]):
-		velocity *= BAIL_DRAG
-		velocity.y -= GRAVITY * delta
+		velocity *= SkateData.BAIL_DRAG
+		velocity.y -= SkateData.GRAVITY * delta
 		snap_to_ground()
 		check_walls()
 		position += basis.z * velocity.z * delta
@@ -412,11 +356,11 @@ func ground_physics(delta):
 	var manual_type = "base"
 	var manual1 = InputBuffer.is_combo_pressed(["up","down"]) 
 	var manual2 = InputBuffer.is_combo_pressed(["down","up"]) 
-	if((manual1 || manual2) && !manual):
-		balance = randf_range(-BALANCE_MANUAL_START_RANGE,BALANCE_MANUAL_START_RANGE)
+	if((manual1 || manual2) && !manual && SkateData.MANUALS_ENABLED):
+		balance = randf_range(-SkateData.BALANCE_MANUAL_START_RANGE,SkateData.BALANCE_MANUAL_START_RANGE)
 		if(balance == 0):
 			balance = 0.1
-		balance_diff = BALANCE_MANUAL_MIN_DIFFICULTY
+		balance_diff = SkateData.BALANCE_MANUAL_MIN_DIFFICULTY
 		bal_speed = 0
 		manual = true
 		set_animation("Manual", 1)
@@ -456,9 +400,9 @@ func ground_physics(delta):
 			score += 10
 		score += delta
 		vertical_balance.show()
-		balance_diff += delta * BALANCE_MANUAL_DIFF_INCREASE
-		bal_speed += (balance * (BALANCE_MANUAL_MULT_DIFFICULTY + balance_diff)) * delta
-		bal_speed += Input.get_axis("down","up") * BALANCE_MANUAL_MULT_INPUT * delta
+		balance_diff += delta * SkateData.BALANCE_MANUAL_DIFF_INCREASE
+		bal_speed += (balance * (SkateData.BALANCE_MANUAL_MULT_DIFFICULTY + balance_diff)) * delta
+		bal_speed += Input.get_axis("down","up") * SkateData.BALANCE_MANUAL_MULT_INPUT * delta
 		balance += bal_speed * delta
 		vertical_balance.value = (balance * 50) + 50
 		if(abs(balance) > 1):
@@ -476,20 +420,20 @@ func ground_physics(delta):
 	
 	var input_dir = Input.get_vector("left", "right", "down", "up")
 	var pow = Input.get_action_strength("drift")
-	var drift = pow * pow * DRIFT_FORCE + 1 if Input.is_action_pressed("drift") else 1
+	var drift = pow * pow * SkateData.DRIFT_FORCE + 1 if Input.is_action_pressed("drift") else 1
 	if Input.is_action_pressed("drift"):
-		velocity.z *= DRIFT_FORCE_DRAG
+		velocity.z *= SkateData.DRIFT_FORCE_DRAG
 	angle -= input_dir.x * drift * delta
 	if(manual):
-		angle -= input_dir.x * delta * BALANCE_MANUAL_TURN_SPEED
+		angle -= input_dir.x * delta * SkateData.BALANCE_MANUAL_TURN_SPEED
 
 	$MeshInstance3D.rotation = Vector3.ZERO
 	CLONE_WOOPER.ANIMATION_TREE["parameters/Direction/blend_amount"] = (Input.get_axis("left", "right") * (Input.get_action_strength("drift")+1)/2)
 	
 	if(!Input.is_action_pressed("jump") && !manual):
-		velocity.z += (1-Input.get_action_strength("down")) * MINIMUM_SPEED * delta
+		velocity.z += (1-Input.get_action_strength("down")) * SkateData.MINIMUM_SPEED * delta
 	if(Input.is_action_just_pressed("kick") && !manual && !CLONE_WOOPER.ANIMATION_TREE["parameters/Kick/active"]):
-		velocity.z += max(KICK_FORCE - velocity.z,0)
+		velocity.z += max(SkateData.KICK_FORCE - velocity.z,0)
 		start_animation("Kick")
 	
 	#GRAVTIY	
@@ -498,21 +442,21 @@ func ground_physics(delta):
 	#Slope speedup
 	var mult = 0
 	vert_ground = false
-	if($GravityRay.get_collider()):
+	if($GravityRay.get_collider() && SkateData.VERT_WALLS_ENABLED):
 		var layer = $GravityRay.get_collider().get_collision_layer()
 		vert_ground = layer == 5 || layer == 4
 	if(sign(basis.z.y) == 1):
-		if(!vert_ground):
-			mult = -basis.z.y * UP_SLOPE_ACCELERATION
+		if(!vert_ground || !SkateData.VERT_WALLS_ENABLED):
+			mult = -basis.z.y * SkateData.UP_SLOPE_ACCELERATION
 		else:
-			mult = -basis.z.y * UP_VERT_SLOPE_ACCELERATION
+			mult = -basis.z.y * SkateData.UP_VERT_SLOPE_ACCELERATION
 			
 		
 	elif(sign(basis.z.y) == -1):
-		if(!vert_ground):
-			mult = -basis.z.y * DOWN_SLOPE_ACCELERATION
+		if(!vert_ground || !SkateData.VERT_WALLS_ENABLED):
+			mult = -basis.z.y * SkateData.DOWN_SLOPE_ACCELERATION
 		else:
-			mult = -basis.z.y * DOWN_VERT_SLOPE_ACCELERATION
+			mult = -basis.z.y * SkateData.DOWN_VERT_SLOPE_ACCELERATION
 		
 	if(velocity.z < 0):
 		velocity.z += mult * delta 
@@ -520,25 +464,25 @@ func ground_physics(delta):
 		velocity.z += mult * delta 
 		
 	velocity -= (velocity * friction) * delta
-	velocity.x *= HORIZONTAL_DRAG
+	velocity.x *= SkateData.HORIZONTAL_DRAG
 	
 	#velocity -= sign(velocity) * (velocity * velocity) * 0.0001
 	if(Input.is_action_just_released("jump")):
 		jump()
 	elif(Input.is_action_pressed("jump")):
-		CLONE_WOOPER.ANIMATION_TREE.set("parameters/Prepare/blend_amount", lerp(CLONE_WOOPER.ANIMATION_TREE["parameters/Prepare/blend_amount"] + 0.0,1.0,min(1,delta*JUMP_HOLD_SPEED)))
-		drag = JUMP_HOLD_DRAG
+		CLONE_WOOPER.ANIMATION_TREE.set("parameters/Prepare/blend_amount", lerp(CLONE_WOOPER.ANIMATION_TREE["parameters/Prepare/blend_amount"] + 0.0,1.0,min(1,delta*SkateData.JUMP_HOLD_SPEED)))
+		drag = SkateData.JUMP_HOLD_DRAG
 		velocity *= drag
-		friction = JUMP_HOLD_FRICTION
-	elif(manual || JUMP_ALWAYS_HOLD):
-		drag = JUMP_HOLD_DRAG
+		friction = SkateData.JUMP_HOLD_FRICTION
+	elif(manual || SkateData.JUMP_ALWAYS_HOLD):
+		drag = SkateData.JUMP_HOLD_DRAG
 		velocity *= drag
-		friction = JUMP_HOLD_FRICTION
+		friction = SkateData.JUMP_HOLD_FRICTION
 	else:
 		CLONE_WOOPER.ANIMATION_TREE.set("parameters/Prepare/blend_amount", 0)
-		drag = DRAG
+		drag = SkateData.DRAG
 		velocity *= drag
-		friction = FRICTION
+		friction = SkateData.FRICTION
 	
 	cap_velocity()
 	
@@ -551,6 +495,8 @@ func ground_physics(delta):
 		
 	if(state == STATE.vert):
 		return
+		
+	
 
 #AIRBORNE STATE
 #INCLUDES STUFF FOR WHEN THE PLAYER IS IN THE AIR
@@ -559,7 +505,7 @@ var wallplant_speed = Vector3.ZERO
 
 func check_airborne():
 	
-	if(has_jumped && jump_timer > JUMP_TIMER):
+	if(has_jumped && jump_timer > SkateData.JUMP_TIMER):
 		has_jumped = false
 		jump_timer = 0
 	state = STATE.airborne if !$GravityRay.is_colliding() else STATE.grounded
@@ -583,7 +529,7 @@ func force_check_airborne():
 	return state == STATE.airborne
 	
 func check_airborne_in_air():
-	if(has_jumped && jump_timer > JUMP_TIMER):
+	if(has_jumped && jump_timer > SkateData.JUMP_TIMER):
 		has_jumped = false
 		jump_timer = 0
 	state = STATE.airborne if !$GravityRay.is_colliding() else STATE.grounded
@@ -609,8 +555,8 @@ var airborne_angle = 0
 
 func airborne_physics(delta):
 	if(CLONE_WOOPER.ANIMATION_TREE["parameters/Bail/active"] || CLONE_WOOPER.ANIMATION_TREE["parameters/Crash/active"]):
-		velocity -= global_to_local_vector(Vector3(0,GRAVITY,0)) * delta
-		velocity *= BAIL_DRAG
+		velocity -= global_to_local_vector(Vector3(0,SkateData.GRAVITY,0)) * delta
+		velocity *= SkateData.BAIL_DRAG
 		snap_to_ground()
 		check_walls()
 		position += basis.z * velocity.z * delta
@@ -630,7 +576,7 @@ func airborne_physics(delta):
 	
 	var temp_velocity = local_to_global_vector(velocity)
 	var target = Quaternion.from_euler(Vector3(0,angle,0))
-	if(get_world_3d() != null):
+	if(get_world_3d() != null && SkateData.AUTO_ALIGN_ENABLED):
 		var s_s = get_world_3d().direct_space_state
 		var q = PhysicsRayQueryParameters3D.create(position, position + Vector3(0,-1000, 0))
 		var r = s_s.intersect_ray(q)
@@ -640,12 +586,12 @@ func airborne_physics(delta):
 			trans = trans.rotated_local(Vector3.UP, angle)
 			#target = new_transform.basis * target
 			#target.x = rotation.x
-			if(DEBUG_DIRECTION):
-				DebugDraw3D.draw_arrow(global_position,global_position + trans.basis.x,Color.GREEN, DEBUG_ARROW_THICKNESS)
-				DebugDraw3D.draw_arrow(global_position,global_position + trans.basis.y,Color.BLUE, DEBUG_ARROW_THICKNESS)
-				DebugDraw3D.draw_arrow(global_position,global_position + trans.basis.z,Color.RED, DEBUG_ARROW_THICKNESS)
+			if(SkateData.DEBUG_DIRECTION):
+				DebugDraw3D.draw_arrow(global_position,global_position + trans.basis.x,Color.GREEN, SkateData.DEBUG_ARROW_THICKNESS)
+				DebugDraw3D.draw_arrow(global_position,global_position + trans.basis.y,Color.BLUE, SkateData.DEBUG_ARROW_THICKNESS)
+				DebugDraw3D.draw_arrow(global_position,global_position + trans.basis.z,Color.RED, SkateData.DEBUG_ARROW_THICKNESS)
 			
-			basis = basis.orthonormalized().slerp(trans.basis.orthonormalized(),min(1,delta * max(4,(SPEED_CAP - velocity.length())/SPEED_CAP*4)))
+			basis = basis.orthonormalized().slerp(trans.basis.orthonormalized(),min(1,delta * max(4,(SkateData.SPEED_CAP - velocity.length())/SkateData.SPEED_CAP*4)))
 		else:
 			rotation = rotation.slerp(target.get_euler(), delta)
 	else:
@@ -656,12 +602,12 @@ func airborne_physics(delta):
 	check_walls_airborne(delta)
 	var input_dir = Input.get_vector("left", "right", "down", "up")
 	var prev_angle = angle
-	angle -= input_dir.x * AIR_TURN_SPEED * delta
+	angle -= input_dir.x * SkateData.AIR_TURN_SPEED * delta
 	var global_velocity = local_to_global_vector(velocity)
 	rotate_object_local(Vector3.UP, angle - prev_angle)
 	velocity = global_to_local_vector(global_velocity)
 	
-	velocity -= global_to_local_vector(Vector3(0,GRAVITY,0)) * delta
+	velocity -= global_to_local_vector(Vector3(0,SkateData.GRAVITY,0)) * delta
 	
 	velocity *= 0.998
 	
@@ -684,8 +630,8 @@ func airborne_physics(delta):
 		angle = atan2(v.x,v.z)
 		snap_to_ground()
 		velocity = global_to_local_vector(vel_global)
-		velocity.x *= AIR_TO_GROUND_SIDE_MOMENTUM_LOSS
-		velocity.z += sign(velocity.z) * abs(velocity.y) * (1 - AIR_TO_GROUND_MOMENTUM_LOSS)
+		velocity.x *= SkateData.AIR_TO_GROUND_SIDE_MOMENTUM_LOSS
+		velocity.z += sign(velocity.z) * abs(velocity.y) * (1 - SkateData.AIR_TO_GROUND_MOMENTUM_LOSS)
 		velocity.y = 0
 		start_animation("Floor")
 		$DropAudio.play()
@@ -694,10 +640,12 @@ func airborne_physics(delta):
 		
 	if(InputBuffer.is_action_press_buffered("grind") ):
 		check_rail()
-	if(InputBuffer.is_action_press_buffered("jump") && wallplant_speed.length() > 1):
+	var vel_global = wallplant_speed
+	$SlapRay.rotation = Vector3(-PI/2, -atan2(vel_global.normalized().z, vel_global.normalized().x) + PI/2,0)
+	if(SkateData.WALLPLANTS_ENABLED && InputBuffer.is_action_press_buffered("jump") && wallplant_speed.length() > 1):
 		$SlapRay.force_raycast_update()
 		if($SlapRay.is_colliding()):
-			var vel_global = global_to_local_vector(wallplant_speed)
+			vel_global = global_to_local_vector(wallplant_speed)
 			var vel_normal = -(Vector3(vel_global.x,0,vel_global.z)).normalized()
 			var normal = $SlapRay.get_collision_normal()
 			var normal_angled = Vector3(normal.x,0,normal.z)
@@ -712,11 +660,11 @@ func airborne_physics(delta):
 				velocity.z *= 1.5
 				global_position = point
 				global_position += normal * 0.2
-				if(DEBUG_WALLPLANTS):
+				if(SkateData.DEBUG_WALLPLANTS):
 					DebugDraw3D.draw_arrow(point, 
-					point + normal,Color.RED,DEBUG_ARROW_THICKNESS,false, 5)
+					point + normal,Color.RED,SkateData.DEBUG_ARROW_THICKNESS,false, 5)
 					DebugDraw3D.draw_arrow(point, 
-					point + (global_to_local_vector(velocity)).normalized(),Color.BLUE,DEBUG_ARROW_THICKNESS,false, 5)
+					point + (global_to_local_vector(velocity)).normalized(),Color.BLUE,SkateData.DEBUG_ARROW_THICKNESS,false, 5)
 				if(STICKER != null):
 					var obj = STICKER.instantiate()
 					get_parent().add_child(obj)
@@ -729,7 +677,7 @@ func airborne_physics(delta):
 				CLONE_WOOPER.rotation = rotation
 				
 				return
-	if(Input.is_action_pressed("drift") && !spine_lock):
+	if(Input.is_action_pressed("drift") && !spine_lock && SkateData.ACID_DROPS_ENABLED):
 		var space_state = get_world_3d().direct_space_state
 		var forward = basis.z
 		forward.y = 0
@@ -738,8 +686,8 @@ func airborne_physics(delta):
 		var query = PhysicsRayQueryParameters3D.create(position + forward * scale, (position + forward * scale) +  Vector3(0,-100, 0))
 		var result = space_state.intersect_ray(query)
 		if(result.size() != 0):
-			if(DEBUG_VERT):
-				DebugDraw3D.draw_arrow(position + forward * scale, result["position"],Color.GREEN, DEBUG_ARROW_THICKNESS,false, 100)
+			if(SkateData.DEBUG_VERT):
+				DebugDraw3D.draw_arrow(position + forward * scale, result["position"],Color.GREEN, SkateData.DEBUG_ARROW_THICKNESS,false, 100)
 
 			var layer = result["collider"].get_collision_layer()
 			if(result["normal"].y > 0 && (layer == 4 || layer == 5)):
@@ -771,9 +719,9 @@ func check_rail():
 	for r in GameManager._rails:
 		if(r == null):
 			continue
-		if(velocity.z < MINIMUM_GRIND_SPEED && r.fall_on_low_speed):
+		if(velocity.z < SkateData.MINIMUM_GRIND_SPEED && r.fall_on_low_speed):
 			continue
-		if(r.get_distance(global_position) < GRIND_MAGNETISM):
+		if(r.get_distance(global_position) < SkateData.GRIND_MAGNETISM):
 			var trans = r.get_angle(global_position)
 			if(trans != null):
 				if(abs(trans.basis.z.dot(basis.z)) < 0.5):
@@ -799,10 +747,10 @@ func check_rail():
 			#balance_diff = 0.2
 			#bal_speed = 0
 			set_transition("GrindTricks", "base")
-			balance = randf_range(-BALANCE_START_RANGE,BALANCE_START_RANGE)
+			balance = randf_range(-SkateData.BALANCE_START_RANGE,SkateData.BALANCE_START_RANGE)
 			if(balance == 0):
 				balance = 0.1
-			balance_diff = BALANCE_MIN_DIFFICULTY
+			balance_diff = SkateData.BALANCE_MIN_DIFFICULTY
 			bal_speed = 0
 			
 			move_list.push_front("Grind")
@@ -824,7 +772,6 @@ func drop_rail():
 	velocity.z *= 1-abs(Input.get_axis("left","right")) * 0.5
 	
 	set_animation("Grinding", 0)
-	
 	airborne_angle = 0
 	state = STATE.airborne
 	
@@ -837,8 +784,8 @@ func rail_physics(delta):
 	manual = false
 	horizontal_balance.show()
 	balance_diff += delta
-	bal_speed += (balance * (BALANCE_MULT_DIFFICULTY + balance_diff)) * delta
-	bal_speed += Input.get_axis("left","right") * BALANCE_MULT_INPUT * delta
+	bal_speed += (balance * (SkateData.BALANCE_MULT_DIFFICULTY + balance_diff)) * delta
+	bal_speed += Input.get_axis("left","right") * SkateData.BALANCE_MULT_INPUT * delta
 	balance += bal_speed * delta
 	horizontal_balance.value = (balance * 50) + 50
 	if(abs(balance) > 1):
@@ -873,7 +820,7 @@ func rail_physics(delta):
 		reset()
 		return
 	offset -= delta * velocity.z
-	if(velocity.z < MINIMUM_GRIND_SPEED && rail.fall_on_low_speed):
+	if(velocity.z < SkateData.MINIMUM_GRIND_SPEED && rail.fall_on_low_speed):
 		drop_rail()
 		return
 	var pos = rail.get_closest_point_offset(offset)
@@ -886,9 +833,9 @@ func rail_physics(delta):
 	
 	var mult = 0
 	if(sign(trans.basis.z.y) == 1):
-		mult = -trans.basis.z.y * DOWN_GRIND_SLOPE_ACCELERATION
+		mult = -trans.basis.z.y * SkateData.DOWN_GRIND_SLOPE_ACCELERATION
 	elif(sign(basis.z.y) == -1):
-		mult = -trans.basis.z.y * UP_GRIND_SLOPE_ACCELERATION
+		mult = -trans.basis.z.y * SkateData.UP_GRIND_SLOPE_ACCELERATION
 		
 	if(velocity.z < 0):
 		velocity.z += mult * delta 
@@ -899,9 +846,8 @@ func rail_physics(delta):
 	if(velocity.z < 0):
 		rotate_object_local(Vector3.UP, PI)
 	
-	velocity -= (velocity * GRIND_FRICTION) * delta
-	velocity *= GRIND_DRAG
-	
+	velocity -= (velocity * SkateData.GRIND_FRICTION) * delta
+	velocity *= SkateData.GRIND_DRAG
 	
 	if(Input.is_action_just_pressed("drift")):
 		drop_rail()
@@ -911,7 +857,7 @@ func rail_physics(delta):
 		drop_rail()
 		jump()
 	elif(InputBuffer.is_action_press_buffered("jump")):
-		CLONE_WOOPER.ANIMATION_TREE.set("parameters/Prepare/blend_amount", lerp(CLONE_WOOPER.ANIMATION_TREE["parameters/Prepare/blend_amount"] + 0.0,1.0,min(delta*JUMP_HOLD_SPEED,1)))
+		CLONE_WOOPER.ANIMATION_TREE.set("parameters/Prepare/blend_amount", lerp(CLONE_WOOPER.ANIMATION_TREE["parameters/Prepare/blend_amount"] + 0.0,1.0,min(delta*SkateData.JUMP_HOLD_SPEED,1)))
 	else:
 		CLONE_WOOPER.ANIMATION_TREE.set("parameters/Prepare/blend_amount", 0)
 	pass
@@ -949,7 +895,7 @@ func snap_to_ground_vert():
 			angle+=PI
 			
 		var point = $GravityRay.get_collision_point()
-		position = point + basis.y * GROUND_OFFSET
+		position = point + basis.y * SkateData.GROUND_OFFSET
 		rotation = Quaternion(Vector3.UP, $GravityRay.get_collision_normal()).get_euler()
 		rotate_object_local(Vector3.UP, angle)
 		if(CLONE_WOOPER.ANIMATION_TREE["parameters/Kickflip/active"]):
@@ -978,12 +924,14 @@ func drop_out_vert():
 	airborne_angle = 0
 	state = STATE.airborne
 func check_vert():
+	if(!SkateData.VERT_ENABLED):
+		return false
 	if(basis.z.y <= 0 && !(basis.z.y < 0 && velocity.z < -1)):
 		return false
 	for v in GameManager._vert:
 		if(v == null):
 			continue
-		if(v.get_distance(global_position) < VERT_MAGNETISM):
+		if(v.get_distance(global_position) < SkateData.VERT_MAGNETISM):
 			spine_lock = false
 			var trans = v.get_angle(global_position)
 			if(trans == null):
@@ -1056,8 +1004,8 @@ func check_vert_relative(pos):
 			#if d < 0:
 				#velocity.z *= -1
 			vert_timer = 0
-			if(DEBUG_VERT):
-				DebugDraw3D.draw_arrow(global_position, global_position + basis.y, Color.BLUE, DEBUG_ARROW_THICKNESS)
+			if(SkateData.DEBUG_VERT):
+				DebugDraw3D.draw_arrow(global_position, global_position + basis.y, Color.BLUE, SkateData.DEBUG_ARROW_THICKNESS)
 			return true
 	return false
 
@@ -1102,8 +1050,8 @@ func vert_physics(delta):
 	vert_dir = vert_angle_offset
 	
 	var comp_angle = (angle + vert_angle_offset) + PI/2
-	vert_vel.y -= GRAVITY * delta
-	angle -= input_dir.x * AIR_TURN_SPEED * delta
+	vert_vel.y -= SkateData.GRAVITY * delta
+	angle -= input_dir.x * SkateData.AIR_TURN_SPEED * delta
 	angle -= vert_angle_offset - old_offset
 	vert_coords += vert_vel*delta
 	if(vert.is_loop):
@@ -1136,8 +1084,8 @@ func vert_physics(delta):
 		var query = PhysicsRayQueryParameters3D.create(position - basis.y * scale, (position - basis.y * scale) + Vector3(0,-100, 0))
 		var result = space_state.intersect_ray(query)
 		if(result.size() != 0):
-			if(DEBUG_VERT):
-				DebugDraw3D.draw_arrow(position - basis.y * 0.5, result["position"],Color.RED, DEBUG_ARROW_THICKNESS,false, 100)
+			if(SkateData.DEBUG_VERT):
+				DebugDraw3D.draw_arrow(position - basis.y * 0.5, result["position"],Color.RED, SkateData.DEBUG_ARROW_THICKNESS,false, 100)
 
 			var layer = result["collider"].get_collision_layer()
 			if(result["normal"].y > 0 && (layer == 4 || layer == 5)):
