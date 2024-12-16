@@ -143,7 +143,7 @@ func _process(delta):
 func createPlayer(id):
 	players[id] = GameManager.clone_player.instantiate()
 	players[id].clothes = base_clothing.duplicate()
-	if(GameManager.player != null && GameManager.player.MP_COLLISIONS_ENABLED):
+	if(GameManager.player != null && SkateData.MP_COLLISIONS_ENABLED):
 		players[id].enable_collisions()
 	add_child(players[id])
 	

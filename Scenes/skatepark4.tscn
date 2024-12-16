@@ -92,7 +92,7 @@ _data = {
 &"Wobble": SubResource("Animation_dxlpg")
 }
 
-[node name="Node3D" type="Node3D"]
+[node name="Node3D2" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_x2gjh")

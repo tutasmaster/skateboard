@@ -26,7 +26,8 @@ enum STATE {
 	airborne,
 	railed, 
 	vert,
-	transition
+	transition,
+	walking
 }
 
 var friction = SkateData.FRICTION
@@ -126,6 +127,8 @@ func _physics_process(delta):
 	elif(state == STATE.transition):
 		position = position.lerp(to_position,delta * 2)
 		rotation = Quaternion.from_euler(rotation).slerp(to_rotation, delta * 2).get_euler()
+	elif(state == STATE.walking):
+		walk_physics(delta)
 
 func start_animation(anim):
 	if(!CLONE_WOOPER.ANIMATION_TREE["parameters/" + anim + "/active"]):
@@ -344,7 +347,7 @@ var manual = false
 
 func ground_physics(delta):
 	wallplant_speed = Vector3.ZERO
-	if(CLONE_WOOPER.ANIMATION_TREE["parameters/Bail/active"] || CLONE_WOOPER.ANIMATION_TREE["parameters/Crash/active"]):
+	if(CLONE_WOOPER.ANIMATION_TREE["parameters/IntoSkate/active"] || CLONE_WOOPER.ANIMATION_TREE["parameters/Bail/active"] || CLONE_WOOPER.ANIMATION_TREE["parameters/Crash/active"]):
 		velocity *= SkateData.BAIL_DRAG
 		velocity.y -= SkateData.GRAVITY * delta
 		snap_to_ground()
@@ -496,6 +499,10 @@ func ground_physics(delta):
 	if(state == STATE.vert):
 		return
 		
+	if(Input.is_action_just_pressed("walk")):
+		velocity = Vector3.ZERO
+		state = STATE.walking
+		start_animation("IntoWalk")
 	
 
 #AIRBORNE STATE
@@ -1108,5 +1115,59 @@ func vert_physics(delta):
 		check_rail()
 	if(InputBuffer.is_action_press_buffered("trick") && !CLONE_WOOPER.ANIMATION_TREE["parameters/Kickflip/active"]):
 		trick_animation()
+	pass
+	
+func snap_to_ground_walking():
+	if(state == STATE.walking):
+		if($GravityRay.get_collider() == null):
+			return
+		var point = $GravityRay.get_collision_point()
+		var layer = $GravityRay.get_collider().get_collision_layer()
+		var ground_angle = atan2($GravityRay.get_collision_normal().z, $GravityRay.get_collision_normal().x)
+		position = point + basis.y * SkateData.GROUND_OFFSET
+		rotation = Quaternion(Vector3.UP, $GravityRay.get_collision_normal()).get_euler()
+		var off_angle = angle_difference(prev_ground_angle, ground_angle )
+		angle -= (1 - abs(basis.y.y)) * off_angle
+		rotate_object_local(Vector3.UP, angle)
+		prev_ground_angle = ground_angle
+		
+func walk_physics(delta):
+	if(CLONE_WOOPER.ANIMATION_TREE["parameters/IntoWalk/active"]):
+		return
+	else:
+		set_animation("Walk",1)
+	snap_to_ground_walking()
+	check_walls()
+	
+	var input_dir = Input.get_vector("left", "right", "down", "up")
+	
+	angle -= input_dir.x * SkateData.WALK_TURN_SPEED * delta
+
+	$MeshInstance3D.rotation = Vector3.ZERO
+	
+	velocity.z += input_dir.y * SkateData.WALK_ACCELERATION * delta
+	
+	set_animation("WalkForward",clamp(velocity.z/4, -1, 1))
+	
+	#GRAVTIY	
+	velocity.y = -1
+	
+	velocity -= (velocity * SkateData.WALK_FRICTION) * delta
+	velocity.x *= SkateData.HORIZONTAL_DRAG
+	
+	if(velocity.length() > SkateData.WALK_SPEED_CAP):
+		velocity = velocity.normalized() * SkateData.WALK_SPEED_CAP
+	
+	
+	
+	position += basis.z * velocity.z * delta
+	position += basis.y * velocity.y * delta
+	position += basis.x * velocity.x * delta
+	
+	if(Input.is_action_just_pressed("walk")):
+		set_animation("Walk",0)
+		start_animation("IntoSkate")
+		force_snap_to_ground()
+	
 	pass
 	

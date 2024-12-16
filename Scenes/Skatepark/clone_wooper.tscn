@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://chwvu3wpe0fc1"]
+[gd_scene load_steps=57 format=4 uid="uid://chwvu3wpe0fc1"]
 
 [ext_resource type="PackedScene" uid="uid://bjch3dhc8hymo" path="res://Assets/Skatepark/skate.blend" id="1_m50v8"]
 [ext_resource type="Script" uid="uid://bj8lir22r2kkb" path="res://Scripts/Skate/CloneWooper.gd" id="1_q36gl"]
@@ -46,6 +46,19 @@ animation = &"Manual3"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dsi8v"]
 animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ojhuj"]
+animation = &"Drop"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7o3sv"]
+animation = &"IdleWalk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_optw7"]
+animation = &"IdleWalkWalk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qgm4j"]
+animation = &"Drop"
+play_mode = 1
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_a0a60"]
 animation = &"Ollie"
@@ -122,6 +135,10 @@ input_3/reset = true
 
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_u3q6x"]
 
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_i8cxj"]
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_c4dp7"]
+
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_e620i"]
 fadein_time = 0.1
 fadeout_time = 0.2
@@ -160,10 +177,15 @@ input_3/reset = true
 
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_uj5ox"]
 
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_i8cxj"]
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_qgm4j"]
+
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_f7ja8"]
 fadeout_time = 0.2
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_vuade"]
+graph_offset = Vector2(-100.991, 11.1373)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_1e06u")
 nodes/Animation/position = Vector2(-880, 20)
 "nodes/Animation 10/node" = SubResource("AnimationNodeAnimation_vv6fg")
@@ -171,7 +193,7 @@ nodes/Animation/position = Vector2(-880, 20)
 "nodes/Animation 11/node" = SubResource("AnimationNodeAnimation_ayqup")
 "nodes/Animation 11/position" = Vector2(1620, 500)
 "nodes/Animation 12/node" = SubResource("AnimationNodeAnimation_8rb7c")
-"nodes/Animation 12/position" = Vector2(2340, 620)
+"nodes/Animation 12/position" = Vector2(2360, 740)
 "nodes/Animation 13/node" = SubResource("AnimationNodeAnimation_7ixig")
 "nodes/Animation 13/position" = Vector2(-580, 320)
 "nodes/Animation 14/node" = SubResource("AnimationNodeAnimation_d1q1m")
@@ -194,6 +216,14 @@ nodes/Animation/position = Vector2(-880, 20)
 "nodes/Animation 21/position" = Vector2(1640, 760)
 "nodes/Animation 22/node" = SubResource("AnimationNodeAnimation_dsi8v")
 "nodes/Animation 22/position" = Vector2(1740, 880)
+"nodes/Animation 23/node" = SubResource("AnimationNodeAnimation_ojhuj")
+"nodes/Animation 23/position" = Vector2(2600, 660)
+"nodes/Animation 24/node" = SubResource("AnimationNodeAnimation_7o3sv")
+"nodes/Animation 24/position" = Vector2(2780, 680)
+"nodes/Animation 25/node" = SubResource("AnimationNodeAnimation_optw7")
+"nodes/Animation 25/position" = Vector2(2800, 880)
+"nodes/Animation 26/node" = SubResource("AnimationNodeAnimation_qgm4j")
+"nodes/Animation 26/position" = Vector2(3200, 680)
 "nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_a0a60")
 "nodes/Animation 3/position" = Vector2(120, 540)
 "nodes/Animation 4/node" = SubResource("AnimationNodeAnimation_26lv5")
@@ -222,6 +252,10 @@ nodes/GrindTricks/node = SubResource("AnimationNodeTransition_stsfm")
 nodes/GrindTricks/position = Vector2(2060, 460)
 nodes/Grinding/node = SubResource("AnimationNodeBlend2_u3q6x")
 nodes/Grinding/position = Vector2(2280, 340)
+nodes/IntoSkate/node = SubResource("AnimationNodeOneShot_i8cxj")
+nodes/IntoSkate/position = Vector2(3420, 440)
+nodes/IntoWalk/node = SubResource("AnimationNodeOneShot_c4dp7")
+nodes/IntoWalk/position = Vector2(2860, 360)
 nodes/Kick/node = SubResource("AnimationNodeOneShot_e620i")
 nodes/Kick/position = Vector2(280, 200)
 nodes/Kickflip/node = SubResource("AnimationNodeOneShot_xsb5a")
@@ -234,10 +268,14 @@ nodes/OneShot/node = SubResource("AnimationNodeOneShot_uhhd5")
 nodes/OneShot/position = Vector2(600, 220)
 nodes/Prepare/node = SubResource("AnimationNodeBlend2_uj5ox")
 nodes/Prepare/position = Vector2(-100, -40)
+nodes/Walk/node = SubResource("AnimationNodeBlend2_i8cxj")
+nodes/Walk/position = Vector2(3140, 360)
+nodes/WalkForward/node = SubResource("AnimationNodeBlend2_qgm4j")
+nodes/WalkForward/position = Vector2(2980, 680)
 nodes/Wallplant/node = SubResource("AnimationNodeOneShot_f7ja8")
 nodes/Wallplant/position = Vector2(1940, 180)
-nodes/output/position = Vector2(2920, 180)
-node_connections = [&"Bail", 0, &"Floor", &"Bail", 1, &"Animation 9", &"Crash", 0, &"Grinding", &"Crash", 1, &"Animation 12", &"Direction", 0, &"Animation 4", &"Direction", 1, &"Animation", &"Direction", 2, &"Animation 5", &"Flip", 0, &"Animation 6", &"Flip", 1, &"Animation 15", &"Flip", 2, &"Animation 16", &"Flip", 3, &"Animation 17", &"Floor", 0, &"Kickflip", &"Floor", 1, &"Animation 7", &"GrindTricks", 0, &"Animation 11", &"GrindTricks", 1, &"Animation 20", &"GrindTricks", 2, &"Animation 21", &"GrindTricks", 3, &"Animation 22", &"Grinding", 0, &"Wallplant", &"Grinding", 1, &"GrindTricks", &"Kick", 0, &"Manual", &"Kick", 1, &"Animation 8", &"Kickflip", 0, &"OneShot", &"Kickflip", 1, &"Flip", &"Manual", 0, &"Prepare", &"Manual", 1, &"ManualType", &"ManualType", 0, &"Animation 13", &"ManualType", 1, &"Animation 14", &"ManualType", 2, &"Animation 18", &"ManualType", 3, &"Animation 19", &"OneShot", 0, &"Kick", &"OneShot", 1, &"Animation 3", &"Prepare", 0, &"Direction", &"Prepare", 1, &"Animation 2", &"Wallplant", 0, &"Bail", &"Wallplant", 1, &"Animation 10", &"output", 0, &"Crash"]
+nodes/output/position = Vector2(3660, 420)
+node_connections = [&"Bail", 0, &"Floor", &"Bail", 1, &"Animation 9", &"Crash", 0, &"Grinding", &"Crash", 1, &"Animation 12", &"Direction", 0, &"Animation 4", &"Direction", 1, &"Animation", &"Direction", 2, &"Animation 5", &"Flip", 0, &"Animation 6", &"Flip", 1, &"Animation 15", &"Flip", 2, &"Animation 16", &"Flip", 3, &"Animation 17", &"Floor", 0, &"Kickflip", &"Floor", 1, &"Animation 7", &"GrindTricks", 0, &"Animation 11", &"GrindTricks", 1, &"Animation 20", &"GrindTricks", 2, &"Animation 21", &"GrindTricks", 3, &"Animation 22", &"Grinding", 0, &"Wallplant", &"Grinding", 1, &"GrindTricks", &"IntoSkate", 0, &"Walk", &"IntoSkate", 1, &"Animation 26", &"IntoWalk", 0, &"Crash", &"IntoWalk", 1, &"Animation 23", &"Kick", 0, &"Manual", &"Kick", 1, &"Animation 8", &"Kickflip", 0, &"OneShot", &"Kickflip", 1, &"Flip", &"Manual", 0, &"Prepare", &"Manual", 1, &"ManualType", &"ManualType", 0, &"Animation 13", &"ManualType", 1, &"Animation 14", &"ManualType", 2, &"Animation 18", &"ManualType", 3, &"Animation 19", &"OneShot", 0, &"Kick", &"OneShot", 1, &"Animation 3", &"Prepare", 0, &"Direction", &"Prepare", 1, &"Animation 2", &"Walk", 0, &"IntoWalk", &"Walk", 1, &"WalkForward", &"WalkForward", 0, &"Animation 24", &"WalkForward", 1, &"Animation 25", &"Wallplant", 0, &"Bail", &"Wallplant", 1, &"Animation 10", &"output", 0, &"IntoSkate"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ft1bk"]
 
@@ -325,6 +363,12 @@ parameters/GrindTricks/current_state = "base"
 parameters/GrindTricks/transition_request = ""
 parameters/GrindTricks/current_index = 0
 parameters/Grinding/blend_amount = 0.0
+parameters/IntoSkate/active = false
+parameters/IntoSkate/internal_active = false
+parameters/IntoSkate/request = 0
+parameters/IntoWalk/active = false
+parameters/IntoWalk/internal_active = false
+parameters/IntoWalk/request = 0
 parameters/Kick/active = false
 parameters/Kick/internal_active = false
 parameters/Kick/request = 0
@@ -339,6 +383,8 @@ parameters/OneShot/active = false
 parameters/OneShot/internal_active = false
 parameters/OneShot/request = 0
 parameters/Prepare/blend_amount = 0.0
+parameters/Walk/blend_amount = 0.0
+parameters/WalkForward/blend_amount = 0.0
 parameters/Wallplant/active = false
 parameters/Wallplant/internal_active = false
 parameters/Wallplant/request = 0

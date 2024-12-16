@@ -26,8 +26,8 @@ func _ready():
 
 func _process(delta):
 	if(target_position != null && target_rotation != null):
-		position = lerp(position, target_position, max(delta * GameManager.player.MP_INTERPOLATION_SPEED,1))  
-		rotation = Quaternion.from_euler(rotation).slerp(Quaternion.from_euler(target_rotation),max(delta * GameManager.player.MP_INTERPOLATION_SPEED,1)).get_euler()
+		position = lerp(position, target_position, max(delta * SkateData.MP_INTERPOLATION_SPEED,1))  
+		rotation = Quaternion.from_euler(rotation).slerp(Quaternion.from_euler(target_rotation),max(delta * SkateData.MP_INTERPOLATION_SPEED,1)).get_euler()
 
 func enable_collisions():
 	pass

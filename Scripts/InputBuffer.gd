@@ -124,7 +124,6 @@ func _input(event: InputEvent) -> void:
 		
 	_get_timestamps(event)[_get_timestamps_key(event)] = Time.get_ticks_msec()
 
-
 # Returns whether any of the keyboard keys or joypad buttons in the given action were pressed within the buffer window.
 func is_action_press_buffered(action: String, buffer_window: int = BUFFER_WINDOW) -> bool:
 	# Get the inputs associated with the action. If any one of them was pressed in the last buffer_window milliseconds,
