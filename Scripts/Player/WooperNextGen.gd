@@ -325,9 +325,9 @@ func check_walls():
 	for c in checks:
 		c.force_raycast_update()
 		if(c.is_colliding()):
-			if(c.get_collision_normal().dot(Vector3.UP) >= 0.8):
-				reset()
-				return
+			#if(c.get_collision_normal().dot(Vector3.UP) >= 0.8):
+				#reset()
+				##return
 			count += 1
 			var point = c.get_collision_point()
 			var distance = abs(c.target_position.y) - c.global_position.distance_to(point)
@@ -347,6 +347,7 @@ var manual = false
 
 func ground_physics(delta):
 	wallplant_speed = Vector3.ZERO
+
 	if(CLONE_WOOPER.ANIMATION_TREE["parameters/IntoSkate/active"] || CLONE_WOOPER.ANIMATION_TREE["parameters/Bail/active"] || CLONE_WOOPER.ANIMATION_TREE["parameters/Crash/active"]):
 		velocity *= SkateData.BAIL_DRAG
 		velocity.y -= SkateData.GRAVITY * delta

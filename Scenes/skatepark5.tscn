@@ -1,0 +1,476 @@
+[gd_scene load_steps=14 format=3 uid="uid://lsp20k5sr7qe"]
+
+[ext_resource type="PackedScene" uid="uid://pqlomjxlleb5" path="res://Scenes/Skatepark/camera_pivot.tscn" id="1_t1155"]
+[ext_resource type="Material" uid="uid://c5vpvypo2kyk4" path="res://Assets/Materials/Test/TestTexture.tres" id="1_unprj"]
+[ext_resource type="PackedScene" uid="uid://kl0o5c68shap" path="res://Assets/Skatepark/Quarterpipe.glb" id="2_p1ebr"]
+[ext_resource type="Material" uid="uid://db13mqrccg5ej" path="res://Assets/Materials/Test/TestTexture3.tres" id="3_4w73i"]
+[ext_resource type="Material" uid="uid://qmt736vt23xj" path="res://Assets/Materials/wall.tres" id="3_gp3mo"]
+[ext_resource type="PackedScene" uid="uid://7fvi2whbg4yg" path="res://Scenes/Skatepark/wooper.tscn" id="4_4w73i"]
+[ext_resource type="Material" uid="uid://ctu23jrolwqkh" path="res://Assets/Materials/Floor.tres" id="4_k6rak"]
+[ext_resource type="PackedScene" uid="uid://chwvu3wpe0fc1" path="res://Scenes/Skatepark/clone_wooper.tscn" id="5_aiedr"]
+[ext_resource type="Script" uid="uid://bvyma6a8cyjsj" path="res://Scripts/Skate/VertTrigger.gd" id="5_h2pqx"]
+[ext_resource type="PackedScene" uid="uid://br3377n550fvr" path="res://Assets/Skatepark/export.glb" id="8_h2pqx"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t1155"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_4w73i"]
+sky_material = SubResource("ProceduralSkyMaterial_t1155")
+
+[sub_resource type="Environment" id="Environment_aiedr"]
+sky = SubResource("Sky_4w73i")
+ambient_light_source = 2
+ambient_light_color = Color(0.434365, 0.444099, 0.457324, 1)
+ambient_light_energy = 0.1
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Node3D" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-1, -8.74228e-08, 0, -3.82137e-15, 4.37114e-08, 1, -8.74228e-08, 1, -4.37114e-08, 0, 0, 0)
+light_color = Color(0.787252, 0.804498, 0.761594, 1)
+light_energy = 0.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_aiedr")
+
+[node name="CameraPivot" parent="." node_paths=PackedStringArray("target") instance=ExtResource("1_t1155")]
+target = NodePath("../Wooper")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.139465, -0.249939, -0.171143)
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.82853, 0, -3.34912)
+use_collision = true
+size = Vector3(25.2164, 0.500122, 26.0869)
+material = ExtResource("1_unprj")
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.70192, 14.6031, -11.0547)
+use_collision = true
+size = Vector3(26.9632, 0.500122, 41.498)
+material = ExtResource("3_gp3mo")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 5.01422, -3.67881, -21.484)
+use_collision = true
+size = Vector3(4.98046, 14.7193, 36)
+material = ExtResource("4_k6rak")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -7.83915, 6.933, -3.34912)
+use_collision = true
+size = Vector3(15.8811, 0.500122, 26.0869)
+material = ExtResource("3_gp3mo")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, -10.4796, 6.933, -23.3072)
+use_collision = true
+size = Vector3(15.8811, 14.2261, 26.0571)
+material = ExtResource("3_gp3mo")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, 9.18358, 6.933, -36.5669)
+use_collision = true
+size = Vector3(15.8811, 14.8694, 17.4675)
+material = ExtResource("3_gp3mo")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, 7.89422, 6.933, -30.069)
+use_collision = true
+size = Vector3(15.8811, 27.8654, 0.965942)
+material = ExtResource("3_gp3mo")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, 18.0081, 6.933, -16.3661)
+use_collision = true
+size = Vector3(15.8811, 55.2711, 0.965942)
+material = ExtResource("3_gp3mo")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(4.37114e-08, 1, 8.74228e-08, 1, -4.37114e-08, 0, 3.82138e-15, 8.74228e-08, -1, 18.0081, 6.933, 9.63696)
+use_collision = true
+size = Vector3(15.8811, 55.2711, 0.965942)
+material = ExtResource("3_gp3mo")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, 12.5628, 0.597522, -22.512)
+use_collision = true
+size = Vector3(3.21014, 12.6357, 10.142)
+material = ExtResource("4_k6rak")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -7.5232, 0.13421, 1.47978)
+polygon = PackedVector2Array(-1.98298, 0.00797565, -1.96891, 1.95436, 1.94421, -0.000570625)
+depth = 8.0
+material = ExtResource("3_4w73i")
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0.4768, 0.13421, -7.82565)
+polygon = PackedVector2Array(-1.98298, 0.00797565, -1.96891, 1.95436, 1.94421, -0.000570625)
+depth = 8.0
+material = ExtResource("3_4w73i")
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.3748, 0.851971, 0.894796)
+
+[node name="Quarterpipe" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.09722)
+
+[node name="Quarterpipe2" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -6.09722)
+
+[node name="Quarterpipe3" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -6.09722)
+
+[node name="Quarterpipe22" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -6.09722)
+
+[node name="Quarterpipe7" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16.3621)
+
+[node name="Quarterpipe8" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -16.3621)
+
+[node name="Quarterpipe9" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -16.3621)
+
+[node name="Quarterpipe10" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -16.3621)
+
+[node name="Quarterpipe11" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -16.3621)
+
+[node name="Quarterpipe12" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -16.3621)
+
+[node name="Quarterpipe13" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, -16.3621)
+
+[node name="Quarterpipe14" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, -16.3621)
+
+[node name="Quarterpipe15" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0, -16.3621)
+
+[node name="Quarterpipe16" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -16.3621)
+
+[node name="Quarterpipe17" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2, -29.3621)
+
+[node name="Quarterpipe18" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 2, -29.3621)
+
+[node name="Quarterpipe19" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 2, -29.3621)
+
+[node name="Quarterpipe20" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 2, -29.3621)
+
+[node name="Quarterpipe21" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 2, -29.3621)
+
+[node name="Quarterpipe4" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4, 0, -2.38653)
+
+[node name="Quarterpipe23" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5.99581, 0, -2.38653)
+
+[node name="Quarterpipe5" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2, 0, -2.38653)
+
+[node name="Quarterpipe6" parent="Node3D" instance=ExtResource("2_p1ebr")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, -2.38653)
+
+[node name="VertTrigger2" type="Node3D" parent="Node3D"]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 4.99106, 0.977047, -6.9005)
+script = ExtResource("5_h2pqx")
+type = 2
+pointList = Array[Vector3]([Vector3(-7.43071, 1.82902, -6.0057), Vector3(0.61626, 1.82902, -6.0057)])
+metadata/_custom_type_script = ExtResource("5_h2pqx")
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.53674e-07, 0, -6.04697)
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="VertTrigger3" type="Node3D" parent="Node3D"]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 4.99106, 0.977047, -1.59767)
+script = ExtResource("5_h2pqx")
+type = 2
+pointList = Array[Vector3]([Vector3(0.61626, 1.82902, -0.702874), Vector3(-7.43071, 1.82902, -0.702874)])
+metadata/_custom_type_script = ExtResource("5_h2pqx")
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0, 2)
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.53674e-07, 0, -6.04697)
+
+[node name="VertTrigger4" type="Node3D" parent="Node3D"]
+transform = Transform3D(1, 0, -1.74845e-07, 0, 1, 0, 1.74845e-07, 0, 1, 6.92904, 1.12282, -3.56805)
+script = ExtResource("5_h2pqx")
+type = 1
+pointList = Array[Vector3]([Vector3(0.554244, 1.97479, -0.673249), Vector3(0.554245, 2.32351, -1.2656), Vector3(0.554245, 2.59135, -1.93679), Vector3(0.554245, 2.75868, -2.64407), Vector3(0.554245, 2.81266, -3.28164), Vector3(0.554245, 2.75868, -4.0178), Vector3(0.554245, 2.59135, -4.72507), Vector3(0.554244, 2.32351, -5.39626), Vector3(0.554245, 1.97479, -5.98861)])
+metadata/_custom_type_script = ExtResource("5_h2pqx")
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0, 2)
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.57628e-07, 0.348719, 1.40765)
+
+[node name="Marker3D3" type="Marker3D" parent="Node3D/VertTrigger4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0.616566, 0.736461)
+
+[node name="Marker3D4" type="Marker3D" parent="Node3D/VertTrigger4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.19209e-07, 0.783888, 0.0291839)
+
+[node name="Marker3D5" type="Marker3D" parent="Node3D/VertTrigger4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.837876, -0.608389)
+
+[node name="Marker3D9" type="Marker3D" parent="Node3D/VertTrigger4"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.78814e-07, 0.783888, -1.34455)
+
+[node name="Marker3D8" type="Marker3D" parent="Node3D/VertTrigger4"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3.57628e-07, 0.616566, -2.05182)
+
+[node name="Marker3D7" type="Marker3D" parent="Node3D/VertTrigger4"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5.36442e-07, 0.348719, -2.72301)
+
+[node name="Marker3D6" type="Marker3D" parent="Node3D/VertTrigger4"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4.17233e-07, 0, -3.31536)
+
+[node name="VertTrigger5" type="Node3D" parent="Node3D"]
+transform = Transform3D(1, 0, -1.74845e-07, 0, 1, 0, 1.74845e-07, 0, 1, 5.00964, 1.12282, -3.56805)
+script = ExtResource("5_h2pqx")
+type = 1
+pointList = Array[Vector3]([Vector3(-1.36516, 1.97479, -0.673249), Vector3(-1.36516, 2.32351, -1.2656), Vector3(-1.36516, 2.59135, -1.93679), Vector3(-1.36516, 2.75868, -2.64407), Vector3(-1.36516, 2.81266, -3.28164), Vector3(-1.36516, 2.75868, -4.0178), Vector3(-1.36516, 2.59135, -4.72507), Vector3(-1.36516, 2.32351, -5.39626), Vector3(-1.36516, 1.97479, -5.98861)])
+metadata/_custom_type_script = ExtResource("5_h2pqx")
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0, 2)
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.57628e-07, 0.348719, 1.40765)
+
+[node name="Marker3D3" type="Marker3D" parent="Node3D/VertTrigger5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0.616566, 0.736461)
+
+[node name="Marker3D4" type="Marker3D" parent="Node3D/VertTrigger5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.19209e-07, 0.783888, 0.0291839)
+
+[node name="Marker3D5" type="Marker3D" parent="Node3D/VertTrigger5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.837876, -0.608389)
+
+[node name="Marker3D9" type="Marker3D" parent="Node3D/VertTrigger5"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.78814e-07, 0.783888, -1.34455)
+
+[node name="Marker3D8" type="Marker3D" parent="Node3D/VertTrigger5"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3.57628e-07, 0.616566, -2.05182)
+
+[node name="Marker3D7" type="Marker3D" parent="Node3D/VertTrigger5"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5.36442e-07, 0.348719, -2.72301)
+
+[node name="Marker3D6" type="Marker3D" parent="Node3D/VertTrigger5"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4.17233e-07, 0, -3.31536)
+
+[node name="VertTrigger6" type="Node3D" parent="Node3D"]
+transform = Transform3D(1, 0, -1.74845e-07, 0, 1, 0, 1.74845e-07, 0, 1, 3.01905, 1.12282, -3.56805)
+script = ExtResource("5_h2pqx")
+type = 1
+pointList = Array[Vector3]([Vector3(-3.35575, 1.97479, -0.673249), Vector3(-3.35575, 2.32351, -1.2656), Vector3(-3.35575, 2.59135, -1.93679), Vector3(-3.35575, 2.75868, -2.64407), Vector3(-3.35575, 2.81266, -3.28164), Vector3(-3.35575, 2.75868, -4.0178), Vector3(-3.35575, 2.59135, -4.72507), Vector3(-3.35575, 2.32351, -5.39626), Vector3(-3.35575, 1.97479, -5.98861)])
+metadata/_custom_type_script = ExtResource("5_h2pqx")
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0, 2)
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.57628e-07, 0.348719, 1.40765)
+
+[node name="Marker3D3" type="Marker3D" parent="Node3D/VertTrigger6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0.616566, 0.736461)
+
+[node name="Marker3D4" type="Marker3D" parent="Node3D/VertTrigger6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.19209e-07, 0.783888, 0.0291839)
+
+[node name="Marker3D5" type="Marker3D" parent="Node3D/VertTrigger6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.837876, -0.608389)
+
+[node name="Marker3D9" type="Marker3D" parent="Node3D/VertTrigger6"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.78814e-07, 0.783888, -1.34455)
+
+[node name="Marker3D8" type="Marker3D" parent="Node3D/VertTrigger6"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3.57628e-07, 0.616566, -2.05182)
+
+[node name="Marker3D7" type="Marker3D" parent="Node3D/VertTrigger6"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5.36442e-07, 0.348719, -2.72301)
+
+[node name="Marker3D6" type="Marker3D" parent="Node3D/VertTrigger6"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4.17233e-07, 0, -3.31536)
+
+[node name="VertTrigger7" type="Node3D" parent="Node3D"]
+transform = Transform3D(1, 0, -1.74845e-07, 0, 1, 0, 1.74845e-07, 0, 1, 1.02186, 1.12282, -3.56805)
+script = ExtResource("5_h2pqx")
+type = 1
+pointList = Array[Vector3]([Vector3(-5.35294, 1.97479, -0.673249), Vector3(-5.35294, 2.32351, -1.2656), Vector3(-5.35294, 2.59135, -1.93679), Vector3(-5.35294, 2.75868, -2.64407), Vector3(-5.35294, 2.81266, -3.28164), Vector3(-5.35294, 2.75868, -4.0178), Vector3(-5.35294, 2.59135, -4.72507), Vector3(-5.35294, 2.32351, -5.39626), Vector3(-5.35294, 1.97479, -5.98861)])
+metadata/_custom_type_script = ExtResource("5_h2pqx")
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0, 2)
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.57628e-07, 0.348719, 1.40765)
+
+[node name="Marker3D3" type="Marker3D" parent="Node3D/VertTrigger7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0.616566, 0.736461)
+
+[node name="Marker3D4" type="Marker3D" parent="Node3D/VertTrigger7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.19209e-07, 0.783888, 0.0291839)
+
+[node name="Marker3D5" type="Marker3D" parent="Node3D/VertTrigger7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.837876, -0.608389)
+
+[node name="Marker3D9" type="Marker3D" parent="Node3D/VertTrigger7"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.78814e-07, 0.783888, -1.34455)
+
+[node name="Marker3D8" type="Marker3D" parent="Node3D/VertTrigger7"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3.57628e-07, 0.616566, -2.05182)
+
+[node name="Marker3D7" type="Marker3D" parent="Node3D/VertTrigger7"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5.36442e-07, 0.348719, -2.72301)
+
+[node name="Marker3D6" type="Marker3D" parent="Node3D/VertTrigger7"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4.17233e-07, 0, -3.31536)
+
+[node name="VertTrigger8" type="Node3D" parent="Node3D"]
+transform = Transform3D(1, 0, -1.74845e-07, 0, 1, 0, 1.74845e-07, 0, 1, -0.923202, 1.12282, -3.56805)
+script = ExtResource("5_h2pqx")
+type = 1
+pointList = Array[Vector3]([Vector3(-7.298, 1.97479, -0.673249), Vector3(-7.298, 2.32351, -1.2656), Vector3(-7.298, 2.59135, -1.93679), Vector3(-7.298, 2.75868, -2.64407), Vector3(-7.298, 2.81266, -3.28164), Vector3(-7.298, 2.75868, -4.0178), Vector3(-7.298, 2.59135, -4.72507), Vector3(-7.298, 2.32351, -5.39626), Vector3(-7.298, 1.97479, -5.98861)])
+metadata/_custom_type_script = ExtResource("5_h2pqx")
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0, 2)
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.57628e-07, 0.348719, 1.40765)
+
+[node name="Marker3D3" type="Marker3D" parent="Node3D/VertTrigger8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0.616566, 0.736461)
+
+[node name="Marker3D4" type="Marker3D" parent="Node3D/VertTrigger8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.19209e-07, 0.783888, 0.0291839)
+
+[node name="Marker3D5" type="Marker3D" parent="Node3D/VertTrigger8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.837876, -0.608389)
+
+[node name="Marker3D9" type="Marker3D" parent="Node3D/VertTrigger8"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.78814e-07, 0.783888, -1.34455)
+
+[node name="Marker3D8" type="Marker3D" parent="Node3D/VertTrigger8"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3.57628e-07, 0.616566, -2.05182)
+
+[node name="Marker3D7" type="Marker3D" parent="Node3D/VertTrigger8"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5.36442e-07, 0.348719, -2.72301)
+
+[node name="Marker3D6" type="Marker3D" parent="Node3D/VertTrigger8"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4.17233e-07, 0, -3.31536)
+
+[node name="Wooper" parent="." node_paths=PackedStringArray("CLONE_WOOPER") instance=ExtResource("4_4w73i")]
+transform = Transform3D(1, 0, 0, 0, 1, -0.000471205, 0, 0.000471205, 1, 5.26678, 8.81226, -26.196)
+CLONE_WOOPER = NodePath("../CloneWooper")
+
+[node name="CloneWooper" parent="." instance=ExtResource("5_aiedr")]
+transform = Transform3D(1, 0, 0, 0, 1, -0.000471205, 0, 0.000471205, 1, 5.26678, 8.81226, -26.196)
+
+[node name="VertTrigger" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.00345, 0.949943, -8.33782)
+script = ExtResource("5_h2pqx")
+type = 1
+pointList = Array[Vector3]([Vector3(5.00345, 0.949943, -8.33782), Vector3(5.00345, 0.949943, -5.40232), Vector3(5.63957, 0.949943, -3.9976), Vector3(5.69839, 0.949943, -2.48324), Vector3(4.9785, 0.949943, -0.89911), Vector3(4.92979, 0.949943, 0.52187), Vector3(4.19817, 0.949943, 1.69548), Vector3(4.17602, 0.949943, 4.33478)])
+metadata/_custom_type_script = ExtResource("5_h2pqx")
+
+[node name="Marker3D" type="Marker3D" parent="VertTrigger"]
+
+[node name="Marker3D2" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.9355)
+
+[node name="Marker3D3" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.636122, 0, 4.34022)
+
+[node name="Marker3D4" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.694942, 0, 5.85458)
+
+[node name="Marker3D5" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0249491, 0, 7.43871)
+
+[node name="Marker3D6" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0736594, 0, 8.85969)
+
+[node name="Marker3D7" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.805281, 0, 10.0333)
+
+[node name="Marker3D8" type="Marker3D" parent="VertTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.827427, 0, 12.6726)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(0.966904, 1.11526e-08, -0.255142, 0.255142, -4.22647e-08, 0.966904, 0, -1, -4.37114e-08, -6.96539, 4.60459, -4.13898)
+light_color = Color(0.766558, 0.634091, 0.526221, 1)
+light_energy = 12.99
+spot_range = 10.4007
+spot_angle = 53.5406
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(0.966904, 1.11526e-08, -0.255142, 0.255142, -4.22647e-08, 0.966904, 0, -1, -4.37114e-08, -6.96539, 4.60459, -12.1216)
+light_color = Color(0.766558, 0.634091, 0.526221, 1)
+light_energy = 12.99
+spot_range = 10.4007
+spot_angle = 53.5406
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="."]
+transform = Transform3D(0.966904, 1.11526e-08, -0.255142, 0.255142, -4.22647e-08, 0.966904, 0, -1, -4.37114e-08, -6.96539, 4.60459, 3.87844)
+light_color = Color(0.766558, 0.634091, 0.526221, 1)
+light_energy = 12.99
+spot_range = 10.4007
+spot_angle = 53.5406
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="."]
+transform = Transform3D(-0.966904, -9.85754e-08, 0.255142, 0.255142, -4.22647e-08, 0.966904, -8.45294e-08, 1, 6.60166e-08, 17.3404, 4.60459, -4.11575)
+light_color = Color(0.766558, 0.634091, 0.526221, 1)
+light_energy = 12.99
+spot_range = 10.4007
+spot_angle = 53.5406
+
+[node name="SpotLight3D5" type="SpotLight3D" parent="."]
+transform = Transform3D(-0.966904, -9.85754e-08, 0.255142, 0.255142, -4.22647e-08, 0.966904, -8.45294e-08, 1, 6.60166e-08, 17.3404, 4.60459, 3.86682)
+light_color = Color(0.766558, 0.634091, 0.526221, 1)
+light_energy = 12.99
+spot_range = 10.4007
+spot_angle = 53.5406
+
+[node name="SpotLight3D6" type="SpotLight3D" parent="."]
+transform = Transform3D(-0.966904, -9.85754e-08, 0.255142, 0.255142, -4.22647e-08, 0.966904, -8.45294e-08, 1, 6.60166e-08, 17.3404, 4.60459, -12.1332)
+light_color = Color(0.766558, 0.634091, 0.526221, 1)
+light_energy = 12.99
+spot_range = 10.4007
+spot_angle = 53.5406
+
+[node name="SpotLight3D7" type="SpotLight3D" parent="."]
+transform = Transform3D(1.26794e-07, -1, -7.71692e-08, 0.0629647, -6.90326e-08, 0.998016, -0.998016, -1.31401e-07, 0.0629647, 5.11815, 13.4123, -2.76741)
+light_energy = 38.055
+light_indirect_energy = 0.0
+shadow_bias = 0.145
+shadow_normal_bias = 10.0
+shadow_blur = 0.76
+spot_range = 31.512
+spot_angle = 82.78
+spot_angle_attenuation = 21.8566
+
+[node name="export" parent="." instance=ExtResource("8_h2pqx")]
