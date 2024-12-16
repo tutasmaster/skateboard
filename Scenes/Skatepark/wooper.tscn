@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c4g8fon7tfuff" path="res://Scripts/Player/WooperNextGen.gd" id="1_ea8to"]
 [ext_resource type="PackedScene" uid="uid://4p64crc5rs2h" path="res://Scenes/decal.tscn" id="2_u1lca"]
-[ext_resource type="AudioStream" uid="uid://dtjm1r7gstqbb" path="res://Assets/Sounds/Ollie.mp3" id="3_d6n7p"]
+[ext_resource type="AudioStream" uid="uid://dhhp4bcpjxs5f" path="res://Assets/Sounds/skamte_ollie_short.wav" id="3_tma1d"]
 [ext_resource type="AudioStream" uid="uid://bfikpphw0aa77" path="res://Assets/Sounds/rail2.mp3" id="4_ih6wk"]
 [ext_resource type="AudioStream" uid="uid://bi3oktvaw8ho6" path="res://Assets/Sounds/drop.mp3" id="5_hvx5u"]
 
@@ -139,6 +139,12 @@ hit_back_faces = false
 
 [node name="GravityRay" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0868204, 0)
+target_position = Vector3(0, -0.2, 0)
+collision_mask = 5
+hit_back_faces = false
+
+[node name="WalkingRay" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.182, 0)
 target_position = Vector3(0, -0.2, 0)
 collision_mask = 5
 hit_back_faces = false
@@ -333,7 +339,9 @@ libraries = {
 }
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("3_d6n7p")
+stream = ExtResource("3_tma1d")
+volume_db = -11.126
+pitch_scale = 1.46
 max_polyphony = 10
 
 [node name="RailAudio" type="AudioStreamPlayer3D" parent="."]
@@ -342,6 +350,7 @@ volume_db = -30.0
 
 [node name="DropAudio" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("5_hvx5u")
+volume_db = -15.129
 
 [node name="Backwards" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0)

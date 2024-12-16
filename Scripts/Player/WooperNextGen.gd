@@ -500,9 +500,12 @@ func ground_physics(delta):
 		return
 		
 	if(Input.is_action_just_pressed("walk")):
-		velocity = Vector3.ZERO
 		state = STATE.walking
 		start_animation("IntoWalk")
+		velocity = local_to_global_vector(velocity)
+		rotation = Vector3(0,0,0)
+		rotation.y = angle
+		velocity = global_to_local_vector(velocity)
 	
 
 #AIRBORNE STATE
@@ -709,6 +712,13 @@ func airborne_physics(delta):
 		return
 	if(InputBuffer.is_action_press_buffered("trick") && !CLONE_WOOPER.ANIMATION_TREE["parameters/Kickflip/active"]):
 		trick_animation()
+	if(Input.is_action_just_pressed("walk")):
+		state = STATE.walking
+		start_animation("IntoWalk")
+		velocity = local_to_global_vector(velocity)
+		rotation = Vector3(0,0,0)
+		rotation.y = angle
+		velocity = global_to_local_vector(velocity)
 
 
 #RAIL STATE
@@ -1115,6 +1125,17 @@ func vert_physics(delta):
 		check_rail()
 	if(InputBuffer.is_action_press_buffered("trick") && !CLONE_WOOPER.ANIMATION_TREE["parameters/Kickflip/active"]):
 		trick_animation()
+	
+	
+	if(Input.is_action_just_pressed("walk")):
+		drop_vert()
+		state = STATE.walking
+		start_animation("IntoWalk")
+		velocity = local_to_global_vector(velocity)
+		rotation = Vector3(0,0,0)
+		rotation.y = angle
+		velocity = global_to_local_vector(velocity)
+	
 	pass
 	
 func snap_to_ground_walking():
@@ -1131,43 +1152,90 @@ func snap_to_ground_walking():
 		rotate_object_local(Vector3.UP, angle)
 		prev_ground_angle = ground_angle
 		
+func check_walls_walking(_delta):
+	var movement = Vector3.ZERO
+	var pushback = Vector3.ZERO
+	var checks = $WallCheck.get_children()
+	checks.push_back($Up)
+	for c in checks:
+		if(c.is_colliding()):
+			var point = c.get_collision_point()
+			var distance = abs(c.target_position.y) - c.global_position.distance_to(point)
+			movement += (c.global_transform.basis.y * distance * 1.1)
+			pushback += global_to_local_vector(c.get_collision_normal())
+	if($WalkingRay.is_colliding()):
+		var point = $WalkingRay.get_collision_point()
+		var distance = abs($WalkingRay.target_position.y) - $WalkingRay.global_position.distance_to(point)
+		movement += ($WalkingRay.global_transform.basis.y * distance * 1.1)
+		velocity.y = 0
+		
+	global_position = global_position + movement
+	velocity += pushback
+
+func jump_walk():
+	if(!$GravityRay.is_colliding()):
+		return
+	InputBuffer._invalidate_action("jump")
+	velocity.y = 0
+	velocity.y += SkateData.WALK_JUMP_STRENGTH
+	set_animation("Manual", 0)
+	airborne_angle = 0
+
 func walk_physics(delta):
 	if(CLONE_WOOPER.ANIMATION_TREE["parameters/IntoWalk/active"]):
+		var drag = Vector3(SkateData.DRAG,1,SkateData.DRAG)
+		velocity *= drag
+		velocity.y -= SkateData.GRAVITY * delta
+		check_walls_walking(delta)
+		position += basis.z * velocity.z * delta
+		position += basis.y * velocity.y * delta
+		position += basis.x * velocity.x * delta
 		return
 	else:
 		set_animation("Walk",1)
-	snap_to_ground_walking()
-	check_walls()
+	check_walls_walking(delta)
 	
 	var input_dir = Input.get_vector("left", "right", "down", "up")
-	
 	angle -= input_dir.x * SkateData.WALK_TURN_SPEED * delta
+	rotation.y -= input_dir.x * SkateData.WALK_TURN_SPEED * delta
 
 	$MeshInstance3D.rotation = Vector3.ZERO
 	
-	velocity.z += input_dir.y * SkateData.WALK_ACCELERATION * delta
 	
 	set_animation("WalkForward",clamp(velocity.z/4, -1, 1))
+	var throttle = (abs(input_dir.y) - 0.5) * 2
+	
+	var drag = Vector3(SkateData.DRAG,1,SkateData.DRAG)
+	velocity *= drag
 	
 	#GRAVTIY	
-	velocity.y = -1
+	if(!$WalkingRay.is_colliding()):
+		velocity.y -= SkateData.GRAVITY * delta
+	else:
+
+		if(abs(input_dir.y) < 0.5):
+			velocity.z -= velocity.z * SkateData.WALK_ACCELERATION * delta
+		else:
+			velocity.z += throttle * sign(input_dir.y) * SkateData.WALK_ACCELERATION * delta
+		if(velocity.length() > SkateData.WALK_SPEED_CAP):
+			velocity = velocity.normalized() * SkateData.WALK_SPEED_CAP
+		velocity.x *= SkateData.HORIZONTAL_DRAG
+		
 	
-	velocity -= (velocity * SkateData.WALK_FRICTION) * delta
-	velocity.x *= SkateData.HORIZONTAL_DRAG
-	
-	if(velocity.length() > SkateData.WALK_SPEED_CAP):
-		velocity = velocity.normalized() * SkateData.WALK_SPEED_CAP
-	
+	if(InputBuffer.is_action_press_buffered("jump")):
+		jump_walk()
 	
 	
 	position += basis.z * velocity.z * delta
 	position += basis.y * velocity.y * delta
 	position += basis.x * velocity.x * delta
 	
+	
 	if(Input.is_action_just_pressed("walk")):
 		set_animation("Walk",0)
 		start_animation("IntoSkate")
 		force_snap_to_ground()
+	
 	
 	pass
 	

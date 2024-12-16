@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=4 uid="uid://bfhlpe5504uhr"]
+[gd_scene load_steps=51 format=4 uid="uid://bfhlpe5504uhr"]
 
 [ext_resource type="Shader" uid="uid://qi122372wgdg" path="res://Assets/Shader/water.gdshader" id="2_v7nn4"]
 [ext_resource type="PackedScene" uid="uid://7fvi2whbg4yg" path="res://Scenes/Skatepark/wooper.tscn" id="3_8umei"]
@@ -7,6 +7,9 @@
 [ext_resource type="Material" uid="uid://c5vpvypo2kyk4" path="res://Assets/Materials/Test/TestTexture.tres" id="5_chv58"]
 [ext_resource type="PackedScene" uid="uid://chwvu3wpe0fc1" path="res://Scenes/Skatepark/clone_wooper.tscn" id="5_revvb"]
 [ext_resource type="Script" uid="uid://bm5acfkp5fist" path="res://Scripts/Skate/RailHolder.gd" id="9_k1mjo"]
+[ext_resource type="Script" uid="uid://rd7ri2yxpjx5" path="res://Scripts/Skate/Pickup.gd" id="11_2hytn"]
+[ext_resource type="PackedScene" uid="uid://cik0e030gx5lb" path="res://Assets/fonts.blend" id="12_yq3n3"]
+[ext_resource type="Script" uid="uid://bxdj3f885icva" path="res://Scripts/AutoPlay.gd" id="13_ns3sn"]
 [ext_resource type="PackedScene" uid="uid://kl0o5c68shap" path="res://Assets/Skatepark/Quarterpipe.glb" id="18_otrhp"]
 [ext_resource type="Script" uid="uid://bvyma6a8cyjsj" path="res://Scripts/Skate/VertTrigger.gd" id="19_ppe15"]
 [ext_resource type="PackedScene" uid="uid://bqasctgum7v4e" path="res://Assets/Skatepark/Pipe end.blend" id="20_erpix"]
@@ -278,6 +281,57 @@ size = Vector3(4, 12, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_d13f5"]
 size = Vector3(4, 12, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_eihhf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yfgci"]
+albedo_color = Color(1.10701e-06, 0.607153, 0.476212, 1)
+emission_enabled = true
+emission = Color(0.503491, 0.435209, 9.62615e-08, 1)
+emission_energy_multiplier = 3.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f33f0"]
+emission_enabled = true
+emission = Color(0.968627, 0.588235, 0, 1)
+emission_energy_multiplier = 61.2
+
+[sub_resource type="Animation" id="Animation_13us3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_dxlpg"]
+resource_name = "Wobble"
+length = 10.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.46667, 3, 4.53333, 6, 7.53333, 9, 10.5333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.15, 0), Vector3(0, -0.15, 0), Vector3(0, 0.15, 0), Vector3(0, -0.15, 0), Vector3(0, 0.15, 0), Vector3(0, -0.15, 0), Vector3(0, 0.15, 0), Vector3(0, -0.15, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1kxw2"]
+_data = {
+&"RESET": SubResource("Animation_13us3"),
+&"Wobble": SubResource("Animation_dxlpg")
+}
 
 [node name="Node3D" type="Node3D"]
 
@@ -1858,4 +1912,138 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.51425, 1.85895, -0.811516)
 [node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.57266, 1.85895, -0.811516)
 
+[node name="Pickup" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.1148, 0.428707, -23.6046)
+script = ExtResource("11_2hytn")
+
+[node name="Area3D" type="Area3D" parent="Pickup"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup/Area3D"]
+shape = SubResource("SphereShape3D_eihhf")
+debug_color = Color(0, 0.6, 0.7, 0.42)
+
+[node name="fonts" parent="Pickup" instance=ExtResource("12_yq3n3")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Text" parent="Pickup/fonts" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_yfgci")
+
+[node name="Text_001" parent="Pickup/fonts" index="1"]
+visible = false
+surface_material_override/0 = SubResource("StandardMaterial3D_f33f0")
+
+[node name="Text_002" parent="Pickup/fonts" index="2"]
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pickup"]
+root_node = NodePath("../fonts")
+libraries = {
+&"": SubResource("AnimationLibrary_1kxw2")
+}
+script = ExtResource("13_ns3sn")
+animation = "Wobble"
+
+[node name="Pickup2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.84911, 7.78112, 2.96815)
+script = ExtResource("11_2hytn")
+
+[node name="Area3D" type="Area3D" parent="Pickup2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup2/Area3D"]
+shape = SubResource("SphereShape3D_eihhf")
+debug_color = Color(0, 0.6, 0.7, 0.42)
+
+[node name="fonts" parent="Pickup2" instance=ExtResource("12_yq3n3")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Text" parent="Pickup2/fonts" index="0"]
+visible = false
+surface_material_override/0 = SubResource("StandardMaterial3D_yfgci")
+
+[node name="Text_001" parent="Pickup2/fonts" index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_yfgci")
+
+[node name="Text_002" parent="Pickup2/fonts" index="2"]
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pickup2"]
+root_node = NodePath("../fonts")
+libraries = {
+&"": SubResource("AnimationLibrary_1kxw2")
+}
+script = ExtResource("13_ns3sn")
+animation = "Wobble"
+
+[node name="Pickup3" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.517018, 0.365031, 19.0706)
+script = ExtResource("11_2hytn")
+
+[node name="Area3D" type="Area3D" parent="Pickup3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup3/Area3D"]
+shape = SubResource("SphereShape3D_eihhf")
+debug_color = Color(0, 0.6, 0.7, 0.42)
+
+[node name="fonts" parent="Pickup3" instance=ExtResource("12_yq3n3")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Text" parent="Pickup3/fonts" index="0"]
+visible = false
+surface_material_override/0 = SubResource("StandardMaterial3D_yfgci")
+
+[node name="Text_001" parent="Pickup3/fonts" index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_yfgci")
+
+[node name="Text_002" parent="Pickup3/fonts" index="2"]
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pickup3"]
+root_node = NodePath("../fonts")
+libraries = {
+&"": SubResource("AnimationLibrary_1kxw2")
+}
+script = ExtResource("13_ns3sn")
+animation = "Wobble"
+
+[node name="Pickup4" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.8817, 0.365031, -5.50327)
+script = ExtResource("11_2hytn")
+
+[node name="Area3D" type="Area3D" parent="Pickup4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup4/Area3D"]
+shape = SubResource("SphereShape3D_eihhf")
+debug_color = Color(0, 0.6, 0.7, 0.42)
+
+[node name="fonts" parent="Pickup4" instance=ExtResource("12_yq3n3")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Text" parent="Pickup4/fonts" index="0"]
+visible = false
+surface_material_override/0 = SubResource("StandardMaterial3D_yfgci")
+
+[node name="Text_001" parent="Pickup4/fonts" index="1"]
+visible = false
+surface_material_override/0 = SubResource("StandardMaterial3D_f33f0")
+
+[node name="Text_002" parent="Pickup4/fonts" index="2"]
+surface_material_override/0 = SubResource("StandardMaterial3D_yfgci")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pickup4"]
+root_node = NodePath("../fonts")
+libraries = {
+&"": SubResource("AnimationLibrary_1kxw2")
+}
+script = ExtResource("13_ns3sn")
+animation = "Wobble"
+
+[connection signal="area_entered" from="Pickup/Area3D" to="Pickup" method="_on_area_3d_area_entered"]
+[connection signal="area_entered" from="Pickup2/Area3D" to="Pickup2" method="_on_area_3d_area_entered"]
+[connection signal="area_entered" from="Pickup3/Area3D" to="Pickup3" method="_on_area_3d_area_entered"]
+[connection signal="area_entered" from="Pickup4/Area3D" to="Pickup4" method="_on_area_3d_area_entered"]
+
 [editable path="Quarterpipe16"]
+[editable path="Pickup/fonts"]
+[editable path="Pickup2/fonts"]
+[editable path="Pickup3/fonts"]
+[editable path="Pickup4/fonts"]

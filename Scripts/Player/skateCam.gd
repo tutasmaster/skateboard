@@ -42,6 +42,11 @@ func _process(delta):
 			rot = target.BACKWARDS.global_rotation
 		global_rotation = Quaternion.from_euler(global_rotation).slerp(Quaternion.from_euler(rot),delta*3).get_euler()
 		global_position = target.position
+	elif(target.state == Wooper.STATE.walking):
+		$SpringArm3D.rotation = Quaternion.from_euler($SpringArm3D.rotation).slerp(Quaternion.from_euler(-Vector3(0.3,PI,0)),delta*3).get_euler()
+		global_rotation = Quaternion.from_euler(global_rotation).slerp(Quaternion.from_euler(target.rotation),delta*3).get_euler()
+		global_position = target.position
+		fov = 60.0
 	elif(target.state != Wooper.STATE.airborne):
 		$SpringArm3D.rotation = Quaternion.from_euler($SpringArm3D.rotation).slerp(Quaternion.from_euler(-Vector3(0.3,PI,0)),delta*3).get_euler()
 		global_rotation = Quaternion.from_euler(global_rotation).slerp(Quaternion.from_euler(target.rotation),delta*3).get_euler()

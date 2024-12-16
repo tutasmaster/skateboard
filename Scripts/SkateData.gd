@@ -75,11 +75,12 @@ extends Node
 @export var BALANCE_MANUAL_DIFF_INCREASE = 0.25
 
 @export_subgroup("Walk Properties")
-@export var WALK_GRAVITY = 9.8
+@export var WALK_GRAVITY = 45
 @export var WALK_FRICTION = 3
-@export var WALK_TURN_SPEED = 3
-@export var WALK_SPEED_CAP = 3
-@export var WALK_ACCELERATION = 10
+@export var WALK_TURN_SPEED = 5
+@export var WALK_SPEED_CAP = 4.5
+@export var WALK_ACCELERATION = 20
+@export var WALK_JUMP_STRENGTH = 3
 
 @export_subgroup("Visual Properties")
 @export var LERP_SPEED = 20
@@ -168,6 +169,7 @@ func get_params():
 		"WALK_TURN_SPEED" : WALK_TURN_SPEED,		
 		"WALK_SPEED_CAP" : WALK_SPEED_CAP,		
 		"WALK_ACCELERATION" : WALK_ACCELERATION,		
+		"WALK_JUMP_STRENGTH" : WALK_JUMP_STRENGTH,
 		"_LERP" : "Visual Properties",
 		"LERP_SPEED" : LERP_SPEED,
 		"BALANCE_MANUAL_SCALE" : BALANCE_MANUAL_SCALE,

@@ -1,9 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://dr1421vuf1k0p"]
+[gd_scene load_steps=28 format=3 uid="uid://dr1421vuf1k0p"]
 
 [ext_resource type="PackedScene" uid="uid://7fvi2whbg4yg" path="res://Scenes/Skatepark/wooper.tscn" id="3_e2xob"]
 [ext_resource type="PackedScene" uid="uid://chwvu3wpe0fc1" path="res://Scenes/Skatepark/clone_wooper.tscn" id="4_f50sa"]
 [ext_resource type="PackedScene" uid="uid://dqiccu8a7uvub" path="res://Assets/Skatepark/awning.blend" id="5_5qmun"]
-[ext_resource type="PackedScene" uid="uid://bsqroyiqnc48r" path="res://Scenes/Skatepark/menu.tscn" id="5_5y1oc"]
 [ext_resource type="PackedScene" uid="uid://pqlomjxlleb5" path="res://Scenes/Skatepark/camera_pivot.tscn" id="6_7slm7"]
 [ext_resource type="PackedScene" uid="uid://b30rlvxnx1j7i" path="res://Assets/Skatepark/parasol.blend" id="7_vrfov"]
 [ext_resource type="Script" uid="uid://bvyma6a8cyjsj" path="res://Scripts/Skate/VertTrigger.gd" id="8_4x43h"]
@@ -106,8 +105,6 @@ transform = Transform3D(1, 0, 0, 0, 1, -0.000471205, 0, 0.000471205, 1, -4.86617
 CLONE_WOOPER = NodePath("../CloneWooper")
 
 [node name="CloneWooper" parent="." instance=ExtResource("4_f50sa")]
-
-[node name="Menu" parent="." instance=ExtResource("5_5y1oc")]
 
 [node name="CameraPivot" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_7slm7")]
 target = NodePath("../Wooper")

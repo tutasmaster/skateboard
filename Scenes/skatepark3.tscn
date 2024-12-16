@@ -1,9 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://dfocju8lp0xlw"]
+[gd_scene load_steps=14 format=3 uid="uid://dfocju8lp0xlw"]
 
 [ext_resource type="PackedScene" uid="uid://7fvi2whbg4yg" path="res://Scenes/Skatepark/wooper.tscn" id="1_2rhwu"]
 [ext_resource type="PackedScene" uid="uid://dss8qgv1w0dxm" path="res://Assets/Skatepark/map.glb" id="1_y7imk"]
 [ext_resource type="PackedScene" uid="uid://chwvu3wpe0fc1" path="res://Scenes/Skatepark/clone_wooper.tscn" id="2_ibdp2"]
-[ext_resource type="PackedScene" uid="uid://bsqroyiqnc48r" path="res://Scenes/Skatepark/menu.tscn" id="3_7iskk"]
 [ext_resource type="PackedScene" uid="uid://pqlomjxlleb5" path="res://Scenes/Skatepark/camera_pivot.tscn" id="4_gu6i7"]
 [ext_resource type="Material" uid="uid://c5vpvypo2kyk4" path="res://Assets/Materials/Test/TestTexture.tres" id="5_3u6dy"]
 [ext_resource type="PackedScene" uid="uid://kl0o5c68shap" path="res://Assets/Skatepark/Quarterpipe.glb" id="5_hog18"]
@@ -54,8 +53,6 @@ shadow_enabled = true
 CLONE_WOOPER = NodePath("../CloneWooper")
 
 [node name="CloneWooper" parent="." instance=ExtResource("2_ibdp2")]
-
-[node name="Menu" parent="." instance=ExtResource("3_7iskk")]
 
 [node name="CameraPivot" parent="." node_paths=PackedStringArray("target") instance=ExtResource("4_gu6i7")]
 target = NodePath("../Wooper")

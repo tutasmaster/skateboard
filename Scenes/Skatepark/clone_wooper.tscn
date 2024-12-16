@@ -136,8 +136,10 @@ input_3/reset = true
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_u3q6x"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_i8cxj"]
+fadeout_time = 0.1
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_c4dp7"]
+fadein_time = 0.1
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_e620i"]
 fadein_time = 0.1
@@ -185,7 +187,7 @@ input_3/reset = true
 fadeout_time = 0.2
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_vuade"]
-graph_offset = Vector2(-100.991, 11.1373)
+graph_offset = Vector2(1873.98, 238.722)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_1e06u")
 nodes/Animation/position = Vector2(-880, 20)
 "nodes/Animation 10/node" = SubResource("AnimationNodeAnimation_vv6fg")
