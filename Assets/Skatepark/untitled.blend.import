@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://3rxgywue8s8u"
-path="res://.godot/imported/QuarterPipe.blend-69b92abdfb236b9ab45b7e99a13bffca.scn"
+uid="uid://dens8ttvnykbd"
+path="res://.godot/imported/untitled.blend-00dd5379b837f0bcc76a210286d5599c.scn"
 
 [deps]
 
-source_file="res://Assets/Skatepark/QuarterPipe.blend"
-dest_files=["res://.godot/imported/QuarterPipe.blend-69b92abdfb236b9ab45b7e99a13bffca.scn"]
+source_file="res://Assets/Skatepark/untitled.blend"
+dest_files=["res://.godot/imported/untitled.blend-00dd5379b837f0bcc76a210286d5599c.scn"]
 
 [params]
 
@@ -32,14 +32,7 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
-_subresources={
-"materials": {
-"Pipe": {
-"use_external/enabled": false,
-"use_external/path": "uid://df5daaxcnrnj7"
-}
-}
-}
+_subresources={}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
 blender/nodes/punctual_lights=true

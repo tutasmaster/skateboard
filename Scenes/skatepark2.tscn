@@ -1690,12 +1690,6 @@ transform = Transform3D(-4.37112e-08, 0, 1, 0, 1, 0, -1, 0, -4.37112e-08, 7.0661
 [node name="Quarterpipe16" parent="." instance=ExtResource("18_otrhp")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -1.70376, 0.85484, 12)
 
-[node name="CollisionShape3D" parent="Quarterpipe16/Cylinder/StaticBody3D" index="0"]
-debug_color = Color(0, 0.6, 0.7, 0.42)
-
-[node name="CollisionShape3D" parent="Quarterpipe16/Plane/StaticBody3D" index="0"]
-debug_color = Color(0, 0.6, 0.7, 0.42)
-
 [node name="Quarterpipe17" parent="." instance=ExtResource("18_otrhp")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -3.70376, 0.85484, 12)
 
