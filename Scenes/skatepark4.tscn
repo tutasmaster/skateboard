@@ -956,7 +956,6 @@ velocity = Vector3(0, 10, 10)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/MeshInstance3D/Area3D"]
 shape = SubResource("SphereShape3D_tbiuo")
-debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Node3D2" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, -1.86687, -27.3507)
@@ -1171,7 +1170,6 @@ script = ExtResource("15_13us3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup/Area3D"]
 shape = SubResource("SphereShape3D_1kxw2")
-debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="fonts" parent="Pickup" instance=ExtResource("15_dxlpg")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
@@ -1202,7 +1200,6 @@ script = ExtResource("15_13us3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup2/Area3D"]
 shape = SubResource("SphereShape3D_1kxw2")
-debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="fonts" parent="Pickup2" instance=ExtResource("15_dxlpg")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
@@ -1233,7 +1230,6 @@ script = ExtResource("15_13us3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup3/Area3D"]
 shape = SubResource("SphereShape3D_1kxw2")
-debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="fonts" parent="Pickup3" instance=ExtResource("15_dxlpg")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
@@ -1264,7 +1260,6 @@ script = ExtResource("15_13us3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup4/Area3D"]
 shape = SubResource("SphereShape3D_1kxw2")
-debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="fonts" parent="Pickup4" instance=ExtResource("15_dxlpg")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)

@@ -487,7 +487,6 @@ transform = Transform3D(0.719238, -0.421974, -0.551937, 0.506034, 0.862514, 0, 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBody3D"]
 transform = Transform3D(0.709601, 0.177532, -0.681872, 0.157309, 0.903395, 0.398913, 0.68682, -0.390334, 0.613122, 1.28063, -0.821799, -3.58074)
 shape = SubResource("BoxShape3D_8csy5")
-debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D/StaticBody3D"]
 transform = Transform3D(0.709601, 0.177532, -0.681872, 0.157309, 0.903395, 0.398913, 0.68682, -0.390334, 0.613123, 1.28063, -0.821799, -3.58074)
@@ -584,7 +583,6 @@ surface_material_override/0 = ExtResource("3_0061g")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/pipe/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_0ofwu")
-debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, -21.732, 3, 20)

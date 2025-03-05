@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://lsp20k5sr7qe"]
+[gd_scene load_steps=23 format=3 uid="uid://lsp20k5sr7qe"]
 
 [ext_resource type="PackedScene" uid="uid://pqlomjxlleb5" path="res://Scenes/Skatepark/camera_pivot.tscn" id="1_t1155"]
 [ext_resource type="Material" uid="uid://c5vpvypo2kyk4" path="res://Assets/Materials/Test/TestTexture.tres" id="1_unprj"]
@@ -10,6 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://chwvu3wpe0fc1" path="res://Scenes/Skatepark/clone_wooper.tscn" id="5_aiedr"]
 [ext_resource type="Script" uid="uid://bvyma6a8cyjsj" path="res://Scripts/Skate/VertTrigger.gd" id="5_h2pqx"]
 [ext_resource type="PackedScene" uid="uid://br3377n550fvr" path="res://Assets/Skatepark/export.glb" id="8_h2pqx"]
+[ext_resource type="Script" uid="uid://rd7ri2yxpjx5" path="res://Scripts/Skate/Pickup.gd" id="11_cot77"]
+[ext_resource type="PackedScene" uid="uid://cik0e030gx5lb" path="res://Assets/fonts.blend" id="12_8wlqi"]
+[ext_resource type="Script" uid="uid://bxdj3f885icva" path="res://Scripts/AutoPlay.gd" id="13_xjqd7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t1155"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -25,6 +28,57 @@ ambient_light_color = Color(0.434365, 0.444099, 0.457324, 1)
 ambient_light_energy = 0.1
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_dd6wk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g8v7k"]
+albedo_color = Color(1.10701e-06, 0.607153, 0.476212, 1)
+emission_enabled = true
+emission = Color(0.503491, 0.435209, 9.62615e-08, 1)
+emission_energy_multiplier = 3.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s4vtu"]
+emission_enabled = true
+emission = Color(0.968627, 0.588235, 0, 1)
+emission_energy_multiplier = 61.2
+
+[sub_resource type="Animation" id="Animation_13us3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_dxlpg"]
+resource_name = "Wobble"
+length = 10.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.46667, 3, 4.53333, 6, 7.53333, 9, 10.5333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.15, 0), Vector3(0, -0.15, 0), Vector3(0, 0.15, 0), Vector3(0, -0.15, 0), Vector3(0, 0.15, 0), Vector3(0, -0.15, 0), Vector3(0, 0.15, 0), Vector3(0, -0.15, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1kxw2"]
+_data = {
+&"RESET": SubResource("Animation_13us3"),
+&"Wobble": SubResource("Animation_dxlpg")
+}
 
 [node name="Node3D" type="Node3D"]
 
@@ -192,7 +246,7 @@ transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 4.99106,
 script = ExtResource("5_h2pqx")
 type = 2
 pointList = Array[Vector3]([Vector3(-7.43071, 1.82902, -6.0057), Vector3(0.61626, 1.82902, -6.0057)])
-metadata/_custom_type_script = ExtResource("5_h2pqx")
+metadata/_custom_type_script = "uid://bvyma6a8cyjsj"
 
 [node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.53674e-07, 0, -6.04697)
@@ -200,12 +254,38 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.53674e-07, 0, -6.04697)
 [node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
 
+[node name="VertTrigger9" type="Node3D" parent="Node3D"]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 4.99106, 0.977047, -17.1939)
+script = ExtResource("5_h2pqx")
+type = 2
+pointList = Array[Vector3]([Vector3(-7.43071, 1.82902, -16.2991), Vector3(2.61986, 1.82902, -16.2991)])
+metadata/_custom_type_script = "uid://bvyma6a8cyjsj"
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.53674e-07, 0, -6.04697)
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.0036)
+
+[node name="VertTrigger10" type="Node3D" parent="Node3D"]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 20.0314, 0.977047, -17.1939)
+script = ExtResource("5_h2pqx")
+type = 2
+pointList = Array[Vector3]([Vector3(7.60963, 1.82902, -16.2991), Vector3(17.6602, 1.82902, -16.2991)])
+metadata/_custom_type_script = "uid://bvyma6a8cyjsj"
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/VertTrigger10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.53674e-07, 0, -6.04697)
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.0036)
+
 [node name="VertTrigger3" type="Node3D" parent="Node3D"]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 4.99106, 0.977047, -1.59767)
 script = ExtResource("5_h2pqx")
 type = 2
 pointList = Array[Vector3]([Vector3(0.61626, 1.82902, -0.702874), Vector3(-7.43071, 1.82902, -0.702874)])
-metadata/_custom_type_script = ExtResource("5_h2pqx")
+metadata/_custom_type_script = "uid://bvyma6a8cyjsj"
 
 [node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0, 2)
@@ -217,8 +297,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.53674e-07, 0, -6.04697)
 transform = Transform3D(1, 0, -1.84656e-07, 0, 1, 0, 1.74845e-07, 0, 1.05611, 6.92904, 1.04289, -3.56805)
 script = ExtResource("5_h2pqx")
 type = 1
-pointList = Array[Vector3]([Vector3(0.55424, 1.89486, -0.561024), Vector3(0.55424, 2.24358, -1.18661), Vector3(0.55424, 2.51142, -1.89547), Vector3(0.55424, 2.67875, -2.64243), Vector3(0.55424, 2.73273, -3.31578), Vector3(0.55424, 2.67875, -4.09325), Vector3(0.55424, 2.51142, -4.84021), Vector3(0.55424, 2.24358, -5.54907), Vector3(0.55424, 1.89486, -6.17465)])
-metadata/_custom_type_script = ExtResource("5_h2pqx")
+pointList = Array[Vector3]([Vector3(0.55424, 1.89486, -0.561034), Vector3(0.55424, 2.24358, -1.18662), Vector3(0.55424, 2.51143, -1.89547), Vector3(0.55424, 2.67875, -2.64243), Vector3(0.55424, 2.73274, -3.31578), Vector3(0.55424, 2.67875, -4.09325), Vector3(0.55424, 2.51143, -4.8402), Vector3(0.55424, 2.24358, -5.54905), Vector3(0.55424, 1.89486, -6.17464)])
+metadata/_custom_type_script = "uid://bvyma6a8cyjsj"
 
 [node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0, 2)
@@ -251,8 +331,8 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4.172
 transform = Transform3D(1, 0, -1.84656e-07, 0, 1, 0, 1.74845e-07, 0, 1.05611, 5.00964, 1.04289, -3.56805)
 script = ExtResource("5_h2pqx")
 type = 1
-pointList = Array[Vector3]([Vector3(-1.36516, 1.89486, -0.561024), Vector3(-1.36516, 2.24358, -1.18661), Vector3(-1.36516, 2.51142, -1.89547), Vector3(-1.36516, 2.67875, -2.64243), Vector3(-1.36516, 2.73273, -3.31578), Vector3(-1.36516, 2.67875, -4.09325), Vector3(-1.36516, 2.51142, -4.84021), Vector3(-1.36516, 2.24358, -5.54907), Vector3(-1.36516, 1.89486, -6.17465)])
-metadata/_custom_type_script = ExtResource("5_h2pqx")
+pointList = Array[Vector3]([Vector3(-1.36516, 1.89486, -0.561034), Vector3(-1.36516, 2.24358, -1.18662), Vector3(-1.36516, 2.51143, -1.89547), Vector3(-1.36516, 2.67875, -2.64243), Vector3(-1.36516, 2.73274, -3.31578), Vector3(-1.36516, 2.67875, -4.09325), Vector3(-1.36516, 2.51143, -4.8402), Vector3(-1.36516, 2.24358, -5.54905), Vector3(-1.36516, 1.89486, -6.17464)])
+metadata/_custom_type_script = "uid://bvyma6a8cyjsj"
 
 [node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0, 2)
@@ -285,8 +365,8 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4.172
 transform = Transform3D(1, 0, -1.84656e-07, 0, 1, 0, 1.74845e-07, 0, 1.05611, 3.01905, 1.04289, -3.56805)
 script = ExtResource("5_h2pqx")
 type = 1
-pointList = Array[Vector3]([Vector3(-3.35575, 1.89486, -0.561024), Vector3(-3.35575, 2.24358, -1.18661), Vector3(-3.35575, 2.51142, -1.89547), Vector3(-3.35575, 2.67875, -2.64243), Vector3(-3.35575, 2.73273, -3.31578), Vector3(-3.35575, 2.67875, -4.09325), Vector3(-3.35575, 2.51142, -4.84021), Vector3(-3.35575, 2.24358, -5.54907), Vector3(-3.35575, 1.89486, -6.17465)])
-metadata/_custom_type_script = ExtResource("5_h2pqx")
+pointList = Array[Vector3]([Vector3(-3.35575, 1.89486, -0.561034), Vector3(-3.35575, 2.24358, -1.18662), Vector3(-3.35575, 2.51143, -1.89547), Vector3(-3.35575, 2.67875, -2.64243), Vector3(-3.35575, 2.73274, -3.31578), Vector3(-3.35575, 2.67875, -4.09325), Vector3(-3.35575, 2.51143, -4.8402), Vector3(-3.35575, 2.24358, -5.54905), Vector3(-3.35575, 1.89486, -6.17464)])
+metadata/_custom_type_script = "uid://bvyma6a8cyjsj"
 
 [node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0, 2)
@@ -319,8 +399,8 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4.172
 transform = Transform3D(1, 0, -1.84656e-07, 0, 1, 0, 1.74845e-07, 0, 1.05611, 1.02186, 1.04289, -3.56805)
 script = ExtResource("5_h2pqx")
 type = 1
-pointList = Array[Vector3]([Vector3(-5.35294, 1.89486, -0.561024), Vector3(-5.35294, 2.24358, -1.18661), Vector3(-5.35294, 2.51142, -1.89547), Vector3(-5.35294, 2.67875, -2.64243), Vector3(-5.35294, 2.73273, -3.31578), Vector3(-5.35294, 2.67875, -4.09325), Vector3(-5.35294, 2.51142, -4.84021), Vector3(-5.35294, 2.24358, -5.54907), Vector3(-5.35294, 1.89486, -6.17465)])
-metadata/_custom_type_script = ExtResource("5_h2pqx")
+pointList = Array[Vector3]([Vector3(-5.35294, 1.89486, -0.561034), Vector3(-5.35294, 2.24358, -1.18662), Vector3(-5.35294, 2.51143, -1.89547), Vector3(-5.35294, 2.67875, -2.64243), Vector3(-5.35294, 2.73274, -3.31578), Vector3(-5.35294, 2.67875, -4.09325), Vector3(-5.35294, 2.51143, -4.8402), Vector3(-5.35294, 2.24358, -5.54905), Vector3(-5.35294, 1.89486, -6.17464)])
+metadata/_custom_type_script = "uid://bvyma6a8cyjsj"
 
 [node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0, 2)
@@ -353,8 +433,8 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4.172
 transform = Transform3D(1, 0, -1.84656e-07, 0, 1, 0, 1.74845e-07, 0, 1.05611, -0.923202, 1.04289, -3.56805)
 script = ExtResource("5_h2pqx")
 type = 1
-pointList = Array[Vector3]([Vector3(-7.298, 1.89486, -0.561024), Vector3(-7.298, 2.24358, -1.18661), Vector3(-7.298, 2.51142, -1.89547), Vector3(-7.298, 2.67875, -2.64243), Vector3(-7.298, 2.73273, -3.31578), Vector3(-7.298, 2.67875, -4.09325), Vector3(-7.298, 2.51142, -4.84021), Vector3(-7.298, 2.24358, -5.54907), Vector3(-7.298, 1.89486, -6.17465)])
-metadata/_custom_type_script = ExtResource("5_h2pqx")
+pointList = Array[Vector3]([Vector3(-7.298, 1.89486, -0.561034), Vector3(-7.298, 2.24358, -1.18662), Vector3(-7.298, 2.51143, -1.89547), Vector3(-7.298, 2.67875, -2.64243), Vector3(-7.298, 2.73274, -3.31578), Vector3(-7.298, 2.67875, -4.09325), Vector3(-7.298, 2.51143, -4.8402), Vector3(-7.298, 2.24358, -5.54905), Vector3(-7.298, 1.89486, -6.17464)])
+metadata/_custom_type_script = "uid://bvyma6a8cyjsj"
 
 [node name="Marker3D" type="Marker3D" parent="Node3D/VertTrigger8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0, 2)
@@ -395,7 +475,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.00345, 0.949943, -8.33782)
 script = ExtResource("5_h2pqx")
 type = 1
 pointList = Array[Vector3]([Vector3(5.00345, 0.949943, -8.33782), Vector3(5.00345, 0.949943, -5.40232), Vector3(5.63957, 0.949943, -3.9976), Vector3(5.69839, 0.949943, -2.48324), Vector3(4.9785, 0.949943, -0.89911), Vector3(4.92979, 0.949943, 0.52187), Vector3(4.19817, 0.949943, 1.69548), Vector3(4.17602, 0.949943, 4.33478)])
-metadata/_custom_type_script = ExtResource("5_h2pqx")
+metadata/_custom_type_script = "uid://bvyma6a8cyjsj"
 
 [node name="Marker3D" type="Marker3D" parent="VertTrigger"]
 
@@ -474,3 +554,134 @@ spot_angle = 82.78
 spot_angle_attenuation = 21.8566
 
 [node name="export" parent="." instance=ExtResource("8_h2pqx")]
+
+[node name="Pickup" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.35031, 2.81213, -3.26498)
+script = ExtResource("11_cot77")
+
+[node name="Area3D" type="Area3D" parent="Pickup"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup/Area3D"]
+shape = SubResource("SphereShape3D_dd6wk")
+
+[node name="fonts" parent="Pickup" instance=ExtResource("12_8wlqi")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Text" parent="Pickup/fonts" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_g8v7k")
+
+[node name="Text_001" parent="Pickup/fonts" index="1"]
+visible = false
+surface_material_override/0 = SubResource("StandardMaterial3D_s4vtu")
+
+[node name="Text_002" parent="Pickup/fonts" index="2"]
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pickup"]
+root_node = NodePath("../fonts")
+libraries = {
+&"": SubResource("AnimationLibrary_1kxw2")
+}
+script = ExtResource("13_xjqd7")
+animation = "Wobble"
+
+[node name="Pickup2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7032, 1.03608, -2.3541)
+script = ExtResource("11_cot77")
+
+[node name="Area3D" type="Area3D" parent="Pickup2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup2/Area3D"]
+shape = SubResource("SphereShape3D_dd6wk")
+
+[node name="fonts" parent="Pickup2" instance=ExtResource("12_8wlqi")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Text" parent="Pickup2/fonts" index="0"]
+visible = false
+surface_material_override/0 = SubResource("StandardMaterial3D_g8v7k")
+
+[node name="Text_001" parent="Pickup2/fonts" index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_g8v7k")
+
+[node name="Text_002" parent="Pickup2/fonts" index="2"]
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pickup2"]
+root_node = NodePath("../fonts")
+libraries = {
+&"": SubResource("AnimationLibrary_1kxw2")
+}
+script = ExtResource("13_xjqd7")
+animation = "Wobble"
+
+[node name="Pickup3" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2802, 2.08669, -16.2303)
+script = ExtResource("11_cot77")
+
+[node name="Area3D" type="Area3D" parent="Pickup3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup3/Area3D"]
+shape = SubResource("SphereShape3D_dd6wk")
+
+[node name="fonts" parent="Pickup3" instance=ExtResource("12_8wlqi")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Text" parent="Pickup3/fonts" index="0"]
+visible = false
+surface_material_override/0 = SubResource("StandardMaterial3D_g8v7k")
+
+[node name="Text_001" parent="Pickup3/fonts" index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_g8v7k")
+
+[node name="Text_002" parent="Pickup3/fonts" index="2"]
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pickup3"]
+root_node = NodePath("../fonts")
+libraries = {
+&"": SubResource("AnimationLibrary_1kxw2")
+}
+script = ExtResource("13_xjqd7")
+animation = "Wobble"
+
+[node name="Pickup4" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.21158, 8.76769, -28.4624)
+script = ExtResource("11_cot77")
+
+[node name="Area3D" type="Area3D" parent="Pickup4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup4/Area3D"]
+shape = SubResource("SphereShape3D_dd6wk")
+
+[node name="fonts" parent="Pickup4" instance=ExtResource("12_8wlqi")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Text" parent="Pickup4/fonts" index="0"]
+visible = false
+surface_material_override/0 = SubResource("StandardMaterial3D_g8v7k")
+
+[node name="Text_001" parent="Pickup4/fonts" index="1"]
+visible = false
+surface_material_override/0 = SubResource("StandardMaterial3D_s4vtu")
+
+[node name="Text_002" parent="Pickup4/fonts" index="2"]
+surface_material_override/0 = SubResource("StandardMaterial3D_g8v7k")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pickup4"]
+root_node = NodePath("../fonts")
+libraries = {
+&"": SubResource("AnimationLibrary_1kxw2")
+}
+script = ExtResource("13_xjqd7")
+animation = "Wobble"
+
+[connection signal="area_entered" from="Pickup/Area3D" to="Pickup" method="_on_area_3d_area_entered"]
+[connection signal="area_entered" from="Pickup2/Area3D" to="Pickup2" method="_on_area_3d_area_entered"]
+[connection signal="area_entered" from="Pickup3/Area3D" to="Pickup3" method="_on_area_3d_area_entered"]
+[connection signal="area_entered" from="Pickup4/Area3D" to="Pickup4" method="_on_area_3d_area_entered"]
+
+[editable path="Pickup/fonts"]
+[editable path="Pickup2/fonts"]
+[editable path="Pickup3/fonts"]
+[editable path="Pickup4/fonts"]

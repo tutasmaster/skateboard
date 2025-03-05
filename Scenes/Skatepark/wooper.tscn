@@ -209,7 +209,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.167769, -7.90537e-05)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.91038e-11)
 shape = SubResource("SphereShape3D_364gf")
-debug_color = Color(0, 0.6, 0.7, 0.42)
 
 [node name="Balance" type="Control" parent="."]
 layout_mode = 3
