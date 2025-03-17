@@ -93,7 +93,7 @@ func _process(delta):
 		CLONE_WOOPER.rotation.x += balance * forward * SkateData.BALANCE_MANUAL_SCALE * delta
 		
 	if(state == STATE.railed):
-		CLONE_WOOPER.rotation.z += balance * forward * SkateData.BALANCE_GRIND_SCALE * delta
+		CLONE_WOOPER.rotation.z += balance * SkateData.BALANCE_GRIND_SCALE * delta
 			
 
 func _physics_process(delta):
