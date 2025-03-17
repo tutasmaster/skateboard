@@ -96,6 +96,11 @@ func toggle_pause():
 	GameManager.paused = !GameManager.paused
 	pass # Replace with function body.
 
+func reset():
+	GameManager.reset()
+	hide_menu()
+	open = false
+	GameManager.paused = false
 
 func load_map(map):
 	GameManager.load_map(map)

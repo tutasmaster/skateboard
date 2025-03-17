@@ -99,6 +99,7 @@ func load_params_in_path(path):
 
 func reset():
 	reload()
+	
 
 func load_heavy():
 	load_par("heavy.json")
